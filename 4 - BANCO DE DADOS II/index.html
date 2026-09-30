@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BD II · Estudo Dirigido 2</title>
+<style>
+:root{
+  --bg:#f6f7f5; --card:#ffffff; --text:#1d2521; --muted:#5b6660; --line:#d5dbd7;
+  --accent:#2f7d68; --accent-soft:#e3f1ec; --accent-text:#1f5c4b;
+  --warn:#9a5b00; --warn-soft:#fff3dc; --bad:#b3261e; --bad-soft:#fde8e6;
+  --good:#1e7a3c; --good-soft:#e2f4e7; --code-bg:#f1f3f2; --code-text:#1d2521;
+  --kw:#7a2fa0; --fn:#0b6aa2; --str:#a1470d; --num:#8a6d00; --com:#6b7a72;
+  --exam-head:#d9d9d9; --exam-line:#555; --exam-label:#f3f3f3;
+  --g1:#dcecff; --g2:#ffe6cc; --g3:#e4f5dc;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#121614; --card:#1b201e; --text:#e6ebe8; --muted:#a3ada8; --line:#333b37;
+    --accent:#5fc3a4; --accent-soft:#1f3a31; --accent-text:#8fe0c6;
+    --warn:#f0b75a; --warn-soft:#3a2c14; --bad:#ff8a80; --bad-soft:#3d1e1b;
+    --good:#7ddc98; --good-soft:#18331f; --code-bg:#0f1311; --code-text:#e6ebe8;
+    --kw:#d79bf2; --fn:#7cc7f5; --str:#f2a36b; --num:#e8cd62; --com:#86948d;
+    --exam-head:#353b38; --exam-line:#6d7571; --exam-label:#232826;
+    --g1:#1d3350; --g2:#4a3218; --g3:#23401c;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.top{background:var(--card);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-top:28px;padding-bottom:22px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.lead{color:var(--muted);margin:0;max-width:720px}
+nav.sticky{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+nav.sticky .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:thin}
+nav.sticky a{flex:0 0 auto;text-decoration:none;color:var(--text);font-size:14px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+nav.sticky a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:34px 0 10px}
+h2{font-size:24px;margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+h2 .num{font-size:14px;font-weight:700;color:var(--accent-text);background:var(--accent-soft);border-radius:8px;padding:2px 8px}
+h3{font-size:18px;margin:26px 0 8px}
+p{margin:8px 0}
+.card{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.frase{font-size:18px;font-weight:600;border-left:4px solid var(--accent);padding:6px 0 6px 14px;margin:14px 0}
+.box{border-radius:10px;padding:12px 14px;margin:12px 0;border:1px solid transparent}
+.box b.t{display:block;margin-bottom:4px}
+.box.dica{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.box.peg{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.box.erro{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
+.box ul{margin:6px 0 0;padding-left:20px}
+.index-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+.index-grid a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.index-grid a:hover{border-color:var(--accent)}
+.index-grid .n{font-size:12px;font-weight:700;color:var(--accent)}
+.index-grid .tt{font-weight:650;display:block}
+.index-grid .ds{font-size:13px;color:var(--muted)}
+pre{background:var(--code-bg);color:var(--code-text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font:14px/1.5 ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;margin:10px 0}
+code{font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;font-size:.92em}
+:not(pre)>code{background:var(--code-bg);border:1px solid var(--line);border-radius:5px;padding:0 5px}
+.kw{color:var(--kw);font-weight:600}.fn{color:var(--fn)}.st{color:var(--str)}.nu{color:var(--num)}.co{color:var(--com);font-style:italic}
+table.t{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.t th{background:var(--exam-label)}
+.scroll{overflow-x:auto}
+.null{color:var(--muted);font-style:italic}
+.g1{background:var(--g1)}.g2{background:var(--g2)}.g3{background:var(--g3)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center}
+.arrow{font-size:26px;color:var(--accent);text-align:center}
+@media (max-width:700px){.row2{grid-template-columns:minmax(0,1fr)}.arrow{transform:rotate(90deg)}}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.chip{font:600 13px ui-monospace,Consolas,monospace;padding:5px 9px;border-radius:8px;background:var(--accent-soft);color:var(--accent-text);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+.chip.alt{background:var(--warn-soft);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
+.flow .sep{color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+button{font:inherit;font-size:14px;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);padding:7px 12px}
+button:hover{border-color:var(--accent)}
+button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){button.on{color:#0d1a15}}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:6px}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.cols3,.cols2{grid-template-columns:minmax(0,1fr)}}
+.opt h4{margin:0 0 6px;font-size:15px}
+.tag{display:inline-block;white-space:nowrap;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.tag.caiu{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent)}
+.tag.tema{background:var(--accent-soft);color:var(--accent-text)}
+/* ======= visual estilo prova ======= */
+.exam{border:1px solid var(--exam-line);margin:18px 0;background:var(--card)}
+.exam .head{background:var(--exam-head);border-bottom:1px solid var(--exam-line);text-align:center;font-weight:700;padding:6px 10px}
+.exam .r{display:grid;grid-template-columns:170px minmax(0,1fr);border-bottom:1px solid var(--exam-line)}
+.exam .r:last-child{border-bottom:0}
+.exam .lab{font-weight:700;padding:10px;border-right:1px solid var(--exam-line);background:var(--exam-label)}
+.exam .val{padding:10px 12px;min-width:0}
+@media (max-width:700px){.exam .r{grid-template-columns:minmax(0,1fr)}.exam .lab{border-right:0;border-bottom:1px solid var(--exam-line)}}
+.alt{display:block;width:100%;text-align:left;border:1px solid transparent;border-radius:8px;padding:6px 8px;margin:2px 0;background:transparent;color:var(--text);font-size:15px;line-height:1.5}
+.alt:hover{border-color:var(--line);background:var(--bg)}
+.alt .al{font-weight:700;display:block}
+.alt pre{margin:4px 0;font-size:13px}
+.alt.right{background:var(--good-soft);border-color:var(--good)}
+.alt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.alt[disabled]{cursor:default}
+.exam .coment{display:none}
+.exam.done .coment{display:grid}
+.res{font-weight:700;margin-bottom:4px}
+.res.ok{color:var(--good)}.res.no{color:var(--bad)}
+textarea{width:100%;min-height:110px;font:14px/1.5 ui-monospace,Consolas,monospace;background:var(--code-bg);color:var(--code-text);border:1px solid var(--line);border-radius:8px;padding:10px}
+.scorebar{position:sticky;top:52px;z-index:4;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.scorebar .sc{font-weight:700}
+@media (max-width:700px){.scorebar{position:static}}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{padding:4px 10px;font-size:13px}
+.model{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.tbl{border:1px solid var(--line);border-radius:10px;background:var(--card);min-width:170px;flex:1 1 170px}
+.tbl .tn{background:var(--accent-soft);color:var(--accent-text);font-weight:700;padding:5px 10px;border-radius:10px 10px 0 0;font-size:14px}
+.tbl ul{list-style:none;margin:0;padding:6px 10px;font:13px/1.6 ui-monospace,Consolas,monospace}
+.pk{font-weight:700}.pk::after{content:"  PK";color:var(--accent);font-size:11px}
+.fk::after{content:"  FK";color:var(--warn);font-size:11px;font-weight:700}
+footer{color:var(--muted);font-size:13px;padding:30px 0 50px}
+.check li{margin:4px 0}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Banco de Dados II · Prof. Frank · UNIFAGOC</div>
+    <h1>Estudo Dirigido 2 — guia simples para a prova</h1>
+    <p class="lead">Explicação curta de cada assunto, exemplos no modelo da sua Loja Virtual (ED2), pegadinhas que o professor gosta de cobrar e um simulado no mesmo formato da prova, com resposta comentada.</p>
+  </div>
+</header>
+
+<nav class="sticky" aria-label="Índice">
+  <div class="wrap">
+    <a href="#prova">A prova</a><a href="#funcoes">Funções de linha</a><a href="#null">NULL</a><a href="#join">JOIN</a><a href="#grupo">Funções de grupo</a><a href="#sub">Subconsultas</a><a href="#view">Views</a><a href="#ondelete">ON DELETE</a><a href="#ed1">Revisão ED1</a><a href="#plsql">PL/SQL</a><a href="#simulado">Simulado</a><a href="#discursivas">Discursivas</a><a href="#cola">Cola final</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ====================== ÍNDICE ====================== -->
+<section id="indice">
+  <h2>Índice</h2>
+  <p>Ordem sugerida: leia a seção, abra os "teste rápido" e, no final, faça o simulado. Onde aparece <span class="tag caiu">caiu na prova</span>, é assunto que já foi cobrado.</p>
+  <div class="index-grid">
+    <a href="#prova"><span class="n">0</span><span class="tt">Como é a prova</span><span class="ds">O formato das questões e o que já caiu</span></a>
+    <a href="#funcoes"><span class="n">1</span><span class="tt">Funções de uma linha</span><span class="ds">UPPER, TO_CHAR, MONTHS_BETWEEN, NVL…</span></a>
+    <a href="#null"><span class="n">2</span><span class="tt">NULL</span><span class="ds">IS NULL e a pegadinha do = NULL</span></a>
+    <a href="#join"><span class="n">3</span><span class="tt">JOIN (várias tabelas)</span><span class="ds">INNER, LEFT, RIGHT, (+) e produto cartesiano</span></a>
+    <a href="#grupo"><span class="n">4</span><span class="tt">Funções de grupo</span><span class="ds">COUNT, SUM, AVG, GROUP BY, HAVING</span></a>
+    <a href="#sub"><span class="n">5</span><span class="tt">Subconsultas</span><span class="ds">Consulta dentro de consulta, IN e EXISTS</span></a>
+    <a href="#view"><span class="n">6</span><span class="tt">Views</span><span class="ds">CREATE VIEW e WITH CHECK OPTION</span></a>
+    <a href="#ondelete"><span class="n">7</span><span class="tt">ON DELETE</span><span class="ds">CASCADE, SET NULL e o padrão (restrict)</span></a>
+    <a href="#ed1"><span class="n">8</span><span class="tt">Revisão do ED1</span><span class="ds">O que pode voltar junto</span></a>
+    <a href="#plsql"><span class="n">9</span><span class="tt">PL/SQL (básico)</span><span class="ds">Caiu na prova do ano passado</span></a>
+    <a href="#simulado"><span class="n">10</span><span class="tt">Simulado estilo prova</span><span class="ds">Múltipla escolha com resposta comentada</span></a>
+    <a href="#discursivas"><span class="n">11</span><span class="tt">Discursivas e "ache o erro"</span><span class="ds">Escrever SQL do zero</span></a>
+    <a href="#cola">
+      <span class="n">12</span><span class="tt">Cola de 1 minuto</span><span class="ds">Revisão rápida antes de entrar na sala</span></a>
+  </div>
+</section>
+
+<!-- ====================== 0. A PROVA ====================== -->
+<section id="prova">
+  <h2><span class="num">0</span>Como é a prova</h2>
+  <p>A prova do Estudo Dirigido junta várias matérias. A parte de <b>Banco de Dados II</b> teve 7 questões nas duas devolutivas. Cada questão vem numa tabela com <b>Enunciado</b>, <b>Alternativas</b> e, na devolutiva, a <b>Resposta comentada</b>. O simulado desta página usa esse mesmo visual.</p>
+
+  <h3>Os 4 tipos de questão que aparecem</h3>
+  <div class="card">
+    <ol>
+      <li><b>"Qual comando está correto?"</b> — as 5 alternativas trazem códigos quase iguais. A diferença está num detalhe: a ordem das cláusulas, onde fica o <code>WITH CHECK OPTION</code>, o que entra no <code>GROUP BY</code>, uma coluna sem nome…</li>
+      <li><b>Afirmativas I, II, III</b> — você marca "somente I e III", "somente III" etc. Julgue uma afirmativa de cada vez, como verdadeira ou falsa.</li>
+      <li><b>Tabela de dados → resultado</b> — mostram os dados de uma tabela e o resultado final, e você escolhe o SELECT que gera aquele resultado (normalmente com GROUP BY, COUNT e SUM).</li>
+      <li><b>Discursiva</b> — escrever os comandos (ex.: as chaves estrangeiras com ON DELETE) ou <b>achar os erros</b> de um script.</li>
+    </ol>
+  </div>
+
+  <h3>O que já caiu em Banco de Dados II</h3>
+  <div class="scroll">
+  <table class="t">
+    <tr><th>Prova</th><th>Assunto</th><th>O que precisava saber</th></tr>
+    <tr><td>ED2 2025/2 · Q8</td><td>View com WITH CHECK OPTION</td><td>O filtro vai no WHERE e o <code>WITH CHECK OPTION</code> fica no FINAL do comando. Sem junção e sem GROUP BY.</td></tr>
+    <tr><td>ED2 2025/2 · Q9</td><td>Afirmações sobre SQL</td><td><code>COUNT(*)</code> conta as linhas; HAVING não é função; quem ordena é o ORDER BY; DISTINCT não é o padrão.</td></tr>
+    <tr><td>ED2 2025/2 · Q10</td><td>PL/SQL (V ou F)</td><td>O PL/SQL roda dentro do SGBD, reduz o tráfego de rede e não é padronizado entre SGBDs.</td></tr>
+    <tr><td>ED2 2025/2 · Q11</td><td>View com AVG</td><td>A coluna com função precisa de nome, e o GROUP BY leva as colunas do SELECT.</td></tr>
+    <tr><td>ED2 2025/2 · Q12</td><td>Tabela → SELECT</td><td><code>COUNT</code> para contar, <code>SUM</code> para somar, e <code>GROUP BY</code> com as colunas que aparecem no resultado.</td></tr>
+    <tr><td>ED2 2025/2 · Q13</td><td><b>Discursiva ON DELETE</b></td><td>CASCADE (apaga os filhos), SET NULL (deixa o filho nulo) e sem cláusula (bloqueia a exclusão).</td></tr>
+    <tr><td>ED2 2025/2 · Q14</td><td>Cursor</td><td>A área de memória para processar várias linhas é o CURSOR.</td></tr>
+    <tr><td>ED1 2026/2 (sua)</td><td>NULL, DDL, BETWEEN, ALTER, erros</td><td>IS NULL, BETWEEN inclui as pontas, coluna nova NOT NULL dá erro se a tabela tem linhas, DROP FROM não existe, UPDATE sem WHERE altera tudo.</td></tr>
+  </table>
+  </div>
+
+  <div class="box dica"><b class="t">Estratégia para as de código</b>
+    <ul>
+      <li>Primeiro <b>elimine as que dão erro</b>: função de grupo no WHERE, coluna fora do GROUP BY, subconsulta sem parênteses, cláusula no lugar errado.</li>
+      <li>Depois veja se a alternativa <b>responde exatamente o que foi pedido</b>: colunas certas, filtro certo, "acima de" (&gt;) ou "a partir de" (&gt;=).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====================== 1. FUNÇÕES DE LINHA ====================== -->
+<section id="funcoes">
+  <h2><span class="num">1</span>Funções de uma linha</h2>
+  <p class="frase">Função de linha trabalha em <u>cada linha</u>: entra 1 valor, sai 1 valor. Se a tabela tem 4 linhas, o resultado tem 4 linhas.</p>
+  <p>Ela pode ir no SELECT (para mostrar) ou no WHERE (para filtrar), e dá para colocar uma dentro da outra, como <code>ROUND(MONTHS_BETWEEN(...), 1)</code>.</p>
+
+  <div class="scroll">
+  <table class="t">
+    <tr><th>Função</th><th>O que faz</th><th>Exemplo</th><th>Resultado</th></tr>
+    <tr><td><code>UPPER</code></td><td>Maiúsculo</td><td><code>UPPER('ana costa')</code></td><td>ANA COSTA</td></tr>
+    <tr><td><code>LOWER</code></td><td>Minúsculo</td><td><code>LOWER('PEDRO')</code></td><td>pedro</td></tr>
+    <tr><td><code>LENGTH</code></td><td>Quantidade de caracteres (espaço conta)</td><td><code>LENGTH('maria santos')</code></td><td>12</td></tr>
+    <tr><td><code>TO_DATE</code></td><td>Texto → data</td><td><code>TO_DATE('10/05/1990','DD/MM/YYYY')</code></td><td>data 10/05/1990</td></tr>
+    <tr><td><code>TO_CHAR</code> (data)</td><td>Data → texto no formato</td><td><code>TO_CHAR(dtnasc,'YYYY-MM-DD')</code></td><td>'1990-05-10'</td></tr>
+    <tr><td><code>TO_CHAR</code> (número)</td><td>Número → texto formatado</td><td><code>TO_CHAR(5000.5,'9,999.99')</code></td><td>'5,000.50'</td></tr>
+    <tr><td><code>SYSDATE</code></td><td>Data e hora de agora</td><td><code>SELECT SYSDATE FROM DUAL;</code></td><td>data de hoje</td></tr>
+    <tr><td><code>MONTHS_BETWEEN</code></td><td>Meses entre 2 datas (a 1ª menos a 2ª)</td><td><code>MONTHS_BETWEEN(SYSDATE, dtadmissao)</code></td><td>ex.: 30,4</td></tr>
+    <tr><td><code>LAST_DAY</code></td><td>Último dia do mês</td><td><code>LAST_DAY(TO_DATE('10/02/2024','DD/MM/YYYY'))</code></td><td>29/02/2024</td></tr>
+    <tr><td><code>ROUND</code></td><td>Arredonda</td><td><code>ROUND(4.567, 2)</code></td><td>4.57</td></tr>
+    <tr><td><code>TRUNC</code></td><td>Corta, sem arredondar</td><td><code>TRUNC(4.567, 2)</code></td><td>4.56</td></tr>
+    <tr><td><code>TO_NUMBER</code></td><td>Texto → número</td><td><code>TO_NUMBER('1500')</code></td><td>1500</td></tr>
+    <tr><td><code>NVL</code></td><td>Troca NULL por outro valor</td><td><code>NVL(comissao, 0)</code></td><td>0 quando a comissão é NULL</td></tr>
+  </table>
+  </div>
+
+  <div class="box dica"><b class="t">DUAL = tabela de mentirinha</b>
+    A DUAL tem 1 linha só. Serve para usar uma função sem precisar de tabela: <code>SELECT SYSDATE FROM DUAL;</code>. Se você escrever <code>SELECT SYSDATE FROM funcionario;</code>, a data aparece repetida, uma vez para cada funcionário.
+  </div>
+
+  <h3>Exemplo completo (tabela FUNCIONARIO do material)</h3>
+<pre><code class="sql">SELECT matricula,
+       UPPER(nome)                                  AS nome,
+       TO_CHAR(dtadmissao, 'DD/MM/YYYY')            AS data_admissao,
+       ROUND(MONTHS_BETWEEN(SYSDATE, dtadmissao), 1) AS meses_de_empresa,
+       TRUNC(MONTHS_BETWEEN(SYSDATE, dtadmissao))    AS meses_completos,
+       salario + NVL(comissao, 0)                   AS total_remuneracao
+  FROM funcionario
+ ORDER BY meses_de_empresa DESC;</code></pre>
+
+  <div class="box peg"><b class="t">Pegadinhas</b>
+    <ul>
+      <li><b>ROUND × TRUNC:</b> <code>ROUND(4.567,2)</code> = 4.57 e <code>TRUNC(4.567,2)</code> = 4.56. "Meses <u>completos</u>" é TRUNC.</li>
+      <li><b>Ordem no MONTHS_BETWEEN:</b> <code>MONTHS_BETWEEN(SYSDATE, dtadmissao)</code> dá positivo. Invertendo as datas, dá negativo.</li>
+      <li><b>SYSDATE − data</b> dá a diferença em <u>dias</u>, não em meses.</li>
+      <li><b>NULL numa conta vira NULL:</b> <code>salario + comissao</code> fica NULL quando a comissão é nula. Use <code>salario + NVL(comissao,0)</code>.</li>
+    </ul>
+  </div>
+
+  <details><summary>Teste rápido: <code>SELECT UPPER(nome), LENGTH(nome) FROM funcionario WHERE matricula = 1002;</code> (nome = 'maria santos')</summary>
+    Resultado: <b>MARIA SANTOS</b> e <b>12</b>. O LENGTH conta o espaço: "maria" (5) + espaço (1) + "santos" (6) = 12.
+  </details>
+</section>
+
+<!-- ====================== 2. NULL ====================== -->
+<section id="null">
+  <h2><span class="num">2</span>NULL — valor desconhecido <span class="tag caiu">caiu na prova</span></h2>
+  <p class="frase">NULL não é zero nem vazio: é "não sei". E nada é igual a "não sei", nem o próprio NULL.</p>
+  <div class="cols3">
+    <div class="card opt"><h4>✗ Errado</h4><pre><code class="sql">WHERE endereco = NULL
+WHERE endereco &lt;&gt; NULL</code></pre>Nunca é verdadeiro, então não retorna nenhuma linha.</div>
+    <div class="card opt"><h4>✓ Certo</h4><pre><code class="sql">WHERE endereco IS NULL
+WHERE endereco IS NOT NULL</code></pre>"Endereço desconhecido" / "endereço conhecido".</div>
+    <div class="card opt"><h4>Trocar por um valor</h4><pre><code class="sql">NVL(comissao, 0)</code></pre>Quando é NULL, usa 0 no lugar.</div>
+  </div>
+  <div class="box peg"><b class="t">Onde o NULL aparece em outros assuntos</b>
+    <ul>
+      <li><code>COUNT(coluna)</code> <b>ignora</b> NULL; <code>COUNT(*)</code> conta todas as linhas.</li>
+      <li><code>AVG(coluna)</code> ignora NULL: divide só pelas linhas que têm valor.</li>
+      <li><code>NOT IN (subconsulta)</code>: se a subconsulta devolver um NULL, a consulta não retorna nada.</li>
+      <li>No Oracle, texto vazio <code>''</code> é tratado como NULL.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====================== 3. JOIN ====================== -->
+<section id="join">
+  <h2><span class="num">3</span>JOIN — consultar várias tabelas</h2>
+  <p class="frase">O dado está espalhado: o nome está em CLIENTE e o valor em PEDIDO. O JOIN "cola" as tabelas usando a chave: <u>PK do lado 1 = FK do lado N</u>.</p>
+
+  <h3>O modelo da sua Loja (ED2)</h3>
+  <div class="model">
+    <div class="tbl"><div class="tn">CLIENTE (lado 1)</div><ul><li class="pk">codcliente</li><li>nome</li><li>endereco</li><li>cidade</li></ul></div>
+    <div class="tbl"><div class="tn">PEDIDO</div><ul><li class="pk">num_pedido</li><li>data_criacao</li><li>valor_pedido</li><li>status_pedido</li><li class="fk">codcliente</li><li class="fk">cod_tipo_pagamento</li></ul></div>
+    <div class="tbl"><div class="tn">ITEM_PEDIDO (lado N)</div><ul><li class="pk">num_pedido + num_item</li><li class="fk">num_pedido</li><li class="fk">codproduto</li><li>quantidade_item</li><li>valor_total_item</li></ul></div>
+    <div class="tbl"><div class="tn">PRODUTO</div><ul><li class="pk">codproduto</li><li>descricao</li><li>unidade</li><li>preco_unitario</li></ul></div>
+    <div class="tbl"><div class="tn">TIPO_PAGAMENTO</div><ul><li class="pk">cod_tipo_pagamento</li><li>descricao</li></ul></div>
+  </div>
+
+  <h3>As duas formas de escrever (as duas caem)</h3>
+  <div class="cols2">
+    <div class="card opt"><h4>Forma "Oracle antiga" (vírgula + WHERE)</h4>
+<pre><code class="sql">SELECT c.nome, p.num_pedido, p.valor_pedido
+  FROM cliente c, pedido p
+ WHERE c.codcliente = p.codcliente;</code></pre></div>
+    <div class="card opt"><h4>Forma ANSI (JOIN … ON)</h4>
+<pre><code class="sql">SELECT c.nome, p.num_pedido, p.valor_pedido
+  FROM cliente c
+  JOIN pedido p ON p.codcliente = c.codcliente;</code></pre></div>
+  </div>
+  <p><code>c</code> e <code>p</code> são <b>apelidos (alias)</b> das tabelas e servem para escrever menos. Com 3 tabelas, você precisa de 2 ligações; com 4 tabelas, de 3. <b>Regra: N tabelas → N−1 condições de junção.</b></p>
+
+  <div class="box erro"><b class="t">Produto cartesiano (erro clássico)</b>
+    Sem a condição de junção, o Oracle combina <b>todas as linhas com todas</b>. Com 4 funcionários e 3 departamentos, saem 4 × 3 = <b>12 linhas</b> sem sentido. Por isso sempre escreva o WHERE ou o ON ligando as chaves.
+  </div>
+
+  <h3>Veja a diferença: INNER, LEFT e RIGHT</h3>
+  <p>A funcionária CARLA não tem departamento (coddep NULL), e o departamento TI não tem funcionário.</p>
+  <div class="row2">
+    <div class="scroll"><table class="t"><tr><th colspan="3">FUNCIONARIO (f)</th></tr><tr><th>mat</th><th>nome</th><th>coddep</th></tr><tr><td>1</td><td>ANA</td><td>10</td></tr><tr><td>2</td><td>BRUNO</td><td>20</td></tr><tr><td>3</td><td>CARLA</td><td class="null">NULL</td></tr></table></div>
+    <div class="arrow">⋈</div>
+    <div class="scroll"><table class="t"><tr><th colspan="2">DEPARTAMENTO (d)</th></tr><tr><th>coddep</th><th>descricao</th></tr><tr><td>10</td><td>VENDAS</td></tr><tr><td>20</td><td>RH</td></tr><tr><td>30</td><td>TI</td></tr></table></div>
+  </div>
+  <div class="btns" id="joinBtns">
+    <button data-j="inner" class="on">INNER JOIN</button>
+    <button data-j="left">LEFT JOIN</button>
+    <button data-j="right">RIGHT JOIN</button>
+  </div>
+  <div class="card">
+    <pre><code class="sql" id="joinSql"></code></pre>
+    <div id="joinOracle"></div>
+    <div class="scroll" id="joinRes"></div>
+    <p id="joinTxt" style="margin-bottom:0"></p>
+  </div>
+
+  <div class="box dica"><b class="t">Regra do (+) no Oracle</b>
+    O <code>(+)</code> vai do lado da tabela que <b>pode faltar</b>, ou seja, a que vai aparecer com NULL.<br>
+    Todos os funcionários, mesmo sem departamento: <code>WHERE f.coddep = d.coddep(+)</code> (equivale a <code>f LEFT JOIN d</code>).<br>
+    Todos os departamentos, mesmo sem funcionário: <code>WHERE f.coddep(+) = d.coddep</code> (equivale a <code>f RIGHT JOIN d</code>).
+  </div>
+  <div class="box peg"><b class="t">Cuidado com o material</b>
+    No texto de JOIN do material, o exemplo <code>WHERE e.coddep(+) = d.coddep</code> aparece como "funcionários sem departamento". Pela regra do Oracle, esse comando traz <b>todos os departamentos</b>, inclusive os sem funcionário. Para trazer todos os funcionários, o (+) fica do lado de <code>d</code>. Se cair na prova, pense na regra: "o (+) fica do lado de quem pode faltar".
+  </div>
+
+  <h3>Exemplo com 4 tabelas (sua Loja)</h3>
+<pre><code class="sql">-- nome do cliente, pedido, produto e quantidade
+SELECT c.nome, p.num_pedido, pr.descricao, i.quantidade_item
+  FROM cliente c
+  JOIN pedido p       ON p.codcliente  = c.codcliente
+  JOIN item_pedido i  ON i.num_pedido  = p.num_pedido
+  JOIN produto pr     ON pr.codproduto = i.codproduto
+ WHERE c.cidade = 'UBA';</code></pre>
+  <details><summary>Teste rápido: quando usar DISTINCT num JOIN?</summary>
+    Quando a mesma informação pode repetir. Exemplo: "produtos comprados pelo JOAO". Se ele comprou arroz em 2 pedidos, o arroz aparece 2 vezes. Com <code>SELECT DISTINCT</code>, aparece 1 vez só.
+  </details>
+</section>
+
+<!-- ====================== 4. FUNÇÕES DE GRUPO ====================== -->
+<section id="grupo">
+  <h2><span class="num">4</span>Funções de grupo, GROUP BY e HAVING <span class="tag caiu">caiu na prova</span></h2>
+  <p class="frase">Função de grupo pega <u>várias linhas</u> e devolve <u>1 valor</u>: conta, soma, média, maior e menor.</p>
+  <div class="scroll"><table class="t">
+    <tr><th>Função</th><th>Faz</th><th>Com NULL</th></tr>
+    <tr><td><code>COUNT(*)</code></td><td>Conta linhas</td><td>Conta todas</td></tr>
+    <tr><td><code>COUNT(coluna)</code></td><td>Conta os valores preenchidos</td><td>Ignora NULL</td></tr>
+    <tr><td><code>COUNT(DISTINCT coluna)</code></td><td>Conta os valores diferentes</td><td>Ignora NULL</td></tr>
+    <tr><td><code>SUM</code> / <code>AVG</code></td><td>Soma / média</td><td>Ignoram NULL</td></tr>
+    <tr><td><code>MAX</code> / <code>MIN</code></td><td>Maior / menor</td><td>Ignoram NULL</td></tr>
+  </table></div>
+  <div class="box peg"><b class="t">HAVING não é função!</b> As funções de grupo são só <b>COUNT, SUM, AVG, MAX e MIN</b>. Uma alternativa dizendo "SUM, MAX e HAVING são funções agregadas" está errada (caiu assim).</div>
+
+  <h3>GROUP BY: "separa em montinhos e calcula cada um"</h3>
+  <div class="row2">
+    <div class="scroll"><table class="t"><tr><th>codcliente</th><th>valor_pedido</th></tr>
+      <tr class="g1"><td>1</td><td>100.00</td></tr><tr class="g2"><td>2</td><td>50.00</td></tr><tr class="g1"><td>1</td><td>30.00</td></tr><tr class="g3"><td>3</td><td>80.00</td></tr><tr class="g2"><td>2</td><td>20.00</td></tr></table></div>
+    <div class="arrow">→</div>
+    <div class="scroll"><table class="t"><tr><th>codcliente</th><th>qtd</th><th>total</th></tr>
+      <tr class="g1"><td>1</td><td>2</td><td>130.00</td></tr><tr class="g2"><td>2</td><td>2</td><td>70.00</td></tr><tr class="g3"><td>3</td><td>1</td><td>80.00</td></tr></table></div>
+  </div>
+<pre><code class="sql">SELECT codcliente, COUNT(*) qtd, SUM(valor_pedido) total
+  FROM pedido
+ GROUP BY codcliente;</code></pre>
+
+  <div class="box dica"><b class="t">Regra de ouro do GROUP BY</b>
+    Toda coluna do SELECT que <b>não está dentro</b> de COUNT/SUM/AVG/MAX/MIN tem que estar no GROUP BY.<br>
+    <code>SELECT c.codcliente, c.nome, SUM(...)</code> → <code>GROUP BY c.codcliente, c.nome</code>.
+  </div>
+
+  <h3>WHERE × HAVING (a mais cobrada)</h3>
+  <div class="cols2">
+    <div class="card opt"><h4>WHERE — filtra LINHAS, antes de agrupar</h4>"Só pedidos de 2025", "só clientes de Ubá". <b>Não aceita</b> função de grupo.</div>
+    <div class="card opt"><h4>HAVING — filtra GRUPOS, depois de agrupar</h4>"Só clientes com total &gt; 1000", "só departamentos com média &gt; 5000". Usa função de grupo.</div>
+  </div>
+<pre><code class="sql">SELECT codcliente, SUM(valor_pedido) AS total
+  FROM pedido
+ WHERE data_criacao &gt;= TO_DATE('01/01/2025','DD/MM/YYYY')   -- linhas
+   AND data_criacao &lt;  TO_DATE('01/01/2026','DD/MM/YYYY')
+ GROUP BY codcliente
+HAVING SUM(valor_pedido) &gt; 1000                            -- grupos
+ ORDER BY total DESC;</code></pre>
+
+  <h3>Ordem de ESCREVER × ordem que o Oracle EXECUTA</h3>
+  <div class="flow"><b style="min-width:110px">Você escreve:</b><span class="chip">SELECT</span><span class="sep">→</span><span class="chip">FROM</span><span class="sep">→</span><span class="chip">WHERE</span><span class="sep">→</span><span class="chip">GROUP BY</span><span class="sep">→</span><span class="chip">HAVING</span><span class="sep">→</span><span class="chip">ORDER BY</span></div>
+  <div class="flow"><b style="min-width:110px">Oracle executa:</b><span class="chip alt">FROM</span><span class="sep">→</span><span class="chip alt">WHERE</span><span class="sep">→</span><span class="chip alt">GROUP BY</span><span class="sep">→</span><span class="chip alt">HAVING</span><span class="sep">→</span><span class="chip alt">SELECT</span><span class="sep">→</span><span class="chip alt">ORDER BY</span></div>
+  <p>Para decorar a ordem de escrever: <b>"<u>S</u>em <u>F</u>é, <u>W</u>alter <u>G</u>asta <u>H</u>oras <u>O</u>rando"</b>. Como o SELECT roda quase no fim, o apelido criado nele <b>não funciona no WHERE</b>, mas funciona no ORDER BY.</p>
+
+  <div class="box erro"><b class="t">Os 3 erros que viram alternativa errada</b>
+    <ul>
+      <li><code>SELECT coddep, nome, COUNT(*) … GROUP BY coddep</code> → <b>ORA-00979</b>: nome não está no GROUP BY.</li>
+      <li><code>SELECT coddep, COUNT(*) FROM funcionario</code> (sem GROUP BY) → <b>ORA-00937</b>.</li>
+      <li><code>WHERE COUNT(*) &gt; 2</code> → <b>ORA-00934</b>: função de grupo no WHERE. O certo é usar HAVING.</li>
+    </ul>
+  </div>
+  <div class="box peg"><b class="t">Outras pegadinhas (afirmativas)</b>
+    <ul>
+      <li>Quem ordena o resultado é o <b>ORDER BY</b>, não o GROUP BY.</li>
+      <li>O <b>DISTINCT não é o padrão</b>: sem ele, as linhas repetidas aparecem.</li>
+      <li><code>COUNT(*)</code> conta as linhas que satisfazem as condições da consulta (esta foi a correta em 2025).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====================== 5. SUBCONSULTAS ====================== -->
+<section id="sub">
+  <h2><span class="num">5</span>Subconsultas (consultas aninhadas)</h2>
+  <p class="frase">É uma consulta dentro de outra, sempre entre parênteses. A de dentro roda primeiro e entrega o resultado para a de fora.</p>
+  <p>Pense em 2 passos: <b>1º</b> descobrir um valor (o salário do JOAO, a média…), <b>2º</b> usar esse valor no filtro.</p>
+<pre><code class="sql">-- "Qual o nome do funcionário que ganha mais que o JOAO?"
+SELECT nome
+  FROM funcionario
+ WHERE salario &gt; (SELECT salario
+                    FROM funcionario
+                   WHERE nome = 'JOAO');</code></pre>
+<pre><code class="sql">-- Acima da média (AVG não pode ir direto no WHERE, então vai na subconsulta)
+SELECT codproduto, descricao, preco_unitario
+  FROM produto
+ WHERE preco_unitario &gt; (SELECT AVG(preco_unitario) FROM produto);</code></pre>
+
+  <h3>Qual operador usar</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>A subconsulta devolve…</th><th>Use</th><th>Exemplo</th></tr>
+    <tr><td>1 valor só</td><td><code>= &gt; &lt; &gt;= &lt;= &lt;&gt;</code></td><td><code>WHERE salario &gt; (SELECT AVG(salario) …)</code></td></tr>
+    <tr><td>Vários valores</td><td><code>IN</code> / <code>NOT IN</code></td><td><code>WHERE codcliente IN (SELECT codcliente FROM pedido)</code></td></tr>
+    <tr><td>"Existe algum?"</td><td><code>EXISTS</code> / <code>NOT EXISTS</code></td><td>Clientes sem pedido, produtos nunca vendidos</td></tr>
+  </table></div>
+<pre><code class="sql">-- Clientes que ainda não têm pedido (3 jeitos que dão o mesmo resultado)
+SELECT c.nome FROM cliente c
+ WHERE NOT EXISTS (SELECT 1 FROM pedido p WHERE p.codcliente = c.codcliente);
+
+SELECT nome FROM cliente
+ WHERE codcliente NOT IN (SELECT codcliente FROM pedido);
+
+SELECT c.nome FROM cliente c
+  LEFT JOIN pedido p ON p.codcliente = c.codcliente
+ WHERE p.num_pedido IS NULL;</code></pre>
+
+  <div class="box erro"><b class="t">Erros de subconsulta</b>
+    <ul>
+      <li>Usar <code>=</code> quando a subconsulta devolve <b>mais de uma linha</b> → <b>ORA-01427</b>. Troque por <code>IN</code>.</li>
+      <li>Esquecer os parênteses → erro de sintaxe.</li>
+      <li><code>NOT IN</code> com um NULL na subconsulta → não volta nenhuma linha. O <code>NOT EXISTS</code> não tem esse problema.</li>
+    </ul>
+  </div>
+  <div class="box dica"><b class="t">JOIN ou subconsulta?</b> Se você precisa <b>mostrar</b> colunas das duas tabelas, use JOIN. Se só precisa <b>filtrar</b> com base em outra tabela, a subconsulta resolve. O material lembra que muitas subconsultas deixam a consulta mais lenta.</div>
+</section>
+
+<!-- ====================== 6. VIEWS ====================== -->
+<section id="view">
+  <h2><span class="num">6</span>Views (visões) <span class="tag caiu">caiu 2 vezes</span></h2>
+  <p class="frase">A view é um SELECT salvo com nome, uma "tabela virtual". Ela <u>não guarda os dados</u>, guarda só a consulta.</p>
+<pre><code class="sql">CREATE OR REPLACE VIEW vw_pedido_acima_1000 AS
+SELECT c.nome AS nome_cliente, c.cidade, p.num_pedido,
+       pr.codproduto AS cod_material, pr.descricao AS nome_material
+  FROM cliente c
+  JOIN pedido p      ON p.codcliente  = c.codcliente
+  JOIN item_pedido i ON i.num_pedido  = p.num_pedido
+  JOIN produto pr    ON pr.codproduto = i.codproduto
+ WHERE p.valor_pedido &gt; 1000;
+
+SELECT * FROM vw_pedido_acima_1000;   -- usa como se fosse tabela
+DROP VIEW vw_pedido_acima_1000;       -- apaga só a view, os dados continuam</code></pre>
+  <p>Para que serve: <b>simplificar</b> (a consulta grande vira um nome) e dar <b>segurança</b> (mostrar só algumas colunas ou linhas).</p>
+
+  <h3>Coluna com função PRECISA de nome</h3>
+  <p>Se a view tem <code>AVG(...)</code>, <code>SUM(...)</code>, <code>UPPER(...)</code> etc., essa coluna precisa de nome. Sem nome, o Oracle dá erro (<b>ORA-00998</b>). Há 2 jeitos de dar o nome:</p>
+<pre><code class="sql">-- Jeito 1: lista de nomes depois do nome da view (foi a resposta correta em 2025)
+CREATE VIEW ProjMediaHoras (NomeProjeto, MediaHoras) AS
+SELECT p.ProjNome, AVG(t.Horas)
+  FROM Projeto p, Trabalha_em t
+ WHERE p.ProjNumero = t.Pnr
+ GROUP BY p.ProjNumero, p.ProjNome;
+
+-- Jeito 2: apelido dentro do SELECT
+CREATE VIEW vw_total_cliente AS
+SELECT codcliente, SUM(valor_pedido) AS total_vendido
+  FROM pedido
+ GROUP BY codcliente;</code></pre>
+
+  <h3>WITH CHECK OPTION</h3>
+  <p>Ele <b>impede INSERT ou UPDATE pela view</b> de uma linha que ficaria fora do filtro dela. Exemplo: numa view só de RH, não dá para inserir um funcionário de VENDAS.</p>
+<pre><code class="sql">CREATE VIEW V_Funcionarios_RH AS
+SELECT id, nome, salario, nome_depto
+  FROM Funcionario
+ WHERE nome_depto = 'RH'        -- 1º o filtro
+  WITH CHECK OPTION;            -- 2º no FINAL do comando</code></pre>
+  <div class="box erro"><b class="t">Formas erradas que aparecem nas alternativas</b>
+    <ul>
+      <li><code>CREATE VIEW v WITH CHECK OPTION AS SELECT…</code> → lugar errado (ele vem no final).</li>
+      <li><code>WITH CHECK OPTION ON nome_depto = 'RH'</code> → não existe "ON condição"; o filtro vai no WHERE.</li>
+      <li>View com <b>junção</b> ou com <b>GROUP BY</b> → não é atualizável, então o CHECK OPTION não faz sentido nela.</li>
+      <li><code>...GROUP BY ...; WITH CHECK OPTION;</code> → o ponto e vírgula antes encerra o comando, e sobra um pedaço solto.</li>
+    </ul>
+  </div>
+  <div class="box dica"><b class="t">Quando dá para fazer INSERT/UPDATE por uma view (resposta comentada de 2025)</b>
+    <ul>
+      <li>A view é de <b>uma tabela só</b> e contém a <b>chave primária</b> e todas as colunas <b>NOT NULL</b> sem valor default.</li>
+      <li>Views com <b>junção</b> de várias tabelas, em geral, <b>não</b> são atualizáveis.</li>
+      <li>Views com <b>GROUP BY / funções de grupo</b> <b>não</b> são atualizáveis.</li>
+      <li>Bônus: <code>WITH READ ONLY</code> no final deixa a view somente para leitura.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====================== 7. ON DELETE ====================== -->
+<section id="ondelete">
+  <h2><span class="num">7</span>Chave estrangeira com ON DELETE <span class="tag caiu">discursiva em 2025</span></h2>
+  <p class="frase">Pergunta que o ON DELETE responde: "se eu apagar o PAI, o que acontece com os FILHOS?"</p>
+  <p>O <b>pai</b> é a tabela referenciada (lado 1, ex.: PEDIDO). O <b>filho</b> é quem tem a FK (lado N, ex.: ITEM_PEDIDO). <b>O ON DELETE é escrito na FK, ou seja, na tabela filha.</b></p>
+  <div class="cols3">
+    <div class="card opt"><h4>Sem cláusula (padrão = restrict)</h4>
+<pre><code class="sql">FOREIGN KEY (codcliente)
+REFERENCES cliente (codcliente)</code></pre>
+      Apagar um cliente que tem pedidos dá <b>erro</b> (ORA-02292) e nada é apagado.<br><i>Use quando a regra for "não pode excluir se tiver…".</i></div>
+    <div class="card opt"><h4>ON DELETE CASCADE</h4>
+<pre><code class="sql">FOREIGN KEY (num_pedido)
+REFERENCES pedido (num_pedido)
+ON DELETE CASCADE</code></pre>
+      Apagar o pedido <b>apaga também os itens</b> dele automaticamente.<br><i>Use quando a regra for "excluir junto".</i></div>
+    <div class="card opt"><h4>ON DELETE SET NULL</h4>
+<pre><code class="sql">FOREIGN KEY (cod_tipo_pagamento)
+REFERENCES tipo_pagamento
+  (cod_tipo_pagamento)
+ON DELETE SET NULL</code></pre>
+      Apagar o tipo de pagamento deixa os pedidos com a FK = <b>NULL</b>, e os pedidos continuam existindo.<br><i>A coluna da FK precisa aceitar NULL.</i></div>
+  </div>
+
+  <h3>Como fica a resposta da discursiva (modelo 2025)</h3>
+<pre><code class="sql">-- 1) Excluiu funcionário -&gt; exclui os dependentes
+ALTER TABLE Dependente ADD CONSTRAINT FK_Dependente_FCPF
+  FOREIGN KEY (FCPF) REFERENCES Funcionario (CPF) ON DELETE CASCADE;
+
+-- 2) Funcionário que trabalha em projeto NÃO pode ser excluído
+ALTER TABLE Trabalha_em ADD CONSTRAINT FK_TrabalhaEm_FCPF
+  FOREIGN KEY (FCPF) REFERENCES Funcionario (CPF);            -- sem cláusula
+
+-- 3) Excluiu departamento -&gt; a FK do funcionário fica NULL
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_Dnr
+  FOREIGN KEY (DNR) REFERENCES Departamento (Dnumero) ON DELETE SET NULL;</code></pre>
+
+  <div class="box peg"><b class="t">Pegadinhas de Oracle</b>
+    <ul>
+      <li>No Oracle <b>não existe</b> <code>ON DELETE RESTRICT</code> (ele existe no MySQL e no PostgreSQL). Para restringir, basta <b>não escrever nada</b>, porque esse já é o padrão.</li>
+      <li>No Oracle também <b>não existe</b> <code>ON UPDATE CASCADE</code>.</li>
+      <li><b>SET NULL</b> não funciona em coluna NOT NULL ou que faz parte da PK (como o num_pedido de ITEM_PEDIDO).</li>
+      <li>Para mudar o ON DELETE de uma FK que já existe: <code>ALTER TABLE t DROP CONSTRAINT nome_fk;</code> e depois cria de novo.</li>
+      <li>Palavras-chave para achar a regra no enunciado: "automaticamente também excluídos" = <b>CASCADE</b>; "não deve ser excluído caso…" = <b>sem cláusula</b>; "deverá possuir NULL" = <b>SET NULL</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====================== 8. REVISÃO ED1 ====================== -->
+<section id="ed1">
+  <h2><span class="num">8</span>Revisão do ED1 (pode voltar junto)</h2>
+  <p>O professor avisa que a matéria é incremental. Na sua prova do ED1 caíram estes pontos:</p>
+  <div class="scroll"><table class="t">
+    <tr><th>Assunto</th><th>Lembrar</th></tr>
+    <tr><td>DDL × DML</td><td>DDL mexe na <b>estrutura</b> (CREATE, ALTER, DROP). DML mexe nos <b>dados</b> (INSERT, UPDATE, DELETE, SELECT).</td></tr>
+    <tr><td>BETWEEN</td><td>Inclui as duas pontas: <code>BETWEEN 100 AND 200</code> pega 100 e 200.</td></tr>
+    <tr><td>Coluna nova NOT NULL</td><td>Numa tabela com linhas, dá erro. Faça: ADD a coluna aceitando nulo → UPDATE preenchendo → MODIFY para NOT NULL.</td></tr>
+    <tr><td>Ordem dos INSERTs</td><td>Primeiro o pai (DEPARTAMENTO), depois o filho (FUNCIONARIO), por causa da FK.</td></tr>
+    <tr><td>SEQUENCE</td><td><code>seq_funcionario.NEXTVAL</code> gera o próximo número da chave.</td></tr>
+    <tr><td>PK × FK</td><td><code>FOREIGN KEY (id)</code> <b>não</b> torna o id identificador; quem faz isso é <code>PRIMARY KEY (id)</code>.</td></tr>
+    <tr><td>Apagar linhas</td><td><code>DELETE FROM projeto</code>. "DROP FROM" não existe. DROP TABLE apaga a tabela inteira.</td></tr>
+    <tr><td>UPDATE sem WHERE</td><td>Altera <b>todas</b> as linhas.</td></tr>
+    <tr><td>Datas no filtro</td><td>"Admitidos antes de 01/01/2026" → <code>dtadmissao &lt; TO_DATE('01/01/2026','DD/MM/YYYY')</code>.</td></tr>
+  </table></div>
+</section>
+
+<!-- ====================== 9. PL/SQL ====================== -->
+<section id="plsql">
+  <h2><span class="num">9</span>PL/SQL básico <span class="tag caiu">caiu em 2025</span></h2>
+  <p>Não está na ementa deste ED2, mas caiu em 2 questões da prova do ano passado. Vale 5 minutos:</p>
+  <ul class="check">
+    <li><b>PL/SQL</b> = SQL + recursos de programação (variáveis, IF, LOOP).</li>
+    <li>Roda <b>dentro do SGBD</b>, não dentro da aplicação. Por isso <b>reduz o tráfego de rede</b> e melhora o desempenho.</li>
+    <li><b>Não é padronizada</b> entre SGBDs (é do Oracle), o que dificulta migrar para outro banco.</li>
+    <li><b>CURSOR</b> = área de memória para processar <b>várias linhas</b> de um SELECT, uma de cada vez.</li>
+  </ul>
+<pre><code class="sql">DECLARE
+  CURSOR c_clientes IS SELECT nome FROM cliente;
+BEGIN
+  FOR r IN c_clientes LOOP
+    DBMS_OUTPUT.PUT_LINE(r.nome);   -- processa 1 linha por vez
+  END LOOP;
+END;</code></pre>
+</section>
+
+<!-- ====================== 10. SIMULADO ====================== -->
+<section id="simulado">
+  <h2><span class="num">10</span>Simulado estilo prova</h2>
+  <p>Clique numa alternativa: a resposta certa aparece em verde, com a <b>resposta comentada</b> igual à da devolutiva. Seu progresso fica salvo neste navegador.</p>
+  <div class="scorebar">
+    <span class="sc" id="score">Acertos: 0 de 0</span>
+    <div class="filters" id="filters"></div>
+    <button id="reset">Zerar simulado</button>
+  </div>
+  <div id="quiz"></div>
+</section>
+
+<!-- ====================== 11. DISCURSIVAS ====================== -->
+<section id="discursivas">
+  <h2><span class="num">11</span>Discursivas e "ache o erro"</h2>
+  <p>Escreva sua resposta no quadro (é só rascunho) e depois abra a resposta comentada para comparar.</p>
+  <div id="disc"></div>
+</section>
+
+<!-- ====================== 12. COLA ====================== -->
+<section id="cola">
+  <h2><span class="num">12</span>Cola de 1 minuto</h2>
+  <div class="card">
+    <ul class="check">
+      <li><b>NULL:</b> <code>IS NULL</code> / <code>IS NOT NULL</code>. Nunca <code>= NULL</code>.</li>
+      <li><b>JOIN:</b> PK (lado 1) = FK (lado N). N tabelas → N−1 ligações. Sem ligação = produto cartesiano.</li>
+      <li><b>LEFT:</b> mantém tudo da tabela escrita antes do JOIN. <b>(+)</b> fica do lado de quem pode faltar.</li>
+      <li><b>Grupo:</b> COUNT, SUM, AVG, MAX, MIN. HAVING não é função.</li>
+      <li><b>GROUP BY:</b> tudo do SELECT que não está em função de grupo vai no GROUP BY.</li>
+      <li><b>WHERE</b> filtra linhas (sem função de grupo). <b>HAVING</b> filtra grupos (com função de grupo).</li>
+      <li><b>Ordem:</b> SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY ("Sem Fé, Walter Gasta Horas Orando").</li>
+      <li><b>COUNT(*)</b> conta tudo; <b>COUNT(col)</b> e <b>AVG</b> ignoram NULL.</li>
+      <li><b>Subconsulta:</b> entre parênteses. Retorna 1 valor → <code>=</code>; retorna vários → <code>IN</code>. "Não tem" → <code>NOT EXISTS</code>.</li>
+      <li><b>View:</b> não guarda dados. Coluna com função precisa de nome. <code>WITH CHECK OPTION</code> vai no final, depois do WHERE.</li>
+      <li><b>View atualizável:</b> 1 tabela, com PK e as colunas NOT NULL. Com JOIN ou GROUP BY, não é.</li>
+      <li><b>ON DELETE</b> na tabela FILHA: CASCADE (apaga junto), SET NULL (fica nulo), sem nada (bloqueia). Não existe RESTRICT no Oracle.</li>
+      <li><b>Funções:</b> UPPER/LOWER/LENGTH, TO_CHAR/TO_DATE, SYSDATE FROM DUAL, TRUNC(MONTHS_BETWEEN(SYSDATE, d)), ROUND × TRUNC, NVL.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>Feito para estudo · BD II · Estudo Dirigido 2. Sintaxe Oracle.</footer>
+</main>
+
+<script>
+/* ---------------- realce de SQL ---------------- */
+var KW = "SELECT FROM WHERE AND OR NOT IN IS NULL AS ON JOIN INNER LEFT RIGHT FULL OUTER GROUP BY HAVING ORDER ASC DESC DISTINCT CREATE REPLACE VIEW TABLE ALTER ADD CONSTRAINT FOREIGN KEY PRIMARY REFERENCES DELETE CASCADE SET UPDATE INSERT INTO VALUES DROP EXISTS BETWEEN LIKE WITH CHECK OPTION READ ONLY COMMIT MODIFY COLUMN SEQUENCE CURSOR BEGIN END LOOP DECLARE FOR RESTRICT DUAL NUMBER VARCHAR2 DATE".split(" ");
+var FN = "COUNT SUM AVG MAX MIN UPPER LOWER LENGTH TO_DATE TO_CHAR TO_NUMBER SYSDATE MONTHS_BETWEEN LAST_DAY ROUND TRUNC NVL EXTRACT ADD_MONTHS NEXTVAL".split(" ");
+var KWS = {}, FNS = {};
+KW.forEach(function(k){KWS[k]=1}); FN.forEach(function(k){FNS[k]=1});
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function highlight(el){
+  var src = el.textContent, out = "", m;
+  var re = /(--[^\n]*)|('(?:[^']|'')*')|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_$#]*)|([\s\S])/g;
+  while ((m = re.exec(src))) {
+    if (m[1]) out += '<span class="co">'+esc(m[1])+'</span>';
+    else if (m[2]) out += '<span class="st">'+esc(m[2])+'</span>';
+    else if (m[3]) out += '<span class="nu">'+m[3]+'</span>';
+    else if (m[4]) { var u = m[4].toUpperCase();
+      if (KWS[u]) out += '<span class="kw">'+esc(m[4])+'</span>';
+      else if (FNS[u]) out += '<span class="fn">'+esc(m[4])+'</span>';
+      else out += esc(m[4]); }
+    else out += esc(m[5]);
+  }
+  el.innerHTML = out;
+}
+function hlAll(root){ (root||document).querySelectorAll("code.sql").forEach(highlight); }
+
+/* ---------------- visualizador de JOIN ---------------- */
+var F = [[1,"ANA",10],[2,"BRUNO",20],[3,"CARLA",null]];
+var D = [[10,"VENDAS"],[20,"RH"],[30,"TI"]];
+var JOINS = {
+  inner:{sql:"SELECT f.nome, d.descricao\n  FROM funcionario f\n  INNER JOIN departamento d ON f.coddep = d.coddep;",
+         ora:"f.coddep = d.coddep",
+         txt:"Só quem tem par nos dois lados. A CARLA (sem departamento) e o TI (sem funcionário) ficam de fora."},
+  left:{sql:"SELECT f.nome, d.descricao\n  FROM funcionario f\n  LEFT JOIN departamento d ON f.coddep = d.coddep;",
+        ora:"f.coddep = d.coddep(+)",
+        txt:"Todos da ESQUERDA (funcionario, a tabela escrita antes do JOIN). A CARLA aparece com o departamento NULL."},
+  right:{sql:"SELECT f.nome, d.descricao\n  FROM funcionario f\n  RIGHT JOIN departamento d ON f.coddep = d.coddep;",
+         ora:"f.coddep(+) = d.coddep",
+         txt:"Todos da DIREITA (departamento). O TI aparece com o nome NULL."}
+};
+function cell(v){ return v===null ? '<td class="null">NULL</td>' : '<td>'+v+'</td>'; }
+function showJoin(k){
+  var rows = [];
+  F.forEach(function(f){ var d = D.filter(function(x){return x[0]===f[2]})[0];
+    if (d) rows.push([f[1], d[1]]); else if (k==="left") rows.push([f[1], null]); });
+  if (k==="right") { rows = []; D.forEach(function(d){ var fs = F.filter(function(f){return f[2]===d[0]});
+    if (fs.length) fs.forEach(function(f){rows.push([f[1], d[1]])}); else rows.push([null, d[1]]); }); }
+  var j = JOINS[k], el = document.getElementById("joinSql");
+  el.textContent = j.sql; highlight(el);
+  document.getElementById("joinOracle").innerHTML = 'Forma Oracle antiga: <code>WHERE '+esc(j.ora)+'</code>';
+  document.getElementById("joinRes").innerHTML = '<table class="t"><tr><th>nome</th><th>descricao</th></tr>' +
+    rows.map(function(r){return '<tr>'+cell(r[0])+cell(r[1])+'</tr>'}).join("") + '</table>';
+  document.getElementById("joinTxt").textContent = j.txt + " (" + rows.length + " linhas)";
+  document.querySelectorAll("#joinBtns button").forEach(function(b){ b.classList.toggle("on", b.dataset.j===k); });
+}
+document.querySelectorAll("#joinBtns button").forEach(function(b){ b.addEventListener("click", function(){ showJoin(b.dataset.j); }); });
+
+/* ---------------- simulado ---------------- */
+function sql(s){ return '<pre><code class="sql">'+esc(s)+'</code></pre>'; }
+var TEMAS = {todas:"Todas", caiu:"Caiu na prova", funcoes:"Funções", "null":"NULL", join:"JOIN", grupo:"Grupo", sub:"Subconsulta", view:"View", fk:"ON DELETE", plsql:"PL/SQL"};
+
+var Q = [
+{id:"q1", tema:"null", caiu:true,
+ en:"Na tabela CLIENTE, o campo <b>endereco</b> não é obrigatório. Deseja-se listar o código e o nome dos clientes cujo <b>endereço é desconhecido</b>. Qual condição deve ser usada no WHERE?",
+ alts:["WHERE endereco = NULL","WHERE endereco &lt;&gt; NULL","WHERE endereco IS NULL","WHERE endereco = ''","WHERE NVL(endereco) IS NULL"], c:2,
+ com:"No Oracle, NULL representa ausência de valor e <b>não pode ser comparado com = ou &lt;&gt;</b>: a comparação nunca é verdadeira. Para testar nulo, use <b>IS NULL</b>.<br>a) e b) nunca retornam linhas. d) No Oracle, '' é tratado como NULL, então cai no mesmo problema do a). e) NVL exige 2 parâmetros, ex.: NVL(endereco,'SEM')."},
+
+{id:"q2", tema:"join",
+ en:"A tabela FUNCIONARIO tem 4 linhas e DEPARTAMENTO tem 3 linhas. Quantas linhas retorna o comando abaixo?"+sql("SELECT f.nome, d.descricao\n  FROM funcionario f, departamento d;"),
+ alts:["3","4","7","12","Nenhuma, pois dá erro de sintaxe"], c:3,
+ com:"Sem a condição de junção no WHERE, ocorre o <b>produto cartesiano</b>: cada funcionário é combinado com todos os departamentos, 4 × 3 = <b>12</b>. Para evitar: <code>WHERE f.coddep = d.coddep</code>. O comando não tem erro de sintaxe, só não faz sentido."},
+
+{id:"q3", tema:"join",
+ en:"Deseja-se listar <b>todos os funcionários</b>, inclusive os que <b>não possuem departamento</b> (coddep NULL), junto com a descrição do departamento. Qual trecho atende?",
+ alts:[sql("FROM funcionario f INNER JOIN departamento d ON f.coddep = d.coddep"),
+       sql("FROM funcionario f LEFT JOIN departamento d ON f.coddep = d.coddep"),
+       sql("FROM funcionario f RIGHT JOIN departamento d ON f.coddep = d.coddep"),
+       sql("FROM funcionario f, departamento d WHERE f.coddep = d.coddep"),
+       sql("FROM funcionario f, departamento d WHERE f.coddep(+) = d.coddep")], c:1,
+ com:"O <b>LEFT JOIN</b> mantém todas as linhas da tabela da esquerda (FUNCIONARIO, escrita antes do JOIN). Quem não tem departamento aparece com a descrição NULL.<br>a) e d) trazem só quem tem par. c) e e) mantêm todos os <b>departamentos</b>, o que é o contrário do pedido. Na forma Oracle, o certo seria <code>f.coddep = d.coddep(+)</code>."},
+
+{id:"q4", tema:"join",
+ en:"Qual condição, na sintaxe antiga do Oracle, é equivalente a:"+sql("FROM pedido p\n  LEFT JOIN tipo_pagamento t ON p.cod_tipo_pagamento = t.cod_tipo_pagamento"),
+ alts:["WHERE p.cod_tipo_pagamento(+) = t.cod_tipo_pagamento","WHERE p.cod_tipo_pagamento = t.cod_tipo_pagamento",
+       "WHERE p.cod_tipo_pagamento = t.cod_tipo_pagamento(+)","WHERE (+)p.cod_tipo_pagamento = t.cod_tipo_pagamento",
+       "WHERE p.cod_tipo_pagamento = t.cod_tipo_pagamento OR NULL"], c:2,
+ com:"O (+) fica do lado da tabela que <b>pode faltar</b>, a que aparece com NULL. No LEFT JOIN, todos os pedidos ficam e o tipo de pagamento pode faltar, então o (+) vai em <b>t</b>.<br>a) Seria um RIGHT JOIN. b) É um INNER JOIN. d) e e) Não são sintaxe válida."},
+
+{id:"q5", tema:"grupo",
+ en:"Considere a tabela FUNCIONARIO (matricula, nome, salario, coddep). Qual comando executa <b>sem erro</b>?",
+ alts:[sql("SELECT coddep, nome, COUNT(*)\n  FROM funcionario\n GROUP BY coddep;"),
+       sql("SELECT coddep, COUNT(*)\n  FROM funcionario;"),
+       sql("SELECT coddep, COUNT(*)\n  FROM funcionario\n WHERE COUNT(*) > 2\n GROUP BY coddep;"),
+       sql("SELECT coddep, COUNT(*)\n  FROM funcionario\n GROUP BY coddep;"),
+       sql("SELECT coddep, COUNT(*)\n  FROM funcionario\n GROUP BY coddep\n ORDER BY nome;")], c:3,
+ com:"Regra: toda coluna do SELECT fora de função de grupo precisa estar no GROUP BY.<br>a) nome não está no GROUP BY (ORA-00979). b) Mistura coluna comum com COUNT sem GROUP BY (ORA-00937). c) Função de grupo no WHERE (ORA-00934); o certo seria HAVING. e) Ordena por nome, que não está no grupo (ORA-00979)."},
+
+{id:"q6", tema:"grupo",
+ en:"Para cada departamento, deseja-se exibir a <b>média salarial</b> considerando apenas os funcionários <b>admitidos a partir de 01/01/2020</b>, e mostrar só os departamentos com média <b>acima de 5000</b>. Todas as alternativas começam com <code>SELECT coddep, AVG(salario) FROM funcionario</code>. Qual continuação está correta?",
+ alts:[sql("WHERE dtadmissao >= TO_DATE('01/01/2020','DD/MM/YYYY')\nGROUP BY coddep\nHAVING AVG(salario) > 5000;"),
+       sql("WHERE AVG(salario) > 5000\n  AND dtadmissao >= TO_DATE('01/01/2020','DD/MM/YYYY')\nGROUP BY coddep;"),
+       sql("GROUP BY coddep\nHAVING dtadmissao >= TO_DATE('01/01/2020','DD/MM/YYYY')\n   AND AVG(salario) > 5000;"),
+       sql("WHERE dtadmissao >= TO_DATE('01/01/2020','DD/MM/YYYY')\nHAVING AVG(salario) > 5000;"),
+       sql("GROUP BY coddep\nHAVING AVG(salario) > 5000\nWHERE dtadmissao >= TO_DATE('01/01/2020','DD/MM/YYYY');")], c:0,
+ com:"A data filtra <b>linhas</b>, então vai no <b>WHERE</b>, antes do agrupamento. A média filtra <b>grupos</b>, então vai no <b>HAVING</b>, depois do GROUP BY.<br>b) AVG no WHERE (ORA-00934). c) dtadmissao não está no GROUP BY (ORA-00979). d) Falta o GROUP BY e coddep está no SELECT. e) O WHERE não pode vir depois do HAVING."},
+
+{id:"q7", tema:"grupo",
+ en:"A coluna <b>comissao</b> da tabela FUNCIONARIO possui os valores: 500.75, NULL, 300.50 e 450.00. Qual o resultado de:"+sql("SELECT COUNT(*), COUNT(comissao) FROM funcionario;"),
+ alts:["4 e 4","4 e 3","3 e 3","3 e 4","4 e 0"], c:1,
+ com:"<b>COUNT(*)</b> conta as linhas: 4. <b>COUNT(coluna)</b> conta só os valores preenchidos e ignora o NULL: 3."},
+
+{id:"q8", tema:"grupo",
+ en:"Com os mesmos valores de comissão (500.75, NULL, 300.50 e 450.00), assinale a afirmativa correta:",
+ alts:["AVG(comissao) retorna 312,81, pois o NULL é considerado zero.","AVG(comissao) retorna NULL, pois existe um valor nulo na coluna.",
+       "AVG(comissao) retorna aproximadamente 417,08, pois ignora a linha nula e divide a soma por 3.",
+       "AVG(comissao) e AVG(NVL(comissao,0)) sempre retornam o mesmo valor.","A função AVG só pode ser usada quando existe GROUP BY."], c:2,
+ com:"As funções de grupo <b>ignoram NULL</b>: (500.75 + 300.50 + 450.00) / 3 = 1251.25 / 3 ≈ <b>417,08</b>.<br>Se quiser que o NULL conte como zero, use <code>AVG(NVL(comissao,0))</code> = 1251.25 / 4 ≈ 312,81. Por isso a) e d) estão erradas. e) Sem GROUP BY, o AVG calcula a média da tabela inteira."},
+
+{id:"q9", tema:"sub",
+ en:"Deseja-se exibir o nome dos funcionários que têm salário <b>maior que o salário do funcionário 'JOAO SILVA'</b>. Qual comando está correto?",
+ alts:[sql("SELECT nome FROM funcionario\n WHERE salario > nome = 'JOAO SILVA';"),
+       sql("SELECT nome FROM funcionario\n WHERE salario > MAX(salario);"),
+       sql("SELECT nome FROM funcionario\n WHERE salario > SELECT salario FROM funcionario\n                  WHERE nome = 'JOAO SILVA';"),
+       sql("SELECT nome FROM funcionario\n WHERE salario > (SELECT salario FROM funcionario\n                   WHERE nome = 'JOAO SILVA');"),
+       sql("SELECT nome FROM funcionario\nHAVING salario > (SELECT salario FROM funcionario\n                   WHERE nome = 'JOAO SILVA');")], c:3,
+ com:"É um problema em 2 passos, resolvido por <b>subconsulta</b>: a interna descobre o salário do JOAO SILVA, e a externa compara com ele. A subconsulta vai <b>entre parênteses</b>.<br>a) Não é SQL válido. b) Função de grupo no WHERE. c) Faltam os parênteses. e) HAVING sem GROUP BY com coluna comum dá erro, além de não ser o lugar desse filtro."},
+
+{id:"q10", tema:"sub",
+ en:"Existem <b>dois</b> departamentos cuja descrição começa com 'V'. O que acontece ao executar:"+sql("SELECT nome FROM funcionario\n WHERE coddep = (SELECT coddep FROM departamento\n                  WHERE descricao LIKE 'V%');"),
+ alts:["Retorna normalmente os funcionários dos dois departamentos.","Retorna somente os funcionários do primeiro departamento encontrado.",
+       "Gera erro, pois uma subconsulta usada com = retornou mais de uma linha. O correto seria usar IN.",
+       "Não retorna nenhuma linha, mas não gera erro.","Gera erro, pois LIKE não pode ser usado em subconsulta."], c:2,
+ com:"Com <b>=</b>, o Oracle espera <b>um único valor</b>. Como vieram 2, ocorre o erro <b>ORA-01427</b> (a subconsulta de uma linha retornou mais de uma linha). Corrigindo: <code>WHERE coddep IN (SELECT …)</code>."},
+
+{id:"q11", tema:"sub",
+ en:"Analise as afirmativas sobre subconsultas:<br>I. EXISTS verifica se a subconsulta retorna pelo menos uma linha.<br>II. Se a subconsulta usada com NOT IN retornar algum valor NULL, a consulta principal não retorna nenhuma linha.<br>III. Na subconsulta simples, a consulta principal executa primeiro e só depois a subconsulta.<br>Está correto o que se afirma em:",
+ alts:["I, apenas.","I e II, apenas.","II e III, apenas.","I, II e III.","III, apenas."], c:1,
+ com:"I – Verdadeira. II – Verdadeira: comparar com NULL dá “desconhecido”, e o NOT IN não consegue confirmar nenhuma linha. Por isso, em “não possui”, prefira NOT EXISTS. III – Falsa: pelo material, <b>a subconsulta executa primeiro</b> e entrega o resultado para a consulta externa."},
+
+{id:"q12", tema:"sub",
+ en:"No modelo da Loja Virtual, deseja-se listar a descrição dos <b>produtos que nunca foram vendidos</b> (sem nenhum item de pedido). Qual comando atende?",
+ alts:[sql("SELECT p.descricao FROM produto p\n  JOIN item_pedido i ON i.codproduto = p.codproduto;"),
+       sql("SELECT p.descricao FROM produto p\n WHERE NOT EXISTS (SELECT 1 FROM item_pedido i\n                    WHERE i.codproduto = p.codproduto);"),
+       sql("SELECT p.descricao FROM produto p\n WHERE p.codproduto IN (SELECT codproduto FROM item_pedido);"),
+       sql("SELECT p.descricao FROM produto p\n  LEFT JOIN item_pedido i ON i.codproduto = p.codproduto\n WHERE p.codproduto IS NULL;"),
+       sql("SELECT p.descricao FROM produto p\n WHERE p.codproduto <> (SELECT codproduto FROM item_pedido);")], c:1,
+ com:"O <b>NOT EXISTS</b> retorna o produto para o qual não existe nenhum item. <br>a) e c) fazem o contrário: trazem os produtos vendidos. d) A ideia do LEFT JOIN está certa, mas o teste deveria ser <code>i.codproduto IS NULL</code>; p.codproduto é PK e nunca é nulo. e) A subconsulta retorna várias linhas com &lt;&gt; e gera ORA-01427."},
+
+{id:"q13", tema:"view", caiu:true,
+ en:"A tabela ALUNO possui matricula (PK), nome (NOT NULL) e curso (NOT NULL). Deseja-se criar a view <b>V_ALUNOS_CC</b>, que exibe apenas os alunos do curso 'CIENCIA DA COMPUTACAO' e <b>impede a inserção ou atualização</b>, por meio dela, de alunos de outro curso. Qual comando está correto? <i>(parecida com a Q8 de 2025)</i>",
+ alts:[sql("CREATE VIEW V_ALUNOS_CC WITH CHECK OPTION AS\nSELECT matricula, nome, curso\n  FROM aluno\n WHERE curso = 'CIENCIA DA COMPUTACAO';"),
+       sql("CREATE VIEW V_ALUNOS_CC AS\nSELECT matricula, nome, curso\n  FROM aluno\n  WITH CHECK OPTION ON curso = 'CIENCIA DA COMPUTACAO';"),
+       sql("CREATE VIEW V_ALUNOS_CC AS\nSELECT matricula, nome, curso\n  FROM aluno\n GROUP BY curso\n  WITH CHECK OPTION;"),
+       sql("CREATE VIEW V_ALUNOS_CC AS\nSELECT matricula, nome, curso\n  FROM aluno\n WHERE curso = 'CIENCIA DA COMPUTACAO'\n  WITH CHECK OPTION;"),
+       sql("CREATE VIEW V_ALUNOS_CC AS\nSELECT a.matricula, a.nome, c.nome_curso\n  FROM aluno a, curso c\n WHERE a.curso = c.codcurso\n   AND c.nome_curso = 'CIENCIA DA COMPUTACAO'\n  WITH CHECK OPTION;")], c:3,
+ com:"A view precisa ser de <b>uma tabela</b>, sem junção nem agrupamento, com o filtro no <b>WHERE</b> e o <b>WITH CHECK OPTION no final</b>. Ela também contém a PK e as colunas NOT NULL, então aceita INSERT.<br>a) CHECK OPTION no lugar errado. b) Não existe “ON condição”. c) GROUP BY deixa a view não atualizável (e nome/matricula nem estão no grupo). e) View com junção, em geral, não é atualizável."},
+
+{id:"q14", tema:"view",
+ en:"O que acontece ao executar o comando abaixo no Oracle?"+sql("CREATE VIEW v_total_cliente AS\nSELECT codcliente, SUM(valor_pedido)\n  FROM pedido\n GROUP BY codcliente;"),
+ alts:["A view é criada normalmente, com uma coluna chamada SUM.","Gera erro, pois a expressão SUM(valor_pedido) precisa receber um nome (apelido ou lista de colunas da view).",
+       "Gera erro, pois uma view não pode ter GROUP BY.","A view é criada e passa a guardar uma cópia dos valores somados.","Gera erro, pois falta a cláusula WITH CHECK OPTION."], c:1,
+ com:"Em view, <b>toda coluna calculada precisa de nome</b> (ORA-00998). Correções: <code>SUM(valor_pedido) AS total_vendido</code> ou <code>CREATE VIEW v_total_cliente (codcliente, total_vendido) AS …</code>. Foi o ponto da questão da view com AVG em 2025. A view pode ter GROUP BY (ela só não fica atualizável), não guarda dados e não precisa de CHECK OPTION."},
+
+{id:"q15", tema:"view",
+ en:"Sobre views, analise:<br>I. Uma view não armazena os dados, apenas a consulta que os busca nas tabelas.<br>II. Views definidas com junção de várias tabelas, em geral, não são atualizáveis.<br>III. Views com funções de grupo e GROUP BY não são atualizáveis.<br>IV. O comando DROP VIEW apaga também os dados das tabelas usadas pela view.<br>Está correto o que se afirma em:",
+ alts:["I e II, apenas.","I, II e III, apenas.","II e IV, apenas.","I, III e IV, apenas.","I, II, III e IV."], c:1,
+ com:"I, II e III são verdadeiras (as regras da resposta comentada de 2025). IV é falsa: o DROP VIEW remove <b>só a view</b>, e os dados continuam nas tabelas."},
+
+{id:"q16", tema:"fk", caiu:true,
+ en:"No modelo da Loja Virtual, ficou decidido que, <b>ao excluir um PEDIDO, seus itens devem ser excluídos automaticamente</b>. Qual comando garante essa regra?",
+ alts:[sql("ALTER TABLE pedido ADD CONSTRAINT fk_pedido_item\n  FOREIGN KEY (num_pedido) REFERENCES item_pedido (num_pedido)\n  ON DELETE CASCADE;"),
+       sql("ALTER TABLE item_pedido ADD CONSTRAINT fk_item_pedido_pedido\n  FOREIGN KEY (num_pedido) REFERENCES pedido (num_pedido)\n  ON DELETE SET NULL;"),
+       sql("ALTER TABLE item_pedido ADD CONSTRAINT fk_item_pedido_pedido\n  FOREIGN KEY (num_pedido) REFERENCES pedido (num_pedido)\n  ON DELETE CASCADE;"),
+       sql("ALTER TABLE item_pedido ADD CONSTRAINT fk_item_pedido_pedido\n  FOREIGN KEY (num_pedido) REFERENCES pedido (num_pedido)\n  ON UPDATE CASCADE;"),
+       sql("ALTER TABLE item_pedido ADD CONSTRAINT pk_item_pedido\n  PRIMARY KEY (num_pedido) ON DELETE CASCADE;")], c:2,
+ com:"A FK fica na tabela <b>filha</b> (ITEM_PEDIDO) e aponta para o pai (PEDIDO). <b>ON DELETE CASCADE</b> apaga os filhos junto.<br>a) Inverte pai e filho. b) SET NULL não serve: num_pedido faz parte da PK do item e não pode ficar nulo. d) ON UPDATE CASCADE não existe no Oracle. e) ON DELETE não se aplica a PRIMARY KEY."},
+
+{id:"q17", tema:"fk",
+ en:"Ao excluir um registro de TIPO_PAGAMENTO, os pedidos que o utilizavam devem <b>continuar existindo</b>, porém <b>sem tipo de pagamento</b>. Assinale a alternativa correta:",
+ alts:["Criar a FK de PEDIDO com ON DELETE CASCADE.","Criar a FK de PEDIDO com ON DELETE SET NULL; para isso, cod_tipo_pagamento precisa aceitar NULL.",
+       "Colocar ON DELETE SET NULL na chave primária de TIPO_PAGAMENTO.","Não colocar cláusula nenhuma, pois o comportamento padrão do Oracle é SET NULL.",
+       "Usar ON DELETE RESTRICT, que no Oracle deixa a coluna nula."], c:1,
+ com:"<b>SET NULL</b> mantém o filho e deixa a FK nula, por isso a coluna não pode ser NOT NULL. a) CASCADE apagaria os pedidos. c) A cláusula vai na FK (tabela filha), não na PK. d) O padrão do Oracle <b>bloqueia</b> a exclusão. e) ON DELETE RESTRICT não existe no Oracle."},
+
+{id:"q18", tema:"fk", caiu:true,
+ en:"Regra: <b>um cliente NÃO pode ser excluído caso possua pedidos</b>. No Oracle, como deve ficar a FK? Todas as alternativas começam com <code>ALTER TABLE pedido ADD CONSTRAINT fk_pedido_cliente FOREIGN KEY (codcliente)</code>.",
+ alts:[sql("REFERENCES cliente (codcliente) ON DELETE CASCADE;"),sql("REFERENCES cliente (codcliente) ON DELETE SET NULL;"),
+       sql("REFERENCES cliente (codcliente) ON DELETE RESTRICT;"),sql("REFERENCES cliente (codcliente);"),
+       "Não é possível garantir essa regra com chave estrangeira."], c:3,
+ com:"O comportamento <b>padrão</b> da FK (sem cláusula) já impede excluir o pai que tem filhos: o Oracle gera ORA-02292. Foi o item 2 da discursiva de 2025 (Trabalha_em sem cláusula). ON DELETE RESTRICT existe em outros SGBDs, <b>não no Oracle</b>."},
+
+{id:"q19", tema:"funcoes",
+ en:"O funcionário de matrícula 1002 tem o nome gravado como 'maria santos'. Qual o resultado de:"+sql("SELECT UPPER(nome), LENGTH(nome)\n  FROM funcionario\n WHERE matricula = 1002;"),
+ alts:["Maria Santos e 11","MARIA SANTOS e 12","MARIA SANTOS e 11","maria santos e 12","MARIA e 5"], c:1,
+ com:"UPPER converte tudo para maiúsculo: MARIA SANTOS. LENGTH conta os caracteres, <b>inclusive o espaço</b>: 5 + 1 + 6 = 12."},
+
+{id:"q20", tema:"funcoes",
+ en:"Qual o resultado de:"+sql("SELECT ROUND(4.567, 2), TRUNC(4.567, 2) FROM DUAL;"),
+ alts:["4.57 e 4.57","4.56 e 4.57","4.57 e 4.56","5 e 4","4.6 e 4.5"], c:2,
+ com:"ROUND <b>arredonda</b> (4.567 → 4.57). TRUNC <b>corta</b> as casas sem arredondar (4.567 → 4.56)."},
+
+{id:"q21", tema:"funcoes",
+ en:"Qual comando exibe, para cada funcionário, a quantidade de <b>meses completos</b> desde a admissão até hoje?",
+ alts:[sql("SELECT nome, MONTHS_BETWEEN(dtadmissao, SYSDATE) FROM funcionario;"),
+       sql("SELECT nome, TRUNC(MONTHS_BETWEEN(SYSDATE, dtadmissao)) FROM funcionario;"),
+       sql("SELECT nome, SYSDATE - dtadmissao FROM funcionario;"),
+       sql("SELECT nome, LAST_DAY(dtadmissao) FROM funcionario;"),
+       sql("SELECT nome, ROUND(SYSDATE) FROM funcionario;")], c:1,
+ com:"MONTHS_BETWEEN(data maior, data menor) dá os meses com fração, e o <b>TRUNC</b> deixa só os completos.<br>a) As datas estão invertidas (negativo e com fração). c) Dá a diferença em <b>dias</b>. d) Dá o último dia do mês. e) Só arredonda a data de hoje."},
+
+{id:"q22", tema:"funcoes",
+ en:"Qual comando exibe a data e hora atual do servidor Oracle <b>uma única vez</b>?",
+ alts:[sql("SELECT SYSDATE;"),sql("SELECT SYSDATE FROM DUAL;"),sql("SELECT TODAY FROM DUAL;"),sql("SELECT SYSDATE FROM funcionario;"),sql("SELECT DATE() FROM DUAL;")], c:1,
+ com:"No Oracle, todo SELECT precisa de FROM. A <b>DUAL</b> é a tabela de 1 linha usada para isso. a) Falta o FROM. c) e e) Não são funções do Oracle. d) Funciona, mas repete a data uma vez para cada funcionário."},
+
+{id:"q23", tema:"grupo", caiu:true,
+ en:"Considere a tabela PEDIDO com os dados:<table class='t' style='max-width:320px'><tr><th>codcliente</th><th>valor_pedido</th></tr><tr><td>1</td><td>100.00</td></tr><tr><td>2</td><td>50.00</td></tr><tr><td>1</td><td>30.00</td></tr><tr><td>3</td><td>80.00</td></tr><tr><td>2</td><td>20.00</td></tr></table>Qual comando apresenta como resultado a tabela abaixo? <i>(mesmo formato da Q12 de 2025)</i><table class='t' style='max-width:320px'><tr><th>codcliente</th><th>qtd</th><th>total</th></tr><tr><td>1</td><td>2</td><td>130.00</td></tr><tr><td>2</td><td>2</td><td>70.00</td></tr><tr><td>3</td><td>1</td><td>80.00</td></tr></table>",
+ alts:[sql("SELECT codcliente, SUM(*) qtd, COUNT(valor_pedido) total\n  FROM pedido GROUP BY codcliente;"),
+       sql("SELECT codcliente, COUNT(*) qtd, SUM(valor_pedido) total\n  FROM pedido GROUP BY codcliente, valor_pedido;"),
+       sql("SELECT codcliente, MAX(valor_pedido) qtd, SUM(valor_pedido) total\n  FROM pedido GROUP BY codcliente;"),
+       sql("SELECT codcliente, COUNT(*) qtd, SUM(valor_pedido) total\n  FROM pedido GROUP BY codcliente;"),
+       sql("SELECT codcliente, COUNT(*) qtd, SUM(valor_pedido) total\n  FROM pedido WHERE COUNT(*) >= 1;")], c:3,
+ com:"O resultado tem <b>uma linha por cliente</b>, então é GROUP BY codcliente. <b>qtd</b> é a quantidade de pedidos (COUNT) e <b>total</b> é a soma (SUM).<br>a) SUM(*) não existe. b) Agrupar também por valor gera 5 linhas. c) MAX daria 100, 50 e 80 na coluna qtd. e) Função de grupo no WHERE."},
+
+{id:"q24", tema:"grupo", caiu:true,
+ en:"Com relação à linguagem SQL, é correto afirmar que:",
+ alts:["a cláusula GROUP BY controla a ordem em que as linhas aparecem no resultado.","como a eliminação de duplicadas é o padrão, a cláusula DISTINCT é facultativa.",
+       "a cláusula WHERE filtra as linhas antes do agrupamento e a cláusula HAVING filtra os grupos depois do agrupamento.",
+       "COUNT, SUM e HAVING são exemplos de funções agregadas.","a função AVG considera os valores NULL como zero no cálculo da média."], c:2,
+ com:"a) Quem ordena é o ORDER BY. b) A eliminação de duplicadas NÃO é o padrão. d) HAVING é cláusula, não função; as funções agregadas são COUNT, SUM, MAX, MIN e AVG. e) AVG ignora os NULL. <i>(Mesmo estilo da Q9 de 2025, cuja correta era “COUNT(*) conta as tuplas que satisfazem as condições da consulta”.)</i>"},
+
+{id:"q25", tema:"grupo",
+ en:"Qual é a ordem correta de <b>escrita</b> das cláusulas de um SELECT?",
+ alts:["SELECT, FROM, GROUP BY, WHERE, HAVING, ORDER BY","SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY","SELECT, WHERE, FROM, GROUP BY, ORDER BY, HAVING",
+       "FROM, SELECT, WHERE, HAVING, GROUP BY, ORDER BY","SELECT, FROM, WHERE, ORDER BY, GROUP BY, HAVING"], c:1,
+ com:"<b>S</b>em <b>F</b>é, <b>W</b>alter <b>G</b>asta <b>H</b>oras <b>O</b>rando: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY."},
+
+{id:"q26", tema:"view", caiu:true,
+ en:"(Q11 de 2025) Tabelas PROJETO (ProjNome, <u>ProjNumero</u>, ProjLocal, Dnum) e TRABALHA_EM (<u>Fcpf</u>, <u>Pnr</u>, Horas), sendo Pnr FK para ProjNumero. Deseja-se uma VIEW com <b>o nome de cada projeto e a média de horas</b> trabalhadas nele. Qual está correta?",
+ alts:[sql("CREATE VIEW ProjMediaHoras (NomeProjeto, MediaHoras) AS\nSELECT p.ProjNome, AVG(t.Horas)\n  FROM Projeto p, Trabalha_em t\n WHERE p.ProjNumero = t.Pnr\n GROUP BY p.ProjNome, AVG(t.Horas);"),
+       sql("CREATE VIEW ProjMediaHoras AS\nSELECT p.ProjNome AS NomeProjeto, AVG(t.Horas)\n  FROM Projeto p, Trabalha_em t\n WHERE p.ProjNumero = t.Pnr\n GROUP BY p.ProjNumero, p.ProjNome;"),
+       sql("CREATE VIEW ProjMediaHoras (NomeProjeto, MediaHoras) AS\nSELECT p.ProjNome, SUM(t.Horas)/(SELECT COUNT(*) FROM Funcionario)\n  FROM Projeto p, Trabalha_em t\n WHERE p.ProjNumero = t.Pnr\n GROUP BY p.ProjNumero, p.ProjNome;"),
+       sql("CREATE VIEW ProjMediaHoras (NomeProjeto, MediaHoras) AS\nSELECT p.ProjNome, AVG(t.Horas)\n  FROM Projeto p, Trabalha_em t\n WHERE p.ProjNumero = t.Pnr\n GROUP BY p.ProjNumero, p.ProjNome;"),
+       sql("CREATE VIEW ProjMediaHoras AS\nSELECT p.ProjNome AS NomeProjeto, AVG(t.Horas)\n  FROM Projeto p, Trabalha_em t\n WHERE p.ProjNumero = t.Pnr\n GROUP BY p.ProjNumero, p.ProjNome;\nWITH CHECK OPTION;")], c:3,
+ com:"Usa <b>AVG</b> sobre Horas, agrupa pelo número e nome do projeto e <b>renomeia as colunas</b> da view (obrigatório por causa do AVG).<br>a) Função de grupo no GROUP BY. b) e e) O AVG ficou sem nome; e) ainda tem o CHECK OPTION depois do ponto e vírgula. c) Divide pelo total de funcionários da empresa, e não calcula a média do projeto."},
+
+{id:"q27", tema:"plsql", caiu:true,
+ en:"(Q10 de 2025) Sobre PL/SQL, julgue:<br>I. Como o código PL/SQL pode ser executado dentro da própria aplicação (Java, C#, PHP), o desempenho tende a aumentar.<br>II. Com PL/SQL o tráfego de rede entre aplicação e SGBD é muito maior, e isso melhora o desempenho.<br>III. A PL/SQL não é padronizada entre os SGBDs, o que pode dificultar a migração de código.<br>Assinale a correta:",
+ alts:["somente a afirmativa III está correta.","somente as afirmativas I e II estão corretas.","somente as afirmativas II e III estão corretas.","somente a afirmativa I está correta.","somente as afirmativas I e III estão corretas."], c:0,
+ com:"I – Falsa: o PL/SQL executa <b>dentro do SGBD</b>, não na aplicação. II – Falsa: o tráfego de rede <b>diminui</b>, e é por isso que o desempenho melhora. III – Verdadeira."},
+
+{id:"q28", tema:"plsql", caiu:true,
+ en:"(Q14 de 2025) A linguagem PL/SQL possui uma área de memória usada para processar <b>várias linhas</b> recuperadas do banco, permitindo acessar cada linha individualmente. Qual comando é usado?",
+ alts:["RECORD","IS TABLE OF","BULK COLLECT","CURSOR","ROWTYPE"], c:3,
+ com:"O <b>CURSOR</b> processa as várias linhas de um SELECT, uma de cada vez."}
+];
+
+var DISC = [
+{t:"Discursiva — ON DELETE (estilo Q13 de 2025)", tema:"fk",
+ en:"No modelo da Loja Virtual foram definidas 3 regras:<br>1) Ao excluir um <b>PEDIDO</b>, seus <b>itens</b> devem ser excluídos automaticamente.<br>2) Um <b>PRODUTO</b> não pode ser excluído caso esteja em algum item de pedido.<br>3) Ao excluir um <b>TIPO_PAGAMENTO</b>, o campo cod_tipo_pagamento dos pedidos deve ficar <b>NULL</b>.<br>Apresente as chaves estrangeiras com as cláusulas adequadas.",
+ resp:sql("-- 1) CASCADE: apaga os itens junto com o pedido\nALTER TABLE item_pedido ADD CONSTRAINT fk_item_pedido_pedido\n  FOREIGN KEY (num_pedido) REFERENCES pedido (num_pedido)\n  ON DELETE CASCADE;\n\n-- 2) Sem cláusula: o padrão bloqueia a exclusão\nALTER TABLE item_pedido ADD CONSTRAINT fk_item_pedido_produto\n  FOREIGN KEY (codproduto) REFERENCES produto (codproduto);\n\n-- 3) SET NULL: o pedido continua, sem tipo de pagamento\nALTER TABLE pedido ADD CONSTRAINT fk_pedido_tipo_pagamento\n  FOREIGN KEY (cod_tipo_pagamento) REFERENCES tipo_pagamento (cod_tipo_pagamento)\n  ON DELETE SET NULL;")+
+ "As FKs ficam nas tabelas <b>filhas</b>. Se a FK já existir, apague antes: <code>ALTER TABLE item_pedido DROP CONSTRAINT fk_item_pedido_pedido;</code>. Para o SET NULL funcionar, cod_tipo_pagamento não pode ser NOT NULL."},
+
+{t:"Ache os erros — funções de grupo", tema:"grupo",
+ en:"Deseja-se listar código, nome e total comprado dos clientes com total acima de 1000. Aponte os erros e corrija:"+sql("SELECT codcliente, nome, SUM(valor_pedido)\n  FROM pedido\n WHERE SUM(valor_pedido) > 1000\n GROUP BY codcliente;"),
+ resp:"Erros:<br>1. <b>nome</b> não existe em PEDIDO: é preciso fazer JOIN com CLIENTE.<br>2. Função de grupo no <b>WHERE</b> (ORA-00934): a condição do total vai no <b>HAVING</b>.<br>3. <b>nome</b> também precisa estar no GROUP BY.<br>4. A coluna calculada fica melhor com apelido.<br>Corrigido:"+
+ sql("SELECT c.codcliente, c.nome, SUM(p.valor_pedido) AS total\n  FROM cliente c\n  JOIN pedido p ON p.codcliente = c.codcliente\n GROUP BY c.codcliente, c.nome\nHAVING SUM(p.valor_pedido) > 1000;")},
+
+{t:"Ache os erros — view, FK e exclusão", tema:"view",
+ en:"O script abaixo tem 3 erros. Aponte e corrija:"+sql("CREATE VIEW v_media_produto AS\nSELECT codproduto, AVG(preco_unitario)\n  FROM item_pedido\n GROUP BY codproduto;\n\nALTER TABLE item_pedido ADD CONSTRAINT fk_item_produto\n  FOREIGN KEY (codproduto) REFERENCES produto (codproduto)\n  ON DELETE RESTRICT;\n\nDROP FROM produto WHERE preco_unitario = 0;"),
+ resp:"1. <b>AVG sem nome</b> na view (ORA-00998): use <code>AVG(preco_unitario) AS preco_medio</code> ou a lista <code>v_media_produto (codproduto, preco_medio)</code>.<br>2. <b>ON DELETE RESTRICT</b> não existe no Oracle: para restringir, basta não colocar a cláusula.<br>3. <b>DROP FROM</b> não existe: o comando para apagar linhas é <code>DELETE FROM produto WHERE preco_unitario = 0;</code>"+
+ sql("CREATE VIEW v_media_produto (codproduto, preco_medio) AS\nSELECT codproduto, AVG(preco_unitario)\n  FROM item_pedido\n GROUP BY codproduto;\n\nALTER TABLE item_pedido ADD CONSTRAINT fk_item_produto\n  FOREIGN KEY (codproduto) REFERENCES produto (codproduto);\n\nDELETE FROM produto WHERE preco_unitario = 0;")},
+
+{t:"Subconsulta — acima da média", tema:"sub",
+ en:"Liste código, descrição e preço dos produtos com preço unitário <b>acima da média de preço</b> dos produtos, do mais caro para o mais barato.",
+ resp:sql("SELECT codproduto, descricao, preco_unitario\n  FROM produto\n WHERE preco_unitario > (SELECT AVG(preco_unitario) FROM produto)\n ORDER BY preco_unitario DESC;")+"A média vai na subconsulta porque o AVG não pode ser usado direto no WHERE."},
+
+{t:"JOIN com 4 tabelas", tema:"join",
+ en:"Liste o nome do cliente, o número do pedido, a descrição do produto e a quantidade do item, somente para pedidos criados em <b>2025</b>.",
+ resp:sql("SELECT c.nome, p.num_pedido, pr.descricao, i.quantidade_item\n  FROM cliente c\n  JOIN pedido p      ON p.codcliente  = c.codcliente\n  JOIN item_pedido i ON i.num_pedido  = p.num_pedido\n  JOIN produto pr    ON pr.codproduto = i.codproduto\n WHERE p.data_criacao >= TO_DATE('01/01/2025','DD/MM/YYYY')\n   AND p.data_criacao <  TO_DATE('01/01/2026','DD/MM/YYYY');")+
+ "Na forma antiga: <code>FROM cliente c, pedido p, item_pedido i, produto pr WHERE c.codcliente = p.codcliente AND p.num_pedido = i.num_pedido AND i.codproduto = pr.codproduto AND …</code> (4 tabelas → 3 ligações)."},
+
+{t:"Funções de linha", tema:"funcoes",
+ en:"Na tabela FUNCIONARIO, liste: matrícula, nome em maiúsculo, data de admissão no formato DD/MM/YYYY, meses completos de empresa e salário + comissão (tratando a comissão nula).",
+ resp:sql("SELECT matricula,\n       UPPER(nome)                                AS nome,\n       TO_CHAR(dtadmissao, 'DD/MM/YYYY')          AS admissao,\n       TRUNC(MONTHS_BETWEEN(SYSDATE, dtadmissao)) AS meses_empresa,\n       salario + NVL(comissao, 0)                 AS total\n  FROM funcionario;")+"Sem o NVL, quem tem comissão NULL ficaria com o total NULL."},
+
+{t:"View com resumo", tema:"view",
+ en:"Crie a view <b>vw_resumo_cliente</b> com o nome do cliente, a quantidade de pedidos e o valor total gasto. Depois, consulte pela view só os clientes que gastaram mais de 500.",
+ resp:sql("CREATE OR REPLACE VIEW vw_resumo_cliente (nome_cliente, qtd_pedidos, total_gasto) AS\nSELECT c.nome, COUNT(p.num_pedido), SUM(p.valor_pedido)\n  FROM cliente c\n  JOIN pedido p ON p.codcliente = c.codcliente\n GROUP BY c.codcliente, c.nome;\n\nSELECT *\n  FROM vw_resumo_cliente\n WHERE total_gasto > 500;")+
+ "As colunas calculadas (COUNT e SUM) foram nomeadas na lista da view. Na consulta à view, o filtro pode ir no WHERE, porque para quem usa a view total_gasto já é uma coluna comum."},
+
+{t:"Teórica — WHERE × HAVING e INNER × LEFT", tema:"grupo",
+ en:"Explique com suas palavras: (a) a diferença entre WHERE e HAVING; (b) a diferença entre INNER JOIN e LEFT JOIN.",
+ resp:"(a) O <b>WHERE</b> filtra as <b>linhas</b> antes do agrupamento e não aceita funções de grupo. O <b>HAVING</b> filtra os <b>grupos</b> depois do GROUP BY e usa funções como SUM, AVG e COUNT.<br>(b) O <b>INNER JOIN</b> traz só as linhas que têm correspondência nas duas tabelas. O <b>LEFT JOIN</b> traz todas as linhas da tabela da esquerda, e as que não têm par aparecem com NULL nas colunas da outra tabela."}
+];
+
+/* ---------- render do simulado ---------- */
+var LS = "bd2_ed2_simulado_v1";
+function load(){ try { return JSON.parse(localStorage.getItem(LS)) || {}; } catch(e){ return {}; } }
+function save(s){ try { localStorage.setItem(LS, JSON.stringify(s)); } catch(e){} }
+var state = load(), filtro = "todas";
+
+function ordinal(i){ return (i+1) + "ª"; }
+function renderQuiz(){
+  var box = document.getElementById("quiz"); box.innerHTML = "";
+  Q.forEach(function(q, n){
+    if (filtro === "caiu" && !q.caiu) return;
+    if (filtro !== "todas" && filtro !== "caiu" && q.tema !== filtro) return;
+    var d = document.createElement("div"); d.className = "exam"; d.id = q.id;
+    var tags = '<span class="tag tema">'+TEMAS[q.tema]+'</span>' + (q.caiu ? '<span class="tag caiu">caiu / estilo da prova</span>' : '');
+    var alts = q.alts.map(function(a, i){
+      return '<button class="alt" data-i="'+i+'"><span class="al">['+ordinal(i)+' alternativa]</span>'+a+'</button>';
+    }).join("");
+    d.innerHTML = '<div class="head">'+(n+1)+'ª QUESTÃO '+tags+'</div>'+
+      '<div class="r"><div class="lab">Enunciado:</div><div class="val">'+q.en+'</div></div>'+
+      '<div class="r"><div class="lab">Alternativas:</div><div class="val">'+alts+'</div></div>'+
+      '<div class="r coment"><div class="lab">Resposta comentada:</div><div class="val"><div class="res"></div>'+q.com+'</div></div>';
+    d.querySelectorAll(".alt").forEach(function(b){
+      b.addEventListener("click", function(){ if (state[q.id] !== undefined) return; state[q.id] = +b.dataset.i; save(state); paint(q, d); score(); });
+    });
+    box.appendChild(d);
+    if (state[q.id] !== undefined) paint(q, d);
+  });
+  hlAll(box);
+}
+function paint(q, d){
+  var esc_ = state[q.id]; d.classList.add("done");
+  d.querySelectorAll(".alt").forEach(function(b){
+    var i = +b.dataset.i; b.disabled = true;
+    if (i === q.c){ b.classList.add("right"); b.querySelector(".al").textContent = "["+ordinal(i)+" alternativa - CORRETA]"; }
+    else if (i === esc_) b.classList.add("wrong");
+  });
+  var r = d.querySelector(".res");
+  if (esc_ === q.c){ r.className = "res ok"; r.textContent = "Você acertou."; }
+  else { r.className = "res no"; r.textContent = "Você marcou a "+ordinal(esc_)+" alternativa. A correta é a "+ordinal(q.c)+"."; }
+}
+function score(){
+  var resp = 0, ok = 0;
+  Q.forEach(function(q){ if (state[q.id] !== undefined){ resp++; if (state[q.id] === q.c) ok++; } });
+  document.getElementById("score").textContent = "Acertos: "+ok+" de "+resp+" respondidas · "+Q.length+" questões";
+}
+function renderFilters(){
+  var f = document.getElementById("filters");
+  f.innerHTML = Object.keys(TEMAS).map(function(k){ return '<button data-f="'+k+'" class="'+(k===filtro?'on':'')+'">'+TEMAS[k]+'</button>'; }).join("");
+  f.querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ filtro = b.dataset.f; renderFilters(); renderQuiz(); }); });
+}
+document.getElementById("reset").addEventListener("click", function(){ state = {}; save(state); renderQuiz(); score(); });
+
+function renderDisc(){
+  var box = document.getElementById("disc");
+  DISC.forEach(function(q, n){
+    var d = document.createElement("div"); d.className = "exam";
+    d.innerHTML = '<div class="head">DISCURSIVA '+(n+1)+' — '+q.t+' <span class="tag tema">'+TEMAS[q.tema]+'</span></div>'+
+      '<div class="r"><div class="lab">Enunciado:</div><div class="val">'+q.en+'</div></div>'+
+      '<div class="r"><div class="lab">Sua resposta:</div><div class="val"><textarea placeholder="Escreva aqui o seu SQL (rascunho)"></textarea><div class="btns"><button class="ver">Mostrar resposta comentada</button></div></div></div>'+
+      '<div class="r coment"><div class="lab">Resposta comentada:</div><div class="val">'+q.resp+'</div></div>';
+    d.querySelector(".ver").addEventListener("click", function(){ d.classList.toggle("done"); this.textContent = d.classList.contains("done") ? "Esconder resposta" : "Mostrar resposta comentada"; });
+    box.appendChild(d);
+  });
+  hlAll(box);
+}
+
+hlAll(document);
+showJoin("inner");
+renderFilters(); renderQuiz(); score(); renderDisc();
+</script>
+</body>
+</html>

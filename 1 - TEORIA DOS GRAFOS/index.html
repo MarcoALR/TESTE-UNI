@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grafos ED2 · Guia da prova</title>
+<style>
+:root{
+  --bg:#f6f7f5; --card:#ffffff; --text:#1d2521; --muted:#5b6660; --line:#d5dbd7;
+  --accent:#2f7d68; --accent-soft:#e3f1ec; --accent-text:#1f5c4b;
+  --warn:#9a5b00; --warn-soft:#fff3dc; --bad:#b3261e; --bad-soft:#fde8e6;
+  --good:#1e7a3c; --good-soft:#e2f4e7; --code-bg:#f1f3f2; --code-text:#1d2521;
+  --kw:#7a2fa0; --fn:#0b6aa2; --str:#a1470d; --num:#8a6d00; --com:#6b7a72;
+  --exam-head:#d9d9d9; --exam-line:#555; --exam-label:#f3f3f3;
+  --node:#4a9d8e; --node-line:#2f7d68; --edge:#b9a8c4; --wlabel:#f0e04a;
+  --start:#e8a33d; --goal:#2f7d68; --dim:#c9d2cd;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#121614; --card:#1b201e; --text:#e6ebe8; --muted:#a3ada8; --line:#333b37;
+    --accent:#5fc3a4; --accent-soft:#1f3a31; --accent-text:#8fe0c6;
+    --warn:#f0b75a; --warn-soft:#3a2c14; --bad:#ff8a80; --bad-soft:#3d1e1b;
+    --good:#7ddc98; --good-soft:#18331f; --code-bg:#0f1311; --code-text:#e6ebe8;
+    --kw:#d79bf2; --fn:#7cc7f5; --str:#f2a36b; --num:#e8cd62; --com:#86948d;
+    --exam-head:#353b38; --exam-line:#6d7571; --exam-label:#232826;
+    --node:#3f8b7e; --node-line:#5fc3a4; --edge:#6b5f74; --dim:#3a443f;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.top{background:var(--card);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-top:28px;padding-bottom:22px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.lead{color:var(--muted);margin:0;max-width:760px}
+nav.sticky{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+nav.sticky .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:thin}
+nav.sticky a{flex:0 0 auto;text-decoration:none;color:var(--text);font-size:14px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+nav.sticky a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:34px 0 10px}
+h2{font-size:24px;margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+h2 .num{font-size:14px;font-weight:700;color:var(--accent-text);background:var(--accent-soft);border-radius:8px;padding:2px 8px}
+h3{font-size:18px;margin:26px 0 8px}
+h4{margin:16px 0 4px;font-size:15px}
+p{margin:8px 0}
+.card{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.frase{font-size:18px;font-weight:600;border-left:4px solid var(--accent);padding:6px 0 6px 14px;margin:14px 0}
+.box{border-radius:10px;padding:12px 14px;margin:12px 0;border:1px solid transparent}
+.box b.t{display:block;margin-bottom:4px}
+.box.dica{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.box.peg{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.box.erro{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
+.box ul{margin:6px 0 0;padding-left:20px}
+.index-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+.index-grid a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.index-grid a:hover{border-color:var(--accent)}
+.index-grid .n{font-size:12px;font-weight:700;color:var(--accent)}
+.index-grid .tt{font-weight:650;display:block}
+.index-grid .ds{font-size:13px;color:var(--muted)}
+pre{background:var(--code-bg);color:var(--code-text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font:14px/1.5 ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;margin:10px 0}
+code{font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;font-size:.92em}
+:not(pre)>code{background:var(--code-bg);border:1px solid var(--line);border-radius:5px;padding:0 5px}
+.kw{color:var(--kw);font-weight:600}.fn{color:var(--fn)}.st{color:var(--str)}.nu{color:var(--num)}.co{color:var(--com);font-style:italic}
+table.t{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.t th{background:var(--exam-label)}
+table.dij{border-collapse:collapse;font-size:14px;margin:10px 0;min-width:420px}
+table.dij th,table.dij td{border:1px solid var(--exam-line);padding:5px 10px;text-align:center}
+table.dij th{background:var(--exam-label);font-weight:700}
+table.dij td.lab,table.dij th.lab{background:var(--exam-label);font-weight:700;text-align:left}
+table.dij td.hit{background:var(--good-soft);font-weight:700;color:var(--good)}
+table.dij td.fix{background:var(--accent-soft);font-weight:700}
+.scroll{overflow-x:auto}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.cols2{grid-template-columns:minmax(0,1fr)}}
+.tag{display:inline-block;white-space:nowrap;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.tag.caiu{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent)}
+.tag.tema{background:var(--accent-soft);color:var(--accent-text)}
+button{font:inherit;font-size:14px;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);padding:7px 12px}
+button:hover{border-color:var(--accent)}
+/* ===== figura de grafo ===== */
+figure{margin:14px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 10px 10px}
+figure svg{display:block;max-width:100%;height:auto;margin:0 auto}
+figcaption{text-align:center;color:var(--muted);font-size:13px;margin-top:8px;font-style:italic}
+svg text{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.vx{fill:var(--node);stroke:var(--node-line);stroke-width:1.5}
+.vx-start{fill:var(--start);stroke:#b4791f;stroke-width:1.5}
+.vx-goal{fill:var(--goal);stroke:var(--node-line);stroke-width:2.5}
+.vl{fill:#fff;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+.ed{stroke:var(--edge);stroke-width:3;fill:none}
+.ed-on{stroke:var(--accent);stroke-width:4.5;fill:none}
+.ed-off{stroke:var(--dim);stroke-width:2.5;fill:none}
+.wbox{fill:var(--wlabel);stroke:#b9a53a;stroke-width:.8}
+.wt{font-size:11px;font-weight:700;fill:#3d3410;text-anchor:middle;dominant-baseline:central}
+.note{font-size:11px;fill:var(--muted);text-anchor:middle}
+/* ===== estilo prova ===== */
+.exam{border:1px solid var(--exam-line);margin:18px 0;background:var(--card)}
+.exam .head{background:var(--exam-head);border-bottom:1px solid var(--exam-line);text-align:center;font-weight:700;padding:6px 10px}
+.exam .r{display:grid;grid-template-columns:170px minmax(0,1fr);border-bottom:1px solid var(--exam-line)}
+.exam .r:last-child{border-bottom:0}
+.exam .lab{font-weight:700;padding:10px;border-right:1px solid var(--exam-line);background:var(--exam-label)}
+.exam .val{padding:10px 12px;min-width:0}
+@media (max-width:700px){.exam .r{grid-template-columns:minmax(0,1fr)}.exam .lab{border-right:0;border-bottom:1px solid var(--exam-line)}}
+.alt{display:block;width:100%;text-align:left;border:1px solid transparent;border-radius:8px;padding:6px 8px;margin:2px 0;background:transparent;color:var(--text);font-size:15px;line-height:1.5}
+.alt:hover{border-color:var(--line);background:var(--bg)}
+.alt .al{font-weight:700;display:block}
+.alt.right{background:var(--good-soft);border-color:var(--good)}
+.alt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.alt[disabled]{cursor:default}
+.exam .coment{display:none}
+.exam.done .coment{display:grid}
+.scorebar{position:sticky;top:52px;z-index:4;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px}
+.scorebar .sc{font-weight:700}
+@media (max-width:700px){.scorebar{position:static}}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Teoria e Modelos de Grafos · Estudo Dirigido 2</div>
+    <h1>Menor caminho e árvore geradora mínima</h1>
+    <p class="lead">Guia feito a partir da <b>devolutiva da Prova do ED2 de 2025-2</b> (questões 17 a 23) e do
+    material <i>Algoritmos em Grafos — Revisão para a prova</i>. Todos os exemplos abaixo são os grafos que
+    <b>realmente caíram</b>, resolvidos passo a passo pelo método que o professor usa no gabarito.</p>
+  </div>
+</header>
+
+<nav class="sticky"><div class="wrap">
+  <a href="#prova">0 · A prova</a>
+  <a href="#base">1 · Fundamentos</a>
+  <a href="#repr">2 · Representações</a>
+  <a href="#dijkstra">3 · Dijkstra</a>
+  <a href="#passo">4 · Passo a passo</a>
+  <a href="#floyd">5 · Floyd–Warshall</a>
+  <a href="#agm">6 · AGM: Kruskal e Prim</a>
+  <a href="#difer">7 · Caminho × AGM</a>
+  <a href="#simulado">8 · Simulado</a>
+  <a href="#cola">9 · Cola</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="indice">
+  <h2>Índice</h2>
+  <p>Onde aparece <span class="tag caiu">caiu na prova</span>, é questão que já foi cobrada na devolutiva
+  do ED2 — o mesmo assunto tem chance alta de voltar.</p>
+  <div class="index-grid">
+    <a href="#prova"><span class="n">0</span><span class="tt">Como é a prova</span><span class="ds">As 7 questões de Grafos e o que caiu em cada uma</span></a>
+    <a href="#base"><span class="n">1</span><span class="tt">Fundamentos</span><span class="ds">Vértice, aresta, peso, caminho e ciclo</span></a>
+    <a href="#repr"><span class="n">2</span><span class="tt">Representações</span><span class="ds">Matriz de distância e lista de adjacência</span></a>
+    <a href="#dijkstra"><span class="n">3</span><span class="tt">Dijkstra</span><span class="ds">A tabela Distância / Percurso do professor</span></a>
+    <a href="#passo"><span class="n">4</span><span class="tt">Passo a passo</span><span class="ds">O grafo da fibra óptica, resolvido inteiro</span></a>
+    <a href="#floyd"><span class="n">5</span><span class="tt">Floyd–Warshall</span><span class="ds">Todos os pares e a regra de atualização</span></a>
+    <a href="#agm"><span class="n">6</span><span class="tt">Kruskal e Prim</span><span class="ds">Árvore geradora mínima, com exemplo desenhado</span></a>
+    <a href="#difer"><span class="n">7</span><span class="tt">Caminho × AGM</span><span class="ds">A diferença que a prova adora cobrar</span></a>
+    <a href="#simulado"><span class="n">8</span><span class="tt">Simulado</span><span class="ds">As questões reais da prova anterior</span></a>
+    <a href="#cola"><span class="n">9</span><span class="tt">Cola de 1 minuto</span><span class="ds">Revisão antes de entrar na sala</span></a>
+  </div>
+</section>
+
+<!-- ===================== 0 ===================== -->
+<section id="prova">
+  <h2><span class="num">0</span>Como é a prova</h2>
+  <p>Na prova do ED2 de 2025-2, o bloco <b>Teoria e Modelos de Grafos</b> foi da <b>17ª à 23ª questão</b> —
+  sete questões. Todas caíram em cima de <b>dois algoritmos apenas</b>: Dijkstra e Floyd–Warshall.</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Q</th><th>Assunto</th><th>Formato</th></tr>
+    <tr><td>17</td><td>Montar a <b>matriz de distância</b> a partir do desenho do grafo</td><td>Múltipla escolha</td></tr>
+    <tr><td>18</td><td><b>Qual algoritmo usar</b> (pesos negativos + todos os pares)</td><td>Múltipla escolha</td></tr>
+    <tr><td>19</td><td><b>Dijkstra passo a passo</b>, com tabela e rota final</td><td><b>Discursiva</b></td></tr>
+    <tr><td>20</td><td><b>Lista de adjacência</b> → qual desenho corresponde</td><td>Múltipla escolha</td></tr>
+    <tr><td>21</td><td><b>Relaxamento</b>: o que acontece com dist(C)</td><td>Múltipla escolha</td></tr>
+    <tr><td>22</td><td>Dijkstra: estado da tabela <b>após 2 iterações</b></td><td>Múltipla escolha</td></tr>
+    <tr><td>23</td><td><b>Floyd–Warshall</b>: atualizar ou não dist(C,D)</td><td>Múltipla escolha</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">Leitura do padrão</b>
+  Cinco das sete questões foram sobre <b>Dijkstra</b>. Se o seu tempo de estudo for curto, domine a tabela
+  <b>Distância / Percurso</b> da seção 3 — ela sozinha resolve as questões 19, 21 e 22. Depois decore a regra
+  única do Floyd–Warshall. Kruskal e Prim não caíram nessa prova, mas estão no material de revisão deste ED2,
+  então entram como novidade provável.</div>
+</section>
+
+<!-- ===================== 1 ===================== -->
+<section id="base">
+  <h2><span class="num">1</span>Fundamentos</h2>
+  <p class="frase">Um grafo é um conjunto de pontos ligados por linhas — e, quando as linhas têm número, ele é ponderado.</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Elemento</th><th>O que é</th><th>No mundo real</th></tr>
+    <tr><td><b>Vértice</b> (nó)</td><td>Ponto de decisão ou entidade</td><td>cidade, roteador, prédio</td></tr>
+    <tr><td><b>Aresta</b></td><td>Ligação entre dois vértices</td><td>estrada, cabo, trecho</td></tr>
+    <tr><td><b>Peso</b></td><td>Valor associado à aresta</td><td>km, minutos, reais, latência</td></tr>
+    <tr><td><b>Caminho</b></td><td>Sequência de vértices ligados</td><td>D → B → F</td></tr>
+    <tr><td><b>Ciclo</b></td><td>Caminho que volta ao ponto de partida</td><td>volta desnecessária na rede</td></tr>
+    <tr><td><b>Grau</b></td><td>Quantas arestas tocam o vértice</td><td>quantas estradas saem da cidade</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">A pergunta que define tudo</b>
+  Antes de escolher o algoritmo, defina <b>o que o peso significa</b>. A mesma rede dá respostas diferentes
+  se o peso for distância, tempo, custo ou risco. O material do professor destaca isso: <i>"essa escolha é
+  parte do problema"</i>.</div>
+</section>
+
+<!-- ===================== 2 ===================== -->
+<section id="repr">
+  <h2><span class="num">2</span>Representações <span class="tag caiu">questões 17 e 20</span></h2>
+  <p>Duas das sete questões foram só sobre <b>traduzir</b> o grafo de uma forma para outra. É a parte mais
+  fácil de garantir ponto.</p>
+
+  <h3>Matriz de distância (questão 17)</h3>
+  <p>Este foi o grafo da prova — repare nas <b>setas</b>: ele é <b>direcionado</b>, então a matriz
+  <b>não</b> é simétrica.</p>
+
+  <figure>
+  <svg viewBox="0 0 440 280" role="img" aria-label="Grafo direcionado com vértices A, B, C e D">
+    <defs>
+      <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="var(--edge)"/>
+      </marker>
+    </defs>
+    <!-- arestas -->
+    <path class="ed" marker-end="url(#ar)" d="M118,58 L92,178"/>      <!-- A->B 2 -->
+    <path class="ed" marker-end="url(#ar)" d="M152,62 L128,178"/>     <!-- B->A 3 (curva oposta) -->
+    <path class="ed" marker-end="url(#ar)" d="M158,52 L336,186"/>     <!-- A->C 2 -->
+    <path class="ed" marker-end="url(#ar)" d="M126,198 L318,198"/>    <!-- B->C 4 -->
+    <path class="ed" marker-end="url(#ar)" d="M124,186 L208,150"/>    <!-- B->D 7 -->
+    <path class="ed" marker-end="url(#ar)" d="M330,186 L246,152"/>    <!-- C->D 4 -->
+    <path class="ed" marker-end="url(#ar)" d="M218,158 L128,188"/>    <!-- D->B 7 -->
+    <!-- pesos -->
+    <g><rect class="wbox" x="82" y="106" width="18" height="16" rx="3"/><text class="wt" x="91" y="114">2</text></g>
+    <g><rect class="wbox" x="130" y="106" width="18" height="16" rx="3"/><text class="wt" x="139" y="114">3</text></g>
+    <g><rect class="wbox" x="258" y="106" width="18" height="16" rx="3"/><text class="wt" x="267" y="114">2</text></g>
+    <g><rect class="wbox" x="212" y="190" width="18" height="16" rx="3"/><text class="wt" x="221" y="198">4</text></g>
+    <g><rect class="wbox" x="160" y="158" width="18" height="16" rx="3"/><text class="wt" x="169" y="166">7</text></g>
+    <g><rect class="wbox" x="292" y="158" width="18" height="16" rx="3"/><text class="wt" x="301" y="166">4</text></g>
+    <g><rect class="wbox" x="182" y="176" width="18" height="16" rx="3"/><text class="wt" x="191" y="184">7</text></g>
+    <!-- vertices -->
+    <circle class="vx" cx="138" cy="44" r="18"/><text class="vl" x="138" y="44">A</text>
+    <circle class="vx" cx="110" cy="198" r="18"/><text class="vl" x="110" y="198">B</text>
+    <circle class="vx" cx="346" cy="198" r="18"/><text class="vl" x="346" y="198">C</text>
+    <circle class="vx" cx="232" cy="146" r="18"/><text class="vl" x="232" y="146">D</text>
+  </svg>
+  <figcaption>Figura 1 — grafo direcionado da 17ª questão. Cada seta é um sentido só.</figcaption>
+  </figure>
+
+  <p>Para montar a matriz: faça uma grade <b>N×N</b> e, em cada célula, escreva o peso para ir
+  <b>da linha até a coluna</b>. Se não existir essa aresta direta, escreve <b>0</b>.</p>
+
+  <div class="scroll"><table class="dij">
+    <tr><th class="lab"></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+    <tr><td class="lab">A</td><td>0</td><td class="fix">2</td><td class="fix">2</td><td>0</td></tr>
+    <tr><td class="lab">B</td><td class="fix">3</td><td>0</td><td class="fix">4</td><td class="fix">7</td></tr>
+    <tr><td class="lab">C</td><td>0</td><td>0</td><td>0</td><td class="fix">4</td></tr>
+    <tr><td class="lab">D</td><td>0</td><td class="fix">7</td><td>0</td><td>0</td></tr>
+  </table></div>
+
+  <div class="box peg"><b class="t">Onde a prova te derruba</b>
+  <ul>
+    <li>A <b>diagonal é sempre 0</b> (custo de ir de um vértice para ele mesmo).</li>
+    <li>Como o grafo é <b>direcionado</b>, A→B = 2 mas B→A = 3. Quem assume matriz simétrica erra. Duas das
+    alternativas da prova eram exatamente a versão "espelhada".</li>
+    <li>Ausência de aresta vira <b>0</b> nesse gabarito, não infinito. Atenção: é diferente da convenção do
+    Dijkstra, onde o professor usa <b>−1</b> para "ainda não alcançado".</li>
+  </ul></div>
+
+  <h3>Lista de adjacência (questão 20)</h3>
+  <p>Aqui é o caminho inverso: dado o texto, escolher o desenho. A lista da prova era:</p>
+<pre>A → (B, 3), (C, 2)
+B → (A, 3), (C, 4), (D, 6)
+C → (A, 2), (B, 4), (D, 1)
+D → (B, 6), (C, 1)</pre>
+  <div class="box dica"><b class="t">Truque para resolver em 20 segundos</b>
+  Não desenhe nada. <b>Conte as arestas distintas</b>: A–B 3, A–C 2, B–C 4, B–D 6, C–D 1 → são
+  <b>5 arestas</b>. Depois olhe cada alternativa e procure <b>um peso que não existe na lista</b>. Na prova,
+  as alternativas erradas tinham um "3" no lugar do "1" ou ligavam A–D, que não existe. Confira também que
+  o grafo é <b>não direcionado</b>: se B→(A,3), então A→(B,3) precisa aparecer também — e aparece.</div>
+</section>
+
+<!-- ===================== 3 ===================== -->
+<section id="dijkstra">
+  <h2><span class="num">3</span>Dijkstra <span class="tag caiu">questões 19, 21 e 22</span></h2>
+  <p class="frase">Uma origem, todos os destinos. É o algoritmo mais cobrado da matéria.</p>
+
+  <h3>A ideia em uma frase</h3>
+  <p>Dijkstra guarda, para cada vértice, a <b>menor distância conhecida até agora</b> desde a origem. A cada
+  rodada ele escolhe o vértice <b>aberto de menor distância</b>, fecha esse vértice (o valor dele vira
+  definitivo) e tenta melhorar os vizinhos. Essa melhoria se chama <b>relaxamento</b>.</p>
+
+  <div class="box dica"><b class="t">A tabela do professor — use exatamente esta</b>
+  O gabarito não usa ∞. Ele monta uma tabela com <b>duas linhas</b>:
+  <ul>
+    <li><b>Distância</b> — quanto custa chegar ali. Começa <code>0</code> na origem e <code>-1</code> em
+    todos os outros (<code>-1</code> = infinito, "ainda não descobri caminho").</li>
+    <li><b>Percurso</b> — <b>de qual vértice eu vim</b> para conseguir essa distância. É essa linha que
+    permite reconstruir a rota no final.</li>
+  </ul>
+  Escrever a resposta nesse formato é o que vale nota na discursiva.</div>
+
+  <h3>O ciclo, em 4 passos</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Etapa</th><th>Ação</th><th>Pergunta-guia</th></tr>
+    <tr><td>1</td><td>Origem com distância <b>0</b>, os demais com <b>−1</b></td><td>O que já sabemos?</td></tr>
+    <tr><td>2</td><td>Escolher o vértice <b>aberto de menor distância</b> (ignorando −1)</td><td>Qual é o próximo mais promissor?</td></tr>
+    <tr><td>3</td><td><b>Fechar</b> esse vértice</td><td>A distância agora é definitiva?</td></tr>
+    <tr><td>4</td><td><b>Relaxar</b> os vizinhos dele e repetir</td><td>Alguma rota ficou mais barata?</td></tr>
+  </table></div>
+
+  <h3>Relaxamento — a conta que decide tudo <span class="tag caiu">questão 21</span></h3>
+<pre><span class="kw">se</span> distancia[atual] + peso(atual, vizinho) &lt; distancia[vizinho]:
+      distancia[vizinho] = distancia[atual] + peso(atual, vizinho)
+      percurso[vizinho]  = atual        <span class="co">// anota de onde vim</span></pre>
+
+  <p>Foi exatamente isso que a 21ª questão cobrou, num triângulo minúsculo:</p>
+
+  <figure>
+  <svg viewBox="0 0 340 200" role="img" aria-label="Triângulo A, B, C com pesos 2, 5 e 1">
+    <path class="ed" d="M170,42 L78,152"/>
+    <path class="ed" d="M170,42 L262,152"/>
+    <path class="ed-on" d="M96,162 L244,162"/>
+    <g><rect class="wbox" x="106" y="88" width="18" height="16" rx="3"/><text class="wt" x="115" y="96">2</text></g>
+    <g><rect class="wbox" x="216" y="88" width="18" height="16" rx="3"/><text class="wt" x="225" y="96">5</text></g>
+    <g><rect class="wbox" x="161" y="154" width="18" height="16" rx="3"/><text class="wt" x="170" y="162">1</text></g>
+    <circle class="vx-start" cx="170" cy="36" r="18"/><text class="vl" x="170" y="36">A</text>
+    <circle class="vx" cx="78" cy="162" r="18"/><text class="vl" x="78" y="162">B</text>
+    <circle class="vx-goal" cx="262" cy="162" r="18"/><text class="vl" x="262" y="162">C</text>
+    <text class="note" x="170" y="192">origem A (laranja) · destino C</text>
+  </svg>
+  <figcaption>Figura 2 — grafo da 21ª questão. A rota A→B→C custa 3, mais barata que a aresta direta A→C = 5.</figcaption>
+  </figure>
+
+  <div class="scroll"><table class="dij">
+    <tr><th class="lab">Momento</th><th>A</th><th>B</th><th>C</th></tr>
+    <tr><td class="lab">Início</td><td class="fix">0</td><td>2</td><td>5</td></tr>
+    <tr><td class="lab">Fecha B (2), relaxa C</td><td class="fix">0</td><td class="fix">2</td><td class="hit">3</td></tr>
+  </table></div>
+
+  <p><b>A conta:</b> chegar em C passando por B custa <code>dist(B) + peso(B,C) = 2 + 1 = 3</code>. Como
+  <b>3 &lt; 5</b>, o valor é atualizado e o percurso de C passa a ser <b>B</b>.</p>
+
+  <div class="box peg"><b class="t">As três alternativas-armadilha da questão 21</b>
+  <ul>
+    <li><i>"Nada muda, dist(C) já é o menor"</i> — falso: 5 era só o custo da aresta <b>direta</b>, nunca
+    garantido como mínimo.</li>
+    <li><i>"O algoritmo para, encontrou um ciclo"</i> — Dijkstra não para por ciclo; ele simplesmente não
+    reabre vértice fechado.</li>
+    <li><i>"dist(B) é atualizado para 5"</i> — B já foi <b>fechado</b>. Vértice fechado nunca mais muda.</li>
+  </ul></div>
+
+  <div class="box erro"><b class="t">A hipótese que a prova adora testar</b>
+  Dijkstra <b>só funciona com pesos não negativos</b>. Com aresta negativa ele pode fechar um vértice cedo
+  demais e errar. Nesse caso o material aponta <b>Bellman–Ford</b> (uma origem) ou <b>Floyd–Warshall</b>
+  (todos os pares).</div>
+</section>
+
+<!-- ===================== 4 ===================== -->
+<section id="passo">
+  <h2><span class="num">4</span>Passo a passo completo <span class="tag caiu">questão 19 — discursiva</span></h2>
+  <p>Esta foi a <b>discursiva</b> da prova: o grafo da fibra óptica. Pediram as menores distâncias saindo de
+  <b>D</b> e a rota mais econômica de <b>D até F</b>, com o raciocínio.</p>
+
+  <figure>
+  <svg viewBox="0 0 460 300" role="img" aria-label="Grafo da fibra óptica com vértices A a F">
+    <!-- arestas -->
+    <path class="ed" d="M186,52 L118,86"/>   <!-- A-B 4 -->
+    <path class="ed" d="M222,52 L346,84"/>   <!-- A-F 3 -->
+    <path class="ed-on" d="M122,100 L338,100"/> <!-- B-F 1 -->
+    <path class="ed-on" d="M104,118 L104,222"/> <!-- B-D 5 -->
+    <path class="ed" d="M122,232 L200,158"/> <!-- D-E 7 -->
+    <path class="ed-on" d="M122,244 L340,244"/> <!-- D-C 3 -->
+    <path class="ed" d="M232,142 L340,112"/> <!-- E-F 7 -->
+    <path class="ed" d="M236,158 L342,230"/> <!-- E-C 2 -->
+    <path class="ed" d="M356,118 L356,226"/> <!-- F-C 5 -->
+    <!-- pesos -->
+    <g><rect class="wbox" x="143" y="62" width="18" height="16" rx="3"/><text class="wt" x="152" y="70">4</text></g>
+    <g><rect class="wbox" x="273" y="60" width="18" height="16" rx="3"/><text class="wt" x="282" y="68">3</text></g>
+    <g><rect class="wbox" x="221" y="92" width="18" height="16" rx="3"/><text class="wt" x="230" y="100">1</text></g>
+    <g><rect class="wbox" x="95" y="162" width="18" height="16" rx="3"/><text class="wt" x="104" y="170">5</text></g>
+    <g><rect class="wbox" x="148" y="192" width="18" height="16" rx="3"/><text class="wt" x="157" y="200">7</text></g>
+    <g><rect class="wbox" x="221" y="236" width="18" height="16" rx="3"/><text class="wt" x="230" y="244">3</text></g>
+    <g><rect class="wbox" x="288" y="118" width="18" height="16" rx="3"/><text class="wt" x="297" y="126">7</text></g>
+    <g><rect class="wbox" x="288" y="188" width="18" height="16" rx="3"/><text class="wt" x="297" y="196">2</text></g>
+    <g><rect class="wbox" x="347" y="164" width="18" height="16" rx="3"/><text class="wt" x="356" y="172">5</text></g>
+    <!-- vertices -->
+    <circle class="vx" cx="204" cy="40" r="18"/><text class="vl" x="204" y="40">A</text>
+    <circle class="vx" cx="104" cy="100" r="18"/><text class="vl" x="104" y="100">B</text>
+    <circle class="vx-goal" cx="356" cy="100" r="18"/><text class="vl" x="356" y="100">F</text>
+    <circle class="vx" cx="216" cy="150" r="18"/><text class="vl" x="216" y="150">E</text>
+    <circle class="vx-start" cx="104" cy="244" r="18"/><text class="vl" x="104" y="244">D</text>
+    <circle class="vx" cx="356" cy="244" r="18"/><text class="vl" x="356" y="244">C</text>
+    <text class="note" x="230" y="288">origem D (laranja) · destino F · em destaque: a rota mínima D → B → F</text>
+  </svg>
+  <figcaption>Figura 3 — grafo da 19ª questão. A rota destacada custa 5 + 1 = 6.</figcaption>
+  </figure>
+
+  <h3>Iteração 0 — o esqueleto</h3>
+  <div class="scroll"><table class="dij">
+    <tr><th class="lab"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+    <tr><td class="lab">Distância</td><td>−1</td><td>−1</td><td>−1</td><td class="fix">0</td><td>−1</td><td>−1</td></tr>
+    <tr><td class="lab">Percurso</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </table></div>
+
+  <h3>Iteração 1 — fecha D, relaxa os vizinhos diretos</h3>
+  <p>D liga em B (5), C (3) e E (7).</p>
+  <div class="scroll"><table class="dij">
+    <tr><th class="lab"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+    <tr><td class="lab">Distância</td><td>−1</td><td class="hit">5</td><td class="hit">3</td><td class="fix">0</td><td class="hit">7</td><td>−1</td></tr>
+    <tr><td class="lab">Percurso</td><td></td><td>D</td><td>D</td><td></td><td>D</td><td></td></tr>
+  </table></div>
+
+  <h3>Iteração 2 — o menor aberto é C (3). Fecha C.</h3>
+  <p>C liga em E (2) e F (5). Relaxando: <code>3 + 2 = 5 &lt; 7</code> ✔ e <code>3 + 5 = 8 &lt; −1</code> ✔.</p>
+  <div class="scroll"><table class="dij">
+    <tr><th class="lab"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+    <tr><td class="lab">Distância</td><td>−1</td><td>5</td><td class="fix">3</td><td class="fix">0</td><td class="hit">5</td><td class="hit">8</td></tr>
+    <tr><td class="lab">Percurso</td><td></td><td>D</td><td>D</td><td></td><td>C</td><td>C</td></tr>
+  </table></div>
+
+  <h3>Iteração 3 — fecha B (5). É aqui que a resposta aparece.</h3>
+  <p>B liga em A (4) e F (1). Relaxando: <code>5 + 4 = 9</code> ✔ e <code>5 + 1 = 6 &lt; 8</code> ✔ — <b>F
+  melhora de 8 para 6</b> e passa a vir de B.</p>
+  <div class="scroll"><table class="dij">
+    <tr><th class="lab"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+    <tr><td class="lab">Distância</td><td class="hit">9</td><td class="fix">5</td><td class="fix">3</td><td class="fix">0</td><td>5</td><td class="hit">6</td></tr>
+    <tr><td class="lab">Percurso</td><td>B</td><td>D</td><td>D</td><td></td><td>C</td><td>B</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">Como reconstruir a rota — o passo que vale metade da nota</b>
+  Leia a linha <b>Percurso de trás para frente</b>, começando no destino:
+  <ul>
+    <li>F veio de <b>B</b></li>
+    <li>B veio de <b>D</b></li>
+    <li>D é a origem → parou.</li>
+  </ul>
+  Invertendo: <b>D → B → F</b>, com custo <b>6</b>. Repare que a rota mais barata <b>não</b> é a que usa a
+  menor aresta isolada — é a soma que importa.</div>
+
+  <div class="box peg"><b class="t">Cuidado no relaxamento contra −1</b>
+  Quando o vizinho ainda está com <code>−1</code>, qualquer valor é melhor: você <b>sempre</b> preenche.
+  Não caia na armadilha de achar que "−1 é menor que 8" — ali o <code>−1</code> significa infinito.</div>
+</section>
+
+<!-- ===================== 5 ===================== -->
+<section id="floyd">
+  <h2><span class="num">5</span>Floyd–Warshall <span class="tag caiu">questões 18 e 23</span></h2>
+  <p class="frase">Todos os pares de uma vez. E aceita peso negativo.</p>
+
+  <p>Enquanto Dijkstra responde "qual a menor rota <b>a partir de uma origem</b>", o Floyd–Warshall responde
+  "qual a menor rota <b>entre quaisquer dois vértices</b>". Ele trabalha em cima da matriz de distâncias e
+  testa, um por um, cada vértice como <b>intermediário</b>.</p>
+
+  <div class="box dica"><b class="t">A regra única — decore esta linha</b>
+  <pre style="margin:6px 0 0">dist[i][j] = min( dist[i][j] , dist[i][k] + dist[k][j] )</pre>
+  Em palavras: <i>"se passar por <b>k</b> for mais barato do que ir direto, atualize"</i>.</div>
+
+  <figure>
+  <svg viewBox="0 0 420 180" role="img" aria-label="Vértice intermediário k entre i e j">
+    <path class="ed-off" d="M96,60 L324,60"/>
+    <path class="ed-on" d="M92,76 L196,122"/>
+    <path class="ed-on" d="M228,122 L328,76"/>
+    <g><rect class="wbox" x="201" y="44" width="26" height="16" rx="3"/><text class="wt" x="214" y="52">9</text></g>
+    <g><rect class="wbox" x="126" y="92" width="26" height="16" rx="3"/><text class="wt" x="139" y="100">4</text></g>
+    <g><rect class="wbox" x="272" y="92" width="26" height="16" rx="3"/><text class="wt" x="285" y="100">3</text></g>
+    <circle class="vx" cx="78" cy="60" r="18"/><text class="vl" x="78" y="60">C</text>
+    <circle class="vx" cx="342" cy="60" r="18"/><text class="vl" x="342" y="60">D</text>
+    <circle class="vx-start" cx="212" cy="132" r="18"/><text class="vl" x="212" y="132">B</text>
+    <text class="note" x="210" y="26">rota direta C→D = 9 (cinza)</text>
+    <text class="note" x="210" y="170">passando por B: 4 + 3 = 7 · mais barato, então atualiza</text>
+  </svg>
+  <figcaption>Figura 4 — a situação exata da 23ª questão: dist(C,D) cai de 9 para 7.</figcaption>
+  </figure>
+
+  <p>A prova deu <code>dist(C,D) = 9</code>, <code>dist(C,B) = 4</code> e <code>dist(B,D) = 3</code>, com
+  <code>k = B</code>. Como <code>4 + 3 = 7</code> e <b>7 &lt; 9</b>, o algoritmo <b>atualiza dist(C,D) para
+  7</b>. É só isso.</p>
+
+  <div class="box peg"><b class="t">O que NUNCA muda</b>
+  A atualização mexe <b>somente em dist[i][j]</b> — no caso, dist(C,D). As alternativas erradas propunham
+  alterar <code>dist(B,D)</code> ou <code>dist(C,B)</code>: esses são os valores que <b>alimentam</b> a
+  conta, nunca o alvo dela.</div>
+
+  <h3>Qual algoritmo escolher <span class="tag caiu">questão 18</span></h3>
+  <div class="scroll"><table class="t">
+    <tr><th>A pergunta é…</th><th>Tem peso negativo?</th><th>Algoritmo</th></tr>
+    <tr><td>De <b>uma origem</b> para todos</td><td>Não</td><td><b>Dijkstra</b></td></tr>
+    <tr><td>De <b>uma origem</b> para todos</td><td>Sim</td><td><b>Bellman–Ford</b></td></tr>
+    <tr><td>Entre <b>todos os pares</b></td><td>Tanto faz</td><td><b>Floyd–Warshall</b></td></tr>
+    <tr><td>Conectar tudo com menor custo</td><td>—</td><td><b>Kruskal</b> ou <b>Prim</b> (AGM)</td></tr>
+  </table></div>
+  <div class="box dica"><b class="t">A questão 18, resolvida pela tabela</b>
+  O enunciado dizia <i>"pesos negativos"</i> + <i>"menor distância de todos os vértices para todos os
+  outros"</i>. Dois sinais apontando para a mesma linha: <b>Floyd–Warshall</b>. O custo dele é
+  <b>O(n³)</b>, o que o torna bom para grafos pequenos/médios e para redes que farão muitas consultas.</div>
+</section>
+
+<!-- ===================== 6 ===================== -->
+<section id="agm">
+  <h2><span class="num">6</span>Árvore geradora mínima — Kruskal e Prim</h2>
+  <p>Não caiu na prova anterior, <b>mas está no material de revisão deste ED2</b> — é a novidade mais
+  provável. AGM é um subconjunto de arestas que <b>conecta todos os vértices</b>, <b>sem ciclos</b> e com o
+  <b>menor peso total</b>.</p>
+
+  <div class="box dica"><b class="t">O número mágico</b>
+  Uma árvore com <b>n</b> vértices tem sempre <b>n − 1</b> arestas. Se a sua resposta tiver mais que isso,
+  você deixou um ciclo passar. Esse é o critério de parada dos dois algoritmos.</div>
+
+  <figure>
+  <svg viewBox="0 0 440 240" role="img" aria-label="Grafo de cinco vértices com a árvore geradora mínima destacada">
+    <path class="ed-on" d="M118,58 L198,44"/>
+    <path class="ed-off" d="M236,50 L330,74"/>
+    <path class="ed-on" d="M104,80 L104,160"/>
+    <path class="ed-on" d="M214,66 L214,152"/>
+    <path class="ed-off" d="M122,172 L196,166"/>
+    <path class="ed-on" d="M232,160 L332,104"/>
+    <path class="ed-off" d="M228,176 L330,196"/>
+    <path class="ed-on" d="M122,186 L328,206"/>
+    <g><rect class="wbox" x="149" y="40" width="18" height="16" rx="3"/><text class="wt" x="158" y="48">1</text></g>
+    <g><rect class="wbox" x="274" y="52" width="18" height="16" rx="3"/><text class="wt" x="283" y="60">6</text></g>
+    <g><rect class="wbox" x="95" y="112" width="18" height="16" rx="3"/><text class="wt" x="104" y="120">3</text></g>
+    <g><rect class="wbox" x="205" y="100" width="18" height="16" rx="3"/><text class="wt" x="214" y="108">2</text></g>
+    <g><rect class="wbox" x="150" y="161" width="18" height="16" rx="3"/><text class="wt" x="159" y="169">7</text></g>
+    <g><rect class="wbox" x="273" y="124" width="18" height="16" rx="3"/><text class="wt" x="282" y="132">4</text></g>
+    <g><rect class="wbox" x="271" y="178" width="18" height="16" rx="3"/><text class="wt" x="280" y="186">8</text></g>
+    <g><rect class="wbox" x="216" y="188" width="18" height="16" rx="3"/><text class="wt" x="225" y="196">5</text></g>
+    <circle class="vx" cx="104" cy="62" r="18"/><text class="vl" x="104" y="62">A</text>
+    <circle class="vx" cx="216" cy="44" r="18"/><text class="vl" x="216" y="44">B</text>
+    <circle class="vx" cx="346" cy="86" r="18"/><text class="vl" x="346" y="86">C</text>
+    <circle class="vx" cx="104" cy="178" r="18"/><text class="vl" x="104" y="178">D</text>
+    <circle class="vx" cx="214" cy="170" r="18"/><text class="vl" x="214" y="170">E</text>
+    <text class="note" x="220" y="230">em destaque: a AGM (A–B 1, B–E 2, A–D 3, E–C 4) · custo total 10 · 5 vértices, 4 arestas</text>
+  </svg>
+  <figcaption>Figura 5 — as arestas em cinza claro foram descartadas por criar ciclo ou custar mais.</figcaption>
+  </figure>
+
+  <div class="cols2">
+    <div class="card">
+      <h4>Kruskal — pensa em arestas</h4>
+      <ol style="padding-left:20px;margin:6px 0">
+        <li>Ordene <b>todas as arestas</b> do menor para o maior peso.</li>
+        <li>Percorra a lista e <b>aceite</b> a aresta se ela ligar <b>componentes diferentes</b> (ou seja,
+        se não fechar ciclo).</li>
+        <li>Pare quando tiver <b>n − 1</b> arestas.</li>
+      </ol>
+      <p style="font-size:14px;color:var(--muted);margin-top:8px">A estrutura <b>Union-Find</b> (conjuntos
+      disjuntos) é o que torna o teste de ciclo eficiente.</p>
+      <p style="font-size:14px"><b>Na figura:</b> 1 (A–B) ✔ · 2 (B–E) ✔ · 3 (A–D) ✔ · 4 (E–C) ✔ → parou com
+      4 arestas. O 5 (D–E) criaria ciclo.</p>
+    </div>
+    <div class="card">
+      <h4>Prim — pensa em uma árvore que cresce</h4>
+      <ol style="padding-left:20px;margin:6px 0">
+        <li>Comece em <b>um vértice qualquer</b>.</li>
+        <li>A cada etapa, pegue a <b>menor aresta que sai da árvore</b> para um vértice ainda de fora.</li>
+        <li>Repita até todos estarem dentro.</li>
+      </ol>
+      <p style="font-size:14px;color:var(--muted);margin-top:8px">Uma componente só, sempre conectada,
+      crescendo a partir de uma semente.</p>
+      <p style="font-size:14px"><b>Na figura, partindo de A:</b> A–B 1 · B–E 2 · A–D 3 · E–C 4. Mesma
+      árvore, mesmo custo 10.</p>
+    </div>
+  </div>
+
+  <div class="box dica"><b class="t">Os dois chegam ao mesmo custo total</b>
+  Kruskal olha o grafo inteiro e escolhe arestas globalmente; Prim expande uma única componente a partir de
+  uma semente. Podem escolher arestas diferentes quando há <b>pesos empatados</b>, mas o <b>peso total da
+  AGM é sempre o mesmo</b>.</div>
+
+  <div class="box peg"><b class="t">Alternativas falsas típicas</b>
+  <ul>
+    <li><i>"Prim ordena todas as arestas"</i> — não, isso é Kruskal.</li>
+    <li><i>"Kruskal começa numa origem e expande"</i> — não, isso é Prim.</li>
+    <li><i>"Kruskal só serve para grafos direcionados"</i> — falso; AGM é conceito de grafo <b>não</b> direcionado.</li>
+    <li><i>"Prim permite ciclos para redundância"</i> — falso; árvore, por definição, não tem ciclo.</li>
+  </ul></div>
+</section>
+
+<!-- ===================== 7 ===================== -->
+<section id="difer">
+  <h2><span class="num">7</span>Menor caminho ≠ AGM</h2>
+  <p class="frase">Esta distinção já apareceu como afirmativa de julgar. Guarde a frase abaixo.</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th></th><th>Menor caminho</th><th>Árvore geradora mínima</th></tr>
+    <tr><td><b>Otimiza</b></td><td>uma <b>rota</b> específica</td><td>o <b>custo total</b> da rede</td></tr>
+    <tr><td><b>Pergunta</b></td><td>"como vou de A até B gastando menos?"</td><td>"como conecto tudo gastando menos?"</td></tr>
+    <tr><td><b>Exemplo</b></td><td>GPS, entrega, roteamento de pacote</td><td>fibra óptica, rede elétrica, tubulação</td></tr>
+    <tr><td><b>Algoritmos</b></td><td>Dijkstra, Floyd–Warshall, Bellman–Ford</td><td>Kruskal, Prim</td></tr>
+  </table></div>
+
+  <div class="box erro"><b class="t">A afirmativa falsa clássica</b>
+  <i>"Uma AGM gerada por Kruskal necessariamente contém o caminho de menor custo entre i e k."</i> —
+  <b>FALSO</b>. A AGM minimiza o custo <b>total</b> da rede; o caminho entre dois vértices <i>dentro</i> da
+  árvore pode ser bem mais caro que o menor caminho do grafo original, porque a aresta curta entre eles pode
+  ter sido descartada para evitar ciclo.</div>
+
+  <div class="box dica"><b class="t">A afirmativa verdadeira que anda junto</b>
+  <i>"Se um caminho mínimo entre i e k passa por w, então o trecho de w até k também é mínimo."</i> —
+  <b>VERDADEIRO</b>. Chama-se <b>subestrutura ótima</b>, e é justamente a propriedade que faz Dijkstra e
+  Floyd–Warshall funcionarem.</div>
+</section>
+
+<!-- ===================== 8 ===================== -->
+<section id="simulado">
+  <h2><span class="num">8</span>Simulado — questões reais da prova anterior</h2>
+  <p>Todas as questões abaixo são as da devolutiva do ED2, no mesmo formato. Clique para ver a resposta
+  comentada.</p>
+
+  <div class="scorebar">
+    <span class="sc">Acertos: <span id="acertos">0</span> / <span id="total">0</span></span>
+    <button onclick="reiniciar()">Recomeçar</button>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">18ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      A modelagem resulta em um grafo ponderado <b>com arestas de peso negativo</b>. A Secretaria deseja
+      calcular a menor distância <b>de todos os vértices para todos os outros</b>. Qual o algoritmo mais
+      adequado?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Algoritmo de Floyd–Warshall</button>
+      <button class="alt"><span class="al">2ª</span>Algoritmo do Avestruz</button>
+      <button class="alt"><span class="al">3ª</span>Algoritmo Genético</button>
+      <button class="alt"><span class="al">4ª</span>Algoritmo de Dijkstra</button>
+      <button class="alt"><span class="al">5ª</span>Algoritmo do Grafo Ponderado</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> Dois sinais no enunciado apontam para ele: <b>todos os pares</b> e <b>pesos
+      negativos</b>. Dijkstra é descartado pelos pesos negativos e porque resolve a partir de
+      <b>uma</b> origem. "Algoritmo do Avestruz" e "do Grafo Ponderado" não são algoritmos de menor
+      caminho — o segundo nem existe com esse nome.</div></div>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">21ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Dijkstra a partir de A. Na primeira etapa, dist(A)=0, dist(B)=2 e dist(C)=5. Quando <b>B</b> é escolhido
+      como definitivo, o algoritmo verifica o caminho A→B→C (pesos A–B = 2 e B–C = 1). O que acontece com
+      dist(C)?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>dist(C) é atualizado para 3, pois A→B→C custa menos que 5.</button>
+      <button class="alt"><span class="al">2ª</span>dist(C) passa a ser infinito, já que o caminho via B é descartado.</button>
+      <button class="alt"><span class="al">3ª</span>O algoritmo interrompe, pois encontrou um ciclo.</button>
+      <button class="alt"><span class="al">4ª</span>Nada muda, pois dist(C) já está no menor valor possível.</button>
+      <button class="alt"><span class="al">5ª</span>dist(B) é atualizado para 5, redistribuindo o custo.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> O valor 5 era apenas o custo da aresta <b>direta</b> A→C. Ao fechar B, o
+      algoritmo testa <code>dist(B) + peso(B,C) = 2 + 1 = 3</code>. Como <b>3 &lt; 5</b>, relaxa: dist(C) = 3
+      e o percurso de C passa a ser B. A 5ª está errada porque <b>B já foi fechado</b> — vértice fechado
+      nunca mais é alterado.</div></div>
+  </div>
+
+  <div class="exam" data-ok="2">
+    <div class="head">22ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Dígrafo com origem em <b>D</b>, onde <code>−1</code> representa custo infinito. Arestas saindo de D:
+      A (5), B (9), E (5), F (1). Saindo de F: G (1), E (3). Qual a estimativa de custo
+      <b>após duas iterações</b>?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>A: 5 &nbsp; B: 9 &nbsp; C: −1 &nbsp; D: 0 &nbsp; E: 5 &nbsp; F: 1 &nbsp; G: −1</button>
+      <button class="alt"><span class="al">2ª</span>A: 5 &nbsp; B: 9 &nbsp; C: −1 &nbsp; D: 0 &nbsp; E: 4 &nbsp; F: 1 &nbsp; G: 2</button>
+      <button class="alt"><span class="al">3ª</span>A: 5 &nbsp; B: 7 &nbsp; C: 8 &nbsp; D: 0 &nbsp; E: 4 &nbsp; F: 1 &nbsp; G: 2</button>
+      <button class="alt"><span class="al">4ª</span>A: 5 &nbsp; B: 6 &nbsp; C: 10 &nbsp; D: 0 &nbsp; E: 4 &nbsp; F: 1 &nbsp; G: −1</button>
+      <button class="alt"><span class="al">5ª</span>A: 5 &nbsp; B: 6 &nbsp; C: 8 &nbsp; D: 0 &nbsp; E: 3 &nbsp; F: 1 &nbsp; G: 2</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>2ª alternativa.</b> <b>Iteração 1</b> — a partir de D: A = 5, B = 9, E = 5, F = 1; C e G continuam
+      −1. <b>Iteração 2</b> — o menor aberto é <b>F (1)</b>. Relaxando de F: G recebe <code>1 + 1 = 2</code>
+      e E melhora de 5 para <code>1 + 3 = 4</code>. <b>C continua −1</b>, porque nenhuma aresta alcançou C
+      ainda — é esse detalhe que elimina as alternativas 3, 4 e 5.</div></div>
+  </div>
+
+  <div class="exam" data-ok="2">
+    <div class="head">23ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Floyd–Warshall analisando o par (C, D) com intermediário <b>k = B</b>. Na matriz atual:
+      dist(C,D) = 9, dist(C,B) = 4, dist(B,D) = 3. O que o algoritmo fará?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Atualiza dist(B,D) para 9, pois esse é o valor da soma.</button>
+      <button class="alt"><span class="al">2ª</span>Atualiza dist(C,D) para 7, já que dist(C,B) + dist(B,D) &lt; dist(C,D).</button>
+      <button class="alt"><span class="al">3ª</span>Não prossegue, pois a matriz não permite atualização intermediária.</button>
+      <button class="alt"><span class="al">4ª</span>Não altera nada, pois dist(C,D) já possui o menor valor.</button>
+      <button class="alt"><span class="al">5ª</span>Substitui dist(C,B) por 7, pois achou caminho mais curto até B.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>2ª alternativa.</b> Aplicando a regra
+      <code>dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])</code>: <code>4 + 3 = 7</code> e
+      <b>7 &lt; 9</b>, então dist(C,D) vira <b>7</b>. As alternativas 1 e 5 tentam alterar os valores que
+      <b>alimentam</b> a conta — só o alvo <code>dist[i][j]</code> muda.</div></div>
+  </div>
+
+  <div class="exam" data-ok="3">
+    <div class="head">QUESTÃO EXTRA · material de revisão</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Uma empresa quer conectar todas as unidades com o <b>menor custo total</b>, sem ciclos, e escolheu
+      Kruskal. Assinale a correta.</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Kruskal começa numa origem e expande um único componente.</button>
+      <button class="alt"><span class="al">2ª</span>Kruskal só pode ser aplicado a grafos direcionados.</button>
+      <button class="alt"><span class="al">3ª</span>Kruskal ordena as arestas por peso e aceita uma aresta quando ela não cria ciclo.</button>
+      <button class="alt"><span class="al">4ª</span>Kruskal maximiza o número de arestas da solução.</button>
+      <button class="alt"><span class="al">5ª</span>Kruskal busca a menor rota entre uma origem e todos os destinos.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>3ª alternativa.</b> Ordenação crescente + teste de ciclo são o núcleo do Kruskal, e o
+      <b>Union-Find</b> torna esse teste eficiente. A 1ª descreve o <b>Prim</b>; a 5ª descreve o
+      <b>Dijkstra</b>; e a 4ª inverte o objetivo — a AGM usa o <b>mínimo</b> de arestas possível,
+      exatamente <b>n − 1</b>.</div></div>
+  </div>
+
+  <div class="exam" data-ok="3">
+    <div class="head">QUESTÃO EXTRA · afirmativas I, II e III</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Mapa rodoviário não direcionado, tempos de ida e volta iguais. Avalie:<br>
+      <b>I.</b> A partir de i, Dijkstra encontra o menor tempo de i para todos os demais, se os pesos forem
+      não negativos.<br>
+      <b>II.</b> Uma AGM gerada por Kruskal necessariamente contém um caminho de menor custo entre i e k.<br>
+      <b>III.</b> Se um caminho mínimo entre i e k contém w, então o subcaminho de w até k também é mínimo.
+    </div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>I apenas.</button>
+      <button class="alt"><span class="al">2ª</span>II apenas.</button>
+      <button class="alt"><span class="al">3ª</span>I e III.</button>
+      <button class="alt"><span class="al">4ª</span>I, II e III.</button>
+      <button class="alt"><span class="al">5ª</span>II e III apenas.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>3ª alternativa (I e III).</b> <b>I</b> é verdadeira sob a hipótese de pesos não negativos — que o
+      enunciado garante. <b>II é falsa</b>: a AGM minimiza o custo <b>total da rede</b>, não preserva
+      caminhos mínimos entre pares. <b>III</b> é verdadeira pela <b>subestrutura ótima</b> dos caminhos
+      mínimos, propriedade que sustenta Dijkstra e Floyd–Warshall.</div></div>
+  </div>
+</section>
+
+<!-- ===================== 9 ===================== -->
+<section id="cola">
+  <h2><span class="num">9</span>Cola de 1 minuto</h2>
+  <div class="cols2">
+    <div class="card">
+      <h4>Dijkstra</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>Origem = <b>0</b>, resto = <b>−1</b> (infinito)</li>
+        <li>Fecha sempre o <b>menor aberto</b></li>
+        <li>Relaxa: <code>dist[a] + peso &lt; dist[v]</code></li>
+        <li>Anota o <b>Percurso</b> (de onde vim)</li>
+        <li>Rota = ler Percurso <b>de trás pra frente</b></li>
+        <li><b>Fechado nunca muda</b></li>
+        <li>Não vale com <b>peso negativo</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Floyd–Warshall</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><code>min(dist[i][j], dist[i][k]+dist[k][j])</code></li>
+        <li>Todos os pares, aceita negativo</li>
+        <li>Custo <b>O(n³)</b></li>
+        <li>Só <b>dist[i][j]</b> é alterado</li>
+      </ul>
+      <h4>Matriz de distância</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>Diagonal = <b>0</b></li>
+        <li>Linha → coluna</li>
+        <li>Dirigido ⇒ <b>não</b> é simétrica</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Kruskal × Prim</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><b>Kruskal</b>: ordena arestas, evita ciclo (Union-Find)</li>
+        <li><b>Prim</b>: cresce de uma semente, menor aresta da fronteira</li>
+        <li>Sempre <b>n − 1</b> arestas</li>
+        <li>Mesmo <b>custo total</b> nos dois</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Qual usar</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>1 origem, peso ≥ 0 → <b>Dijkstra</b></li>
+        <li>1 origem, peso &lt; 0 → <b>Bellman–Ford</b></li>
+        <li>Todos os pares → <b>Floyd–Warshall</b></li>
+        <li>Conectar tudo barato → <b>AGM</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box dica"><b class="t">Último conselho</b>
+  Na discursiva, <b>desenhe a tabela</b> mesmo que você já saiba a resposta de cabeça. O gabarito de 2025
+  deu nota pelo <b>processo</b>: tabela inicial, cada iteração, e a reconstrução da rota lendo o Percurso de
+  trás para frente. Escrever só "a resposta é D → B → F = 6" vale bem menos.</div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  Guia de Teoria e Modelos de Grafos · Estudo Dirigido 2 · Marco Antônio Lopes Ribeiro — UNIFAGOC<br>
+  Fontes: devolutiva da Prova do ED2 2025-2 (317079, questões 17 a 23), material
+  <i>Algoritmos em Grafos — Revisão para a prova</i> e o índice do ED II no Canvas.
+</div></footer>
+
+<script>
+var total = 0, acertos = 0;
+document.querySelectorAll('.exam').forEach(function(ex){
+  total++;
+  var ok = parseInt(ex.dataset.ok, 10);
+  var alts = ex.querySelectorAll('.alt');
+  alts.forEach(function(b, i){
+    b.addEventListener('click', function(){
+      if (ex.classList.contains('done')) return;
+      ex.classList.add('done');
+      alts.forEach(function(x){ x.disabled = true; });
+      alts[ok - 1].classList.add('right');
+      if (i + 1 === ok) { acertos++; }
+      else { b.classList.add('wrong'); }
+      document.getElementById('acertos').textContent = acertos;
+    });
+  });
+});
+document.getElementById('total').textContent = total;
+function reiniciar(){
+  acertos = 0;
+  document.getElementById('acertos').textContent = 0;
+  document.querySelectorAll('.exam').forEach(function(ex){
+    ex.classList.remove('done');
+    ex.querySelectorAll('.alt').forEach(function(b){
+      b.disabled = false;
+      b.classList.remove('right','wrong');
+    });
+  });
+}
+</script>
+</body>
+</html>

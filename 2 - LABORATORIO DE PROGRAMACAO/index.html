@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratório ED2 · Guia da prova</title>
+<style>
+:root{
+  --bg:#f6f7f5; --card:#ffffff; --text:#1d2521; --muted:#5b6660; --line:#d5dbd7;
+  --accent:#2f7d68; --accent-soft:#e3f1ec; --accent-text:#1f5c4b;
+  --warn:#9a5b00; --warn-soft:#fff3dc; --bad:#b3261e; --bad-soft:#fde8e6;
+  --good:#1e7a3c; --good-soft:#e2f4e7; --code-bg:#f1f3f2; --code-text:#1d2521;
+  --kw:#7a2fa0; --fn:#0b6aa2; --str:#a1470d; --num:#8a6d00; --com:#6b7a72;
+  --exam-head:#d9d9d9; --exam-line:#555; --exam-label:#f3f3f3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#121614; --card:#1b201e; --text:#e6ebe8; --muted:#a3ada8; --line:#333b37;
+    --accent:#5fc3a4; --accent-soft:#1f3a31; --accent-text:#8fe0c6;
+    --warn:#f0b75a; --warn-soft:#3a2c14; --bad:#ff8a80; --bad-soft:#3d1e1b;
+    --good:#7ddc98; --good-soft:#18331f; --code-bg:#0f1311; --code-text:#e6ebe8;
+    --kw:#d79bf2; --fn:#7cc7f5; --str:#f2a36b; --num:#e8cd62; --com:#86948d;
+    --exam-head:#353b38; --exam-line:#6d7571; --exam-label:#232826;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.top{background:var(--card);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-top:28px;padding-bottom:22px}
+.back{display:inline-block;margin-bottom:10px;font-size:13px;text-decoration:none}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.lead{color:var(--muted);margin:0;max-width:760px}
+nav.sticky{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+nav.sticky .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:thin}
+nav.sticky a{flex:0 0 auto;text-decoration:none;color:var(--text);font-size:14px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+nav.sticky a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:34px 0 10px}
+h2{font-size:24px;margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+h2 .num{font-size:14px;font-weight:700;color:var(--accent-text);background:var(--accent-soft);border-radius:8px;padding:2px 8px}
+h3{font-size:18px;margin:26px 0 8px}
+h4{margin:16px 0 4px;font-size:15px}
+p{margin:8px 0}
+.card{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.frase{font-size:18px;font-weight:600;border-left:4px solid var(--accent);padding:6px 0 6px 14px;margin:14px 0}
+.box{border-radius:10px;padding:12px 14px;margin:12px 0;border:1px solid transparent}
+.box b.t{display:block;margin-bottom:4px}
+.box.dica{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.box.peg{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.box.erro{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
+.box ul{margin:6px 0 0;padding-left:20px}
+.index-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+.index-grid a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.index-grid a:hover{border-color:var(--accent)}
+.index-grid .n{font-size:12px;font-weight:700;color:var(--accent)}
+.index-grid .tt{font-weight:650;display:block}
+.index-grid .ds{font-size:13px;color:var(--muted)}
+pre{background:var(--code-bg);color:var(--code-text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font:14px/1.5 ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;margin:10px 0}
+code{font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;font-size:.92em}
+:not(pre)>code{background:var(--code-bg);border:1px solid var(--line);border-radius:5px;padding:0 5px}
+.kw{color:var(--kw);font-weight:600}.fn{color:var(--fn)}.st{color:var(--str)}.nu{color:var(--num)}.co{color:var(--com);font-style:italic}
+table.t{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.t th{background:var(--exam-label)}
+.scroll{overflow-x:auto}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.cols3,.cols2{grid-template-columns:minmax(0,1fr)}}
+.tag{display:inline-block;white-space:nowrap;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.tag.caiu{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent)}
+.tag.tema{background:var(--accent-soft);color:var(--accent-text)}
+.tag.atv{background:var(--good-soft);color:var(--good);border:1px solid color-mix(in srgb,var(--good) 40%,transparent)}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:6px}
+button{font:inherit;font-size:14px;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);padding:7px 12px}
+button:hover{border-color:var(--accent)}
+/* ======= visual estilo prova (igual ao da devolutiva) ======= */
+.exam{border:1px solid var(--exam-line);margin:18px 0;background:var(--card)}
+.exam .head{background:var(--exam-head);border-bottom:1px solid var(--exam-line);text-align:center;font-weight:700;padding:6px 10px}
+.exam .r{display:grid;grid-template-columns:170px minmax(0,1fr);border-bottom:1px solid var(--exam-line)}
+.exam .r:last-child{border-bottom:0}
+.exam .lab{font-weight:700;padding:10px;border-right:1px solid var(--exam-line);background:var(--exam-label)}
+.exam .val{padding:10px 12px;min-width:0}
+@media (max-width:700px){.exam .r{grid-template-columns:minmax(0,1fr)}.exam .lab{border-right:0;border-bottom:1px solid var(--exam-line)}}
+.alt{display:block;width:100%;text-align:left;border:1px solid transparent;border-radius:8px;padding:6px 8px;margin:2px 0;background:transparent;color:var(--text);font-size:15px;line-height:1.5}
+.alt:hover{border-color:var(--line);background:var(--bg)}
+.alt .al{font-weight:700;display:block}
+.alt.right{background:var(--good-soft);border-color:var(--good)}
+.alt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.alt[disabled]{cursor:default}
+.exam .coment{display:none}
+.exam.done .coment{display:grid}
+.scorebar{position:sticky;top:52px;z-index:4;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px}
+.scorebar .sc{font-weight:700}
+@media (max-width:700px){.scorebar{position:static}}
+.gui{border:1px solid var(--exam-line);border-radius:6px;background:var(--card);max-width:420px;margin:10px 0;font-size:14px;overflow:hidden}
+.gui .bar{background:var(--exam-head);padding:4px 8px;font-weight:700;font-size:13px;border-bottom:1px solid var(--exam-line);display:flex;justify-content:space-between}
+.gui .body{padding:12px}
+.gui .fld{display:grid;grid-template-columns:90px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.gui .inp{border:1px solid var(--exam-line);background:var(--bg);padding:4px 6px;border-radius:3px;min-height:26px}
+.gui .btnrow{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.gui .b{border:1px solid var(--exam-line);background:var(--exam-label);padding:3px 14px;border-radius:3px;font-size:13px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="../index.html">← todas as matérias</a>
+    <div class="eyebrow">Laboratório de Programação · Estudo Dirigido 2</div>
+    <h1>Interfaces gráficas em Java</h1>
+    <p class="lead">Montado a partir da <b>devolutiva da Prova do ED1</b> (30 questões, 5 blocos) e do conteúdo
+    novo do ED2. A prova repete a mesma estrutura: mesmos blocos, mesma quantidade de questões, mesmo formato
+    de tabela com <i>Enunciado → Alternativas → Resposta comentada</i>. O que muda é o conteúdo de cada bloco.</p>
+  </div>
+</header>
+
+<nav class="sticky"><div class="wrap">
+  <a href="#prova">0 · A prova</a>
+  <a href="#lab">1 · Laboratório (GUI)</a>
+  <a href="#poo">2 · POO</a>
+  <a href="#atividades">3 · Atividades</a>
+  <a href="#simulado">4 · Simulado</a>
+  <a href="#cola">5 · Cola</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="indice">
+  <h2>Índice</h2>
+  <p>Onde aparece <span class="tag caiu">caiu no ED1</span>, é assunto que já foi cobrado na devolutiva —
+  tem chance alta de voltar. <span class="tag atv">atividade</span> marca o que saiu das suas práticas.</p>
+  <div class="index-grid">
+    <a href="#prova"><span class="n">0</span><span class="tt">Como é a prova</span><span class="ds">Os 5 blocos e quantas questões cada um teve</span></a>
+    <a href="#lab"><span class="n">1</span><span class="tt">Laboratório — GUIs Java</span><span class="ds">Swing, JavaFX, componentes, layouts e eventos</span></a>
+    <a href="#poo"><span class="n">2</span><span class="tt">POO que cai junto</span><span class="ds">Encapsulamento, polimorfismo, sobrecarga, interface</span></a>
+    <a href="#atividades"><span class="n">3</span><span class="tt">Suas atividades</span><span class="ds">O que cada ATV do ED2 pode virar questão</span></a>
+    <a href="#simulado"><span class="n">4</span><span class="tt">Simulado</span><span class="ds">Múltipla escolha com resposta comentada</span></a>
+    <a href="#cola"><span class="n">5</span><span class="tt">Cola de 1 minuto</span><span class="ds">Revisão rápida antes de entrar na sala</span></a>
+  </div>
+</section>
+
+<!-- ============ 0 ============ -->
+<section id="prova">
+  <h2><span class="num">0</span>Como é a prova</h2>
+  <p>A devolutiva do ED1 mostra exatamente o formato. São <b>30 questões</b> divididas em 5 blocos, e cada
+  questão aparece numa tabela com <b>Resposta comentada</b> e <b>Feedback</b>.</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Bloco</th><th>Questões no ED1</th><th>O que esperar no ED2</th></tr>
+    <tr><td><b>Teoria e Modelos de Grafos</b></td><td>1 a 7 &nbsp;(7)</td><td>Mesma base: grau, matrizes, CFG</td></tr>
+    <tr><td><b>Conhecimentos Gerais</b></td><td>8 e 9 &nbsp;(2)</td><td>Texto argumentativo, ética e tecnologia</td></tr>
+    <tr><td><b>Desenvolvimento Web e Mobile</b></td><td>10 a 16 &nbsp;(7)</td><td>Angular: binding, standalone, Material</td></tr>
+    <tr><td><b>Banco de Dados II</b></td><td>17 a 23 &nbsp;(7)</td><td>Conteúdo do ED2: JOIN, grupo, view, sequence</td></tr>
+    <tr><td><b>Laboratório de Programação</b></td><td>24 a 30 &nbsp;(7)</td><td><b>GUIs Java</b> — Swing e JavaFX</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">O que muda do ED1 para o ED2</b>
+  No ED1 o bloco de Laboratório era <b>POO pura</b> (encapsulamento, polimorfismo, interface). No ED2 o assunto
+  passa a ser <b>interface gráfica</b> — mas a POO não sai: ela volta misturada, porque todo componente Swing é
+  objeto, todo listener é interface implementada e toda janela herda de <code>JFrame</code>.</div>
+
+  <h3>Os tipos de questão que aparecem</h3>
+  <div class="cols2">
+    <div class="card"><b>1. Múltipla escolha simples</b><p>Uma afirmação correta entre cinco. É a maioria.</p></div>
+    <div class="card"><b>2. Afirmativas I, II, III</b><p>Julgar cada uma como verdadeira ou falsa e marcar a combinação.</p></div>
+    <div class="card"><b>3. Ache o erro no código</b><p>Um trecho com um defeito; você aponta qual é e como corrigir.</p></div>
+    <div class="card"><b>4. Discursiva</b><p>Escrever código ou explicar uma decisão de projeto. A devolutiva do ED1 trouxe até <i>"resposta possível 1, 2 e 3"</i>.</p></div>
+  </div>
+</section>
+
+<!-- ============ 1 ============ -->
+<section id="lab">
+  <h2><span class="num">1</span>Laboratório de Programação — GUIs Java</h2>
+  <p class="frase">O bloco novo da prova. Sete questões saem daqui.</p>
+
+  <h3>A evolução: AWT → Swing → JavaFX</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Biblioteca</th><th>Como desenha</th><th>Marca registrada</th></tr>
+    <tr><td><b>AWT</b> (1995)</td><td>Usa componentes <b>nativos</b> do sistema operacional</td><td>Chamados <i>heavyweight</i>. Mudam de aparência conforme o SO</td></tr>
+    <tr><td><b>Swing</b> (1998)</td><td>Desenha tudo <b>em Java</b>, por cima do AWT</td><td><i>Lightweight</i>. Classes começam com <b>J</b>. Tem Look and Feel trocável</td></tr>
+    <tr><td><b>JavaFX</b> (2008)</td><td>Grafo de cena, com aceleração gráfica</td><td>Separa layout (<b>FXML</b>) de estilo (<b>CSS</b>) e de lógica (controller)</td></tr>
+  </table></div>
+
+  <div class="box peg"><b class="t">Pegadinha clássica</b>
+  Swing <b>não substituiu</b> o AWT — ele foi construído <i>em cima</i> dele. Por isso o
+  <code>ActionListener</code>, que você usa em Swing, vem de <code>java.awt.event</code>. Se a alternativa disser
+  "Swing eliminou completamente o AWT", está errada.</div>
+
+  <h3>Componentes que você precisa reconhecer de cara</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Componente</th><th>Para quê</th><th>Como se lê o valor</th></tr>
+    <tr><td><code>JFrame</code></td><td>A janela principal</td><td>—</td></tr>
+    <tr><td><code>JPanel</code></td><td>Painel que agrupa outros componentes</td><td>—</td></tr>
+    <tr><td><code>JLabel</code></td><td>Texto fixo / rótulo</td><td><code>getText()</code></td></tr>
+    <tr><td><code>JTextField</code></td><td>Campo de uma linha</td><td><code>getText()</code> → <b>String</b></td></tr>
+    <tr><td><code>JTextArea</code></td><td>Campo de várias linhas</td><td><code>getText()</code></td></tr>
+    <tr><td><code>JButton</code></td><td>Botão</td><td>Dispara <code>ActionListener</code></td></tr>
+    <tr><td><code>JCheckBox</code></td><td>Marcar vários ao mesmo tempo</td><td><code>isSelected()</code> → <b>boolean</b></td></tr>
+    <tr><td><code>JRadioButton</code></td><td>Escolher <b>um</b> entre vários</td><td><code>isSelected()</code> + <code>ButtonGroup</code></td></tr>
+    <tr><td><code>JComboBox</code></td><td>Lista suspensa</td><td><code>getSelectedItem()</code> → <b>Object</b></td></tr>
+    <tr><td><code>JList</code></td><td>Lista visível, permite seleção múltipla</td><td><code>getSelectedValue()</code></td></tr>
+    <tr><td><code>JTable</code></td><td>Tabela de dados</td><td><code>getValueAt(l, c)</code> + <code>DefaultTableModel</code></td></tr>
+    <tr><td><code>JScrollPane</code></td><td>Dá barra de rolagem a outro componente</td><td>—</td></tr>
+  </table></div>
+
+  <div class="box erro"><b class="t">Os dois erros mais cobrados</b>
+  <ul>
+    <li><b>ButtonGroup:</b> sem ele, os <code>JRadioButton</code> podem ser marcados todos juntos. É o
+    <code>ButtonGroup</code> — e não o painel — que faz a exclusividade. Ele agrupa <b>logicamente</b>, não
+    visualmente: não aparece na tela.</li>
+    <li><b>JScrollPane:</b> <code>JTextArea</code> e <code>JTable</code> <b>não rolam sozinhos</b>. Você adiciona
+    o componente ao scroll, e o scroll ao painel:
+    <code>painel.add(new JScrollPane(tabela))</code>.</li>
+  </ul></div>
+
+  <h3>Frames — JFrame <span class="tag caiu">tema do 02 | 06</span></h3>
+<pre><span class="kw">public class</span> <span class="fn">Janela</span> <span class="kw">extends</span> JFrame {
+    <span class="kw">public</span> <span class="fn">Janela</span>() {
+        <span class="fn">setTitle</span>(<span class="st">"Cadastro de Pessoa"</span>);      <span class="co">// texto da barra de título</span>
+        <span class="fn">setSize</span>(<span class="nu">400</span>, <span class="nu">300</span>);                   <span class="co">// largura x altura em pixels</span>
+        <span class="fn">setDefaultCloseOperation</span>(EXIT_ON_CLOSE); <span class="co">// fecha o programa junto com a janela</span>
+        <span class="fn">setLocationRelativeTo</span>(<span class="kw">null</span>);           <span class="co">// centraliza na tela</span>
+        <span class="fn">setVisible</span>(<span class="kw">true</span>);                     <span class="co">// SEMPRE por último</span>
+    }
+}</pre>
+
+  <div class="box peg"><b class="t">Duas pegadinhas de JFrame</b>
+  <ul>
+    <li><code>setVisible(true)</code> vem <b>por último</b>. Componente adicionado depois disso pode não
+    aparecer até a janela ser redesenhada.</li>
+    <li>Sem <code>setDefaultCloseOperation(EXIT_ON_CLOSE)</code> o padrão é apenas <b>esconder</b> a janela
+    (<code>HIDE_ON_CLOSE</code>) — o programa continua rodando em segundo plano.</li>
+  </ul></div>
+
+  <h3>Layouts — como os componentes se organizam</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Layout</th><th>Comportamento</th><th>Quando cai</th></tr>
+    <tr><td><code>FlowLayout</code></td><td>Um ao lado do outro, quebra linha quando acaba o espaço</td><td>Padrão do <b>JPanel</b></td></tr>
+    <tr><td><code>BorderLayout</code></td><td>5 regiões: NORTH, SOUTH, EAST, WEST, CENTER</td><td>Padrão do <b>JFrame</b>. Só <b>um</b> componente por região</td></tr>
+    <tr><td><code>GridLayout</code></td><td>Grade de linhas × colunas, todas as células do mesmo tamanho</td><td>Calculadoras, teclados</td></tr>
+    <tr><td><code>GroupLayout</code></td><td>Gerado pelo editor visual do NetBeans</td><td>É o que aparece no <b>seu</b> código das ATVs</td></tr>
+    <tr><td><code>CardLayout</code></td><td>Empilha painéis e mostra um de cada vez</td><td>Troca de telas sem abrir janela nova</td></tr>
+    <tr><td><code>null</code></td><td>Posição absoluta com <code>setBounds()</code></td><td>Quebra ao redimensionar — evite</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">Decore estes dois padrões</b>
+  <b>JFrame</b> nasce com <code>BorderLayout</code>; <b>JPanel</b> nasce com <code>FlowLayout</code>. E no
+  BorderLayout, se você adicionar dois componentes na mesma região, o segundo <b>substitui</b> o primeiro —
+  o primeiro some.</div>
+
+  <h3>Eventos — o clique do botão</h3>
+  <p>Este é o coração do bloco. Um evento em Swing tem sempre três peças: a <b>fonte</b> (o botão), o
+  <b>ouvinte</b> (<code>ActionListener</code>) e o <b>objeto de evento</b> (<code>ActionEvent</code>).</p>
+<pre>botaoSalvar.<span class="fn">addActionListener</span>(<span class="kw">new</span> <span class="fn">ActionListener</span>() {
+    <span class="kw">public void</span> <span class="fn">actionPerformed</span>(ActionEvent e) {
+        String nome = campoNome.<span class="fn">getText</span>();
+        JOptionPane.<span class="fn">showMessageDialog</span>(<span class="kw">null</span>, <span class="st">"Salvo: "</span> + nome);
+    }
+});
+
+<span class="co">// forma curta, com expressão lambda (Java 8+)</span>
+botaoSalvar.<span class="fn">addActionListener</span>(e -> <span class="fn">salvar</span>());</pre>
+
+  <div class="box peg"><b class="t">O erro que mais aparece em "ache o erro"</b>
+  Criar o listener e <b>esquecer de registrar</b> no componente. Escrever o método
+  <code>actionPerformed</code> não faz nada sozinho — sem <code>addActionListener(...)</code>, o clique é
+  ignorado e o programa <b>não dá erro nenhum</b>, simplesmente não reage. Um botão sem listener compila e roda.</div>
+
+  <h3>Menus — JMenuBar, JMenu, JMenuItem <span class="tag caiu">tema do 02 | 07</span></h3>
+  <p>A hierarquia é fixa e cai em questão de ordenação:</p>
+  <p style="text-align:center;font-family:ui-monospace,Consolas,monospace;font-size:15px">
+  JFrame → <b>JMenuBar</b> → <b>JMenu</b> → <b>JMenuItem</b></p>
+<pre>JMenuBar barra = <span class="kw">new</span> <span class="fn">JMenuBar</span>();
+JMenu menuCadastro = <span class="kw">new</span> <span class="fn">JMenu</span>(<span class="st">"Cadastro"</span>);
+JMenuItem itemCliente = <span class="kw">new</span> <span class="fn">JMenuItem</span>(<span class="st">"Cliente"</span>);
+
+menuCadastro.<span class="fn">add</span>(itemCliente);
+barra.<span class="fn">add</span>(menuCadastro);
+<span class="fn">setJMenuBar</span>(barra);   <span class="co">// método do JFrame — NÃO é add()</span></pre>
+  <div class="box peg"><b class="t">Atenção</b> A barra de menu entra com
+  <code>setJMenuBar(barra)</code>, não com <code>add(barra)</code>. Se usar <code>add()</code>, ela vira um
+  componente comum no meio da janela.</div>
+
+  <h3>Caixas de diálogo — JOptionPane <span class="tag caiu">tema do 02 | 09</span></h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Método</th><th>Serve para</th><th>Devolve</th></tr>
+    <tr><td><code>showMessageDialog</code></td><td>Avisar alguma coisa</td><td><b>void</b> — não devolve nada</td></tr>
+    <tr><td><code>showInputDialog</code></td><td>Pedir um dado digitado</td><td><b>String</b> (ou <code>null</code> se cancelar)</td></tr>
+    <tr><td><code>showConfirmDialog</code></td><td>Perguntar Sim / Não</td><td><b>int</b> — <code>JOptionPane.YES_OPTION</code> vale 0</td></tr>
+  </table></div>
+  <div class="box erro"><b class="t">Duas armadilhas de tipo</b>
+  <ul>
+    <li><code>showInputDialog</code> devolve <b>String</b>, mesmo que a pessoa digite número. Para usar como
+    número é preciso <code>Integer.parseInt(texto)</code> — e isso pode lançar
+    <code>NumberFormatException</code>.</li>
+    <li><code>showConfirmDialog</code> devolve <b>int</b>, não boolean. Comparar com <code>true</code> nem
+    compila; o certo é <code>if (resp == JOptionPane.YES_OPTION)</code>.</li>
+  </ul></div>
+
+  <h3>JavaFX — o que cai <span class="tag caiu">temas 02 | 10 a 02 | 14</span></h3>
+  <p>A analogia oficial é de teatro, e a prova costuma cobrar justamente essa hierarquia:</p>
+  <div class="scroll"><table class="t">
+    <tr><th>Elemento</th><th>É o quê</th><th>Equivalente no Swing</th></tr>
+    <tr><td><code>Stage</code></td><td>O <b>palco</b> — a janela</td><td><code>JFrame</code></td></tr>
+    <tr><td><code>Scene</code></td><td>A <b>cena</b> — o conteúdo exibido no palco</td><td>O <code>ContentPane</code></td></tr>
+    <tr><td><code>Node</code></td><td>Cada <b>ator</b> — botão, campo, imagem</td><td>Os componentes <code>J...</code></td></tr>
+  </table></div>
+<pre><span class="kw">public class</span> <span class="fn">App</span> <span class="kw">extends</span> Application {
+    <span class="kw">public void</span> <span class="fn">start</span>(Stage palco) {          <span class="co">// método obrigatório</span>
+        Button botao = <span class="kw">new</span> <span class="fn">Button</span>(<span class="st">"Clique"</span>);
+        botao.<span class="fn">setOnAction</span>(e -> <span class="fn">System</span>.out.println(<span class="st">"Oi"</span>));
+        Scene cena = <span class="kw">new</span> <span class="fn">Scene</span>(<span class="kw">new</span> <span class="fn">StackPane</span>(botao), <span class="nu">300</span>, <span class="nu">200</span>);
+        palco.<span class="fn">setScene</span>(cena);
+        palco.<span class="fn">show</span>();
+    }
+}</pre>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Conceito</th><th>Swing</th><th>JavaFX</th></tr>
+    <tr><td>Evento de clique</td><td><code>addActionListener</code></td><td><code>setOnAction</code></td></tr>
+    <tr><td>Layout em arquivo separado</td><td>não tem</td><td><b>FXML</b> (XML)</td></tr>
+    <tr><td>Estilo</td><td>Look and Feel</td><td><b>CSS</b> de verdade</td></tr>
+    <tr><td>Ligar campo a dado</td><td>manual, no listener</td><td><b>Property binding</b> — atualiza sozinho</td></tr>
+    <tr><td>Separação de responsabilidades</td><td>tudo na classe da janela</td><td>FXML + Controller + CSS</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">A resposta que a prova quer sobre FXML</b>
+  O FXML descreve <b>a estrutura da interface</b>; o <b>Controller</b> (classe Java) concentra a lógica; o
+  <b>CSS</b> concentra a aparência. A ligação entre eles é feita com <code>fx:controller</code> no FXML e com
+  a anotação <code>@FXML</code> nos campos da classe. É a mesma ideia de separação que o Angular cobra com
+  <code>templateUrl</code> / classe / <code>styleUrl</code> — repare que os dois blocos da prova cobram o
+  <b>mesmo princípio</b>.</div>
+
+  <h3>Validação de formulários <span class="tag caiu">tema do 02 | 14</span></h3>
+<pre><span class="kw">if</span> (campoNome.<span class="fn">getText</span>().<span class="fn">trim</span>().<span class="fn">isEmpty</span>()) {
+    JOptionPane.<span class="fn">showMessageDialog</span>(<span class="kw">null</span>, <span class="st">"Informe o nome"</span>,
+            <span class="st">"Erro"</span>, JOptionPane.ERROR_MESSAGE);
+    campoNome.<span class="fn">requestFocus</span>();   <span class="co">// devolve o cursor ao campo</span>
+    <span class="kw">return</span>;                      <span class="co">// interrompe: não salva</span>
+}
+<span class="kw">try</span> {
+    <span class="kw">int</span> idade = Integer.<span class="fn">parseInt</span>(campoIdade.<span class="fn">getText</span>());
+} <span class="kw">catch</span> (NumberFormatException ex) {
+    JOptionPane.<span class="fn">showMessageDialog</span>(<span class="kw">null</span>, <span class="st">"Idade deve ser um número"</span>);
+}</pre>
+  <div class="box dica"><b class="t">Boas práticas que viram alternativa correta</b>
+  Validar <b>antes</b> de gravar; usar <code>trim()</code> para não aceitar só espaços; tratar a conversão com
+  <code>try/catch</code>; dar mensagem específica dizendo <b>qual</b> campo está errado; e devolver o foco para
+  o campo com problema.</div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="poo">
+  <h2><span class="num">2</span>POO que cai junto <span class="tag caiu">caiu no ED1</span></h2>
+  <p>As questões 24 a 30 do ED1 foram todas de POO. Como o ED2 é GUI, o mais provável é que ela volte
+  <b>aplicada à interface</b>. Revisão do essencial:</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Pilar</th><th>Definição que a devolutiva usou</th><th>Na interface gráfica</th></tr>
+    <tr><td><b>Encapsulamento</b></td><td>Protege o estado interno e dá acesso controlado por métodos</td><td>Atributos <code>private</code> na classe da janela, com get/set</td></tr>
+    <tr><td><b>Herança</b></td><td>Classe especializada reutiliza características de outra</td><td><code>class Janela extends JFrame</code></td></tr>
+    <tr><td><b>Polimorfismo</b></td><td>Mesma operação, comportamentos diferentes conforme o objeto</td><td>Vários listeners implementando <code>actionPerformed</code> de jeitos diferentes</td></tr>
+    <tr><td><b>Abstração</b></td><td>Representa só o que é relevante, ocultando o resto</td><td>Você usa <code>JButton</code> sem saber como ele é desenhado</td></tr>
+  </table></div>
+
+  <div class="box erro"><b class="t">As três confusões que a devolutiva do ED1 corrigiu</b>
+  <ul>
+    <li><b>get/set não garante encapsulamento.</b> Se o atributo for <code>public</code>, o acesso direto
+    continua liberado — <code>animal.nome = "Rex"</code> funciona. O encapsulamento vem do
+    <code>private</code>, não da existência dos métodos.</li>
+    <li><b>Sobrecarga ≠ sobrescrita.</b> Sobrecarga (<i>overload</i>) é o mesmo nome com <b>parâmetros
+    diferentes</b>, na mesma classe. Sobrescrita (<i>override</i>) é a subclasse redefinindo um método herdado,
+    <b>mantendo a assinatura</b>.</li>
+    <li><b>Atributo semelhante não justifica herança.</b> Herança precisa de uma relação real de
+    especialização ("é um tipo de"), não só de campos parecidos.</li>
+  </ul></div>
+
+  <div class="box dica"><b class="t">Interface</b>
+  Uma classe usa <code>implements</code> para assumir o contrato de uma interface, e <code>extends</code> para
+  herdar de uma classe. <code>ActionListener</code> é exatamente isso: uma interface que obriga sua classe a ter
+  o método <code>actionPerformed</code>. Classe abstrata <b>não pode ser instanciada</b> diretamente.</div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="atividades">
+  <h2><span class="num">3</span>Suas atividades — o que cada uma pode virar questão</h2>
+  <p>Estas são as 4 práticas do ED2 que estão no seu GitHub. A prova costuma tirar questão do que foi feito
+  em aula.</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Atividade</th><th>O que tem nela</th><th>Questão provável</th></tr>
+    <tr><td><b>ATV2-1</b> · Formulário Pessoa</td><td><code>JLabel</code>, <code>JTextField</code>, <code>JButton</code>, validação</td><td>Ler valor do campo; validar vazio; qual método devolve o texto</td></tr>
+    <tr><td><b>Atv2-2</b> · Sistema Menu</td><td><code>JMenuBar</code>, <code>JMenu</code>, <code>JMenuItem</code></td><td>Ordem da hierarquia; <code>setJMenuBar</code> vs <code>add</code></td></tr>
+    <tr><td><b>Atv2-3</b> · Janela</td><td><code>JFrame</code>, tamanho, fechamento, layout</td><td><code>setDefaultCloseOperation</code>; ordem do <code>setVisible</code></td></tr>
+    <tr><td><b>Atv2-4</b> · Sistema Biblioteca (dupla)</td><td><code>JTable</code>, <code>JComboBox</code>, <code>CardLayout</code>, <code>JOptionPane</code>, POO do ED1</td><td>Troca de telas com CardLayout; preencher tabela; herança e interface <code>Gerenciavel</code></td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">Por que a Atv2-4 é a mais provável</b>
+  Ela é a única que junta <b>GUI + POO</b>: reaproveita as classes <code>Livro</code>, <code>Membro</code>,
+  <code>Emprestimo</code> e a interface <code>Gerenciavel</code> do ED1 e coloca uma interface gráfica por cima.
+  É exatamente a ponte entre o bloco de Laboratório do ED1 (POO) e o do ED2 (GUI) — e por isso o cenário mais
+  fácil de virar questão discursiva.</div>
+
+  <h3>Como uma tela vira questão</h3>
+  <div class="gui">
+    <div class="bar"><span>Cadastro de Pessoa</span><span>— ▫ ✕</span></div>
+    <div class="body">
+      <div class="fld"><span>Nome</span><div class="inp"></div></div>
+      <div class="fld"><span>Email</span><div class="inp"></div></div>
+      <div class="fld"><span>Idade</span><div class="inp"></div></div>
+      <div class="btnrow"><span class="b">Salvar</span><span class="b">Cancelar</span></div>
+    </div>
+  </div>
+  <p>Numa tela assim, as perguntas clássicas são: <b>qual componente</b> é cada elemento; <b>qual layout</b>
+  organiza os campos; <b>o que acontece</b> ao clicar em Salvar; e <b>onde entra a validação</b>.</p>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="simulado">
+  <h2><span class="num">4</span>Simulado estilo prova</h2>
+  <p>Mesmo formato da devolutiva. Clique numa alternativa para ver a resposta comentada.</p>
+
+  <div class="scorebar">
+    <span class="sc">Acertos: <span id="acertos">0</span> / <span id="total">0</span></span>
+    <button onclick="reiniciar()">Recomeçar</button>
+  </div>
+
+  <div class="exam" data-ok="2">
+    <div class="head">1ª QUESTÃO · Laboratório de Programação</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Um formulário Swing tem três <code>JRadioButton</code> para o sexo do cliente. Ao testar, o usuário
+      consegue marcar os três ao mesmo tempo. Qual a causa?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Os botões precisam estar dentro de um <code>JPanel</code> com <code>GridLayout</code>.</button>
+      <button class="alt"><span class="al">2ª</span>Faltou adicionar os três botões a um <code>ButtonGroup</code>.</button>
+      <button class="alt"><span class="al">3ª</span>Deveria ter usado <code>JCheckBox</code> no lugar.</button>
+      <button class="alt"><span class="al">4ª</span>Falta chamar <code>setSelected(false)</code> em cada um.</button>
+      <button class="alt"><span class="al">5ª</span>O <code>JFrame</code> não permite seleção exclusiva.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>2ª alternativa.</b> A exclusividade entre <code>JRadioButton</code> é responsabilidade do
+      <code>ButtonGroup</code>, que agrupa os botões <b>logicamente</b> — ele não é um componente visual e não
+      aparece na tela. O painel e o layout só cuidam do posicionamento, não do comportamento. O
+      <code>JCheckBox</code> serve justamente para o caso oposto: marcar vários ao mesmo tempo.</div></div>
+  </div>
+
+  <div class="exam" data-ok="4">
+    <div class="head">2ª QUESTÃO · Laboratório de Programação</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      O botão "Salvar" foi criado e o método <code>actionPerformed</code> foi escrito corretamente, mas nada
+      acontece ao clicar — e o programa <b>não exibe nenhum erro</b>. Qual a causa mais provável?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>O <code>JFrame</code> está sem <code>setVisible(true)</code>.</button>
+      <button class="alt"><span class="al">2ª</span>O método <code>actionPerformed</code> precisa ser <code>static</code>.</button>
+      <button class="alt"><span class="al">3ª</span>O botão está no layout errado.</button>
+      <button class="alt"><span class="al">4ª</span>O listener não foi registrado com <code>addActionListener</code>.</button>
+      <button class="alt"><span class="al">5ª</span>Falta importar <code>javax.swing.*</code>, o que impede o clique.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>4ª alternativa.</b> Escrever o método não liga o evento ao componente. Sem
+      <code>botao.addActionListener(...)</code>, o botão não tem nenhum ouvinte e o clique é descartado
+      silenciosamente — <b>o programa compila e roda normalmente</b>, que é justamente o que torna esse erro
+      difícil de achar. Import faltando seria erro de <b>compilação</b>, não de execução.</div></div>
+  </div>
+
+  <div class="exam" data-ok="3">
+    <div class="head">3ª QUESTÃO · Laboratório de Programação</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Sobre a relação entre <code>Stage</code>, <code>Scene</code> e <code>Node</code> no JavaFX, é correto
+      afirmar:</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span><code>Node</code> contém a <code>Scene</code>, que contém o <code>Stage</code>.</button>
+      <button class="alt"><span class="al">2ª</span>Os três são equivalentes e intercambiáveis.</button>
+      <button class="alt"><span class="al">3ª</span>O <code>Stage</code> é a janela, a <code>Scene</code> é o conteúdo exibido nela, e cada <code>Node</code> é um elemento da cena.</button>
+      <button class="alt"><span class="al">4ª</span><code>Stage</code> é um componente visual adicionado ao <code>Node</code>.</button>
+      <button class="alt"><span class="al">5ª</span><code>Scene</code> substitui o <code>JFrame</code> do Swing.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>3ª alternativa.</b> A hierarquia é <code>Stage</code> → <code>Scene</code> → <code>Node</code>, na
+      analogia do teatro: palco, cena e atores. Quem corresponde ao <code>JFrame</code> do Swing é o
+      <b><code>Stage</code></b>, não a <code>Scene</code> — por isso a 5ª está errada.</div></div>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">4ª QUESTÃO · Laboratório de Programação</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      O retorno de <code>JOptionPane.showInputDialog(null, "Idade:")</code> é atribuído a uma variável. Qual o
+      tipo e qual o cuidado necessário?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Devolve <code>String</code>; para usar como número é preciso converter com <code>Integer.parseInt</code>, tratando <code>NumberFormatException</code>.</button>
+      <button class="alt"><span class="al">2ª</span>Devolve <code>int</code> diretamente, sem conversão.</button>
+      <button class="alt"><span class="al">3ª</span>Devolve <code>boolean</code> indicando se o usuário confirmou.</button>
+      <button class="alt"><span class="al">4ª</span>Devolve <code>void</code>; o valor fica num atributo estático.</button>
+      <button class="alt"><span class="al">5ª</span>Devolve <code>Object</code> e nunca pode ser convertido.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> <code>showInputDialog</code> sempre devolve <b>String</b>, mesmo que a pessoa
+      digite um número, e devolve <code>null</code> se ela cancelar. Quem devolve <code>int</code> é o
+      <code>showConfirmDialog</code> (comparado com <code>JOptionPane.YES_OPTION</code>), e quem é
+      <code>void</code> é o <code>showMessageDialog</code>.</div></div>
+  </div>
+
+
+
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="cola">
+  <h2><span class="num">5</span>Cola de 1 minuto</h2>
+  <div class="cols2">
+    <div class="card">
+      <h4>Swing</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><code>setVisible(true)</code> por <b>último</b></li>
+        <li><code>EXIT_ON_CLOSE</code> senão só esconde</li>
+        <li>JFrame = BorderLayout · JPanel = FlowLayout</li>
+        <li>Radio exclusivo → <code>ButtonGroup</code></li>
+        <li>Rolagem → <code>JScrollPane</code></li>
+        <li><code>setJMenuBar()</code>, não <code>add()</code></li>
+        <li>Sem <code>addActionListener</code> → clique ignorado</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>JOptionPane</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>Message → <b>void</b></li>
+        <li>Input → <b>String</b> (ou null)</li>
+        <li>Confirm → <b>int</b> (<code>YES_OPTION</code>)</li>
+      </ul>
+      <h4>JavaFX</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>Stage → Scene → Node</li>
+        <li><code>setOnAction</code> no lugar do listener</li>
+        <li>FXML = estrutura · CSS = estilo · Controller = lógica</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Angular</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><code>{{ }}</code> interpolação</li>
+        <li><code>[ ]</code> property · <code>( )</code> event</li>
+        <li>Standalone → recurso vai nos <code>imports</code></li>
+        <li><code>!</code> não verifica nada em execução</li>
+        <li>Elemento novo na tela → mexe no <b>HTML</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>BD II e Grafos</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><code>IS NULL</code>, nunca <code>= NULL</code></li>
+        <li>NOT NULL em tabela cheia → 3 passos</li>
+        <li><code>BETWEEN</code> é inclusivo</li>
+        <li>Soma dos graus = 2 × arestas</li>
+        <li>Diagonal ≠ 0 → laço → não é simples</li>
+        <li>Maior grau = hub, <b>não</b> ponto fraco</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box dica"><b class="t">Último conselho</b>
+  Nas questões de "ache o erro", procure primeiro <b>o que falta</b> — o listener não registrado, o
+  <code>WHERE</code> ausente, o <code>ButtonGroup</code> esquecido, o módulo fora dos <code>imports</code>.
+  Nas quatro devolutivas, o erro quase nunca foi algo escrito errado: foi algo <b>não escrito</b>.</div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  Guia da Prova do Estudo Dirigido 2 · Marco Antônio Lopes Ribeiro · Ciência da Computação — UNIFAGOC<br>
+  Montado a partir da devolutiva da Prova do ED1 (417480), do índice do ED2 no Canvas e das atividades
+  práticas ATV2-1 a Atv2-4.
+</div></footer>
+
+<script>
+var total = 0, acertos = 0;
+document.querySelectorAll('.exam').forEach(function(ex){
+  total++;
+  var ok = parseInt(ex.dataset.ok, 10);
+  var alts = ex.querySelectorAll('.alt');
+  alts.forEach(function(b, i){
+    b.addEventListener('click', function(){
+      if (ex.classList.contains('done')) return;
+      ex.classList.add('done');
+      alts.forEach(function(x){ x.disabled = true; });
+      alts[ok - 1].classList.add('right');
+      if (i + 1 === ok) { acertos++; }
+      else { b.classList.add('wrong'); }
+      document.getElementById('acertos').textContent = acertos;
+    });
+  });
+});
+document.getElementById('total').textContent = total;
+function reiniciar(){
+  acertos = 0;
+  document.getElementById('acertos').textContent = 0;
+  document.querySelectorAll('.exam').forEach(function(ex){
+    ex.classList.remove('done');
+    ex.querySelectorAll('.alt').forEach(function(b){
+      b.disabled = false;
+      b.classList.remove('right','wrong');
+    });
+  });
+}
+</script>
+</body>
+</html>

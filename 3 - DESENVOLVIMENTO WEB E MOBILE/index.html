@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web e Mobile ED2 · Guia da prova</title>
+<style>
+:root{
+  --bg:#f6f7f5; --card:#ffffff; --text:#1d2521; --muted:#5b6660; --line:#d5dbd7;
+  --accent:#2f7d68; --accent-soft:#e3f1ec; --accent-text:#1f5c4b;
+  --warn:#9a5b00; --warn-soft:#fff3dc; --bad:#b3261e; --bad-soft:#fde8e6;
+  --good:#1e7a3c; --good-soft:#e2f4e7; --code-bg:#f1f3f2; --code-text:#1d2521;
+  --kw:#7a2fa0; --fn:#0b6aa2; --str:#a1470d; --num:#8a6d00; --com:#6b7a72;
+  --exam-head:#d9d9d9; --exam-line:#555; --exam-label:#f3f3f3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#121614; --card:#1b201e; --text:#e6ebe8; --muted:#a3ada8; --line:#333b37;
+    --accent:#5fc3a4; --accent-soft:#1f3a31; --accent-text:#8fe0c6;
+    --warn:#f0b75a; --warn-soft:#3a2c14; --bad:#ff8a80; --bad-soft:#3d1e1b;
+    --good:#7ddc98; --good-soft:#18331f; --code-bg:#0f1311; --code-text:#e6ebe8;
+    --kw:#d79bf2; --fn:#7cc7f5; --str:#f2a36b; --num:#e8cd62; --com:#86948d;
+    --exam-head:#353b38; --exam-line:#6d7571; --exam-label:#232826;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.top{background:var(--card);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-top:28px;padding-bottom:22px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.lead{color:var(--muted);margin:0;max-width:760px}
+.back{display:inline-block;margin-bottom:10px;font-size:13px;text-decoration:none}
+nav.sticky{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+nav.sticky .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:thin}
+nav.sticky a{flex:0 0 auto;text-decoration:none;color:var(--text);font-size:14px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+nav.sticky a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:34px 0 10px}
+h2{font-size:24px;margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+h2 .num{font-size:14px;font-weight:700;color:var(--accent-text);background:var(--accent-soft);border-radius:8px;padding:2px 8px}
+h3{font-size:18px;margin:26px 0 8px}
+h4{margin:16px 0 4px;font-size:15px}
+p{margin:8px 0}
+.card{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.frase{font-size:18px;font-weight:600;border-left:4px solid var(--accent);padding:6px 0 6px 14px;margin:14px 0}
+.box{border-radius:10px;padding:12px 14px;margin:12px 0;border:1px solid transparent}
+.box b.t{display:block;margin-bottom:4px}
+.box.dica{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.box.peg{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.box.erro{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
+.box ul{margin:6px 0 0;padding-left:20px}
+.index-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+.index-grid a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.index-grid a:hover{border-color:var(--accent)}
+.index-grid .n{font-size:12px;font-weight:700;color:var(--accent)}
+.index-grid .tt{font-weight:650;display:block}
+.index-grid .ds{font-size:13px;color:var(--muted)}
+pre{background:var(--code-bg);color:var(--code-text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font:14px/1.5 ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;margin:10px 0}
+code{font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;font-size:.92em}
+:not(pre)>code{background:var(--code-bg);border:1px solid var(--line);border-radius:5px;padding:0 5px}
+.kw{color:var(--kw);font-weight:600}.fn{color:var(--fn)}.st{color:var(--str)}.nu{color:var(--num)}.co{color:var(--com);font-style:italic}
+table.t{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.t th{background:var(--exam-label)}
+.scroll{overflow-x:auto}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.cols2{grid-template-columns:minmax(0,1fr)}}
+.tag{display:inline-block;white-space:nowrap;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.tag.caiu{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent)}
+.tag.seu{background:var(--good-soft);color:var(--good);border:1px solid color-mix(in srgb,var(--good) 40%,transparent)}
+button{font:inherit;font-size:14px;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);padding:7px 12px}
+button:hover{border-color:var(--accent)}
+/* camadas */
+.camadas{display:flex;flex-direction:column;gap:6px;margin:14px 0;font-size:14px}
+.cam{border:1px solid var(--line);border-radius:8px;padding:9px 14px;background:var(--card);display:grid;grid-template-columns:200px minmax(0,1fr);gap:10px}
+.cam b{font-family:ui-monospace,Consolas,monospace;color:var(--accent-text)}
+.cam.hl{background:var(--accent-soft);border-color:var(--accent)}
+.seta{text-align:center;color:var(--accent);font-size:18px;line-height:1}
+@media (max-width:640px){.cam{grid-template-columns:minmax(0,1fr)}}
+/* estilo prova */
+.exam{border:1px solid var(--exam-line);margin:18px 0;background:var(--card)}
+.exam .head{background:var(--exam-head);border-bottom:1px solid var(--exam-line);text-align:center;font-weight:700;padding:6px 10px}
+.exam .r{display:grid;grid-template-columns:170px minmax(0,1fr);border-bottom:1px solid var(--exam-line)}
+.exam .r:last-child{border-bottom:0}
+.exam .lab{font-weight:700;padding:10px;border-right:1px solid var(--exam-line);background:var(--exam-label)}
+.exam .val{padding:10px 12px;min-width:0}
+@media (max-width:700px){.exam .r{grid-template-columns:minmax(0,1fr)}.exam .lab{border-right:0;border-bottom:1px solid var(--exam-line)}}
+.alt{display:block;width:100%;text-align:left;border:1px solid transparent;border-radius:8px;padding:6px 8px;margin:2px 0;background:transparent;color:var(--text);font-size:15px;line-height:1.5}
+.alt:hover{border-color:var(--line);background:var(--bg)}
+.alt .al{font-weight:700;display:block}
+.alt.right{background:var(--good-soft);border-color:var(--good)}
+.alt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.alt[disabled]{cursor:default}
+.exam .coment{display:none}
+.exam.done .coment{display:grid}
+.scorebar{position:sticky;top:52px;z-index:4;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px}
+.scorebar .sc{font-weight:700}
+@media (max-width:700px){.scorebar{position:static}}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="../index.html">← todas as matérias</a>
+    <div class="eyebrow">Desenvolvimento Web e Mobile · Estudo Dirigido 2</div>
+    <h1>Backend, API REST e Angular</h1>
+    <p class="lead">As 7 questões deste bloco na <b>prova do ED2 de 2025-2</b> foram sobre
+    <b>Node.js, Express, REST e PostgreSQL</b> — exatamente a arquitetura do seu projeto de CRUD. Na prova do
+    ED1 de 2026-2, o mesmo bloco foi sobre <b>Angular</b>. Este guia cobre os dois, porque os dois podem cair.</p>
+  </div>
+</header>
+
+<nav class="sticky"><div class="wrap">
+  <a href="#prova">0 · A prova</a>
+  <a href="#cliente">1 · Cliente-servidor</a>
+  <a href="#rest">2 · REST e verbos</a>
+  <a href="#status">3 · Status HTTP</a>
+  <a href="#camadas">4 · Camadas</a>
+  <a href="#express">5 · Rotas Express</a>
+  <a href="#async">6 · Async/await</a>
+  <a href="#angular">7 · Angular</a>
+  <a href="#simulado">8 · Simulado</a>
+  <a href="#cola">9 · Cola</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="indice">
+  <h2>Índice</h2>
+  <p><span class="tag caiu">caiu na prova</span> marca o que já foi cobrado nas devolutivas.
+  <span class="tag seu">seu projeto</span> marca o que você já escreveu no CRUD de usuários.</p>
+  <div class="index-grid">
+    <a href="#prova"><span class="n">0</span><span class="tt">Como é a prova</span><span class="ds">As 7 questões e o que caiu em cada uma</span></a>
+    <a href="#cliente"><span class="n">1</span><span class="tt">Cliente-servidor</span><span class="ds">O papel exato do backend</span></a>
+    <a href="#rest"><span class="n">2</span><span class="tt">REST e verbos HTTP</span><span class="ds">GET, POST, PUT, PATCH, DELETE</span></a>
+    <a href="#status"><span class="n">3</span><span class="tt">Códigos de status</span><span class="ds">200, 201, 400, 404, 500</span></a>
+    <a href="#camadas"><span class="n">4</span><span class="tt">Arquitetura em camadas</span><span class="ds">Rotas, controllers, services, repositories</span></a>
+    <a href="#express"><span class="n">5</span><span class="tt">Rotas em Express</span><span class="ds">Escrever a rota do zero, com pg</span></a>
+    <a href="#async"><span class="n">6</span><span class="tt">Promises e async/await</span><span class="ds">try/catch e o que o await faz de verdade</span></a>
+    <a href="#angular"><span class="n">7</span><span class="tt">Angular</span><span class="ds">Binding, standalone, Material e TypeScript</span></a>
+    <a href="#simulado"><span class="n">8</span><span class="tt">Simulado</span><span class="ds">Questões reais das duas devolutivas</span></a>
+    <a href="#cola"><span class="n">9</span><span class="tt">Cola de 1 minuto</span><span class="ds">Revisão antes da prova</span></a>
+  </div>
+</section>
+
+<!-- ============ 0 ============ -->
+<section id="prova">
+  <h2><span class="num">0</span>Como é a prova</h2>
+  <div class="scroll"><table class="t">
+    <tr><th>Q</th><th>Assunto (ED2 2025-2)</th><th>Formato</th></tr>
+    <tr><td>1</td><td>Papel do <b>backend</b> no modelo cliente-servidor</td><td>Múltipla escolha</td></tr>
+    <tr><td>2</td><td>Sequência dos <b>verbos HTTP</b> (I a IV)</td><td>Múltipla escolha</td></tr>
+    <tr><td>3</td><td>Papel dos <b>controladores</b> na arquitetura em camadas</td><td>Múltipla escolha</td></tr>
+    <tr><td>4</td><td><b>Escrever a rota POST</b> em Express + corpo JSON</td><td><b>Discursiva</b></td></tr>
+    <tr><td>5</td><td><b>Códigos de status</b> (I a IV)</td><td>Múltipla escolha</td></tr>
+    <tr><td>6</td><td><b>async/await</b> e <b>try/catch</b> num service</td><td>Múltipla escolha</td></tr>
+    <tr><td>7</td><td>Ler uma rota <b>PUT</b> e dizer o que ela faz</td><td>Múltipla escolha</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">A boa notícia</b>
+  Esse bloco é praticamente uma prova sobre o <b>projeto que você já fez</b>. Rotas, controllers, services,
+  <code>pool.query</code> com <code>$1, $2</code>, <code>request.body</code>, status 201 — está tudo no seu
+  CRUD. Reler o próprio código vale mais do que decorar teoria.</div>
+</section>
+
+<!-- ============ 1 ============ -->
+<section id="cliente">
+  <h2><span class="num">1</span>Cliente-servidor <span class="tag caiu">questão 1</span></h2>
+  <p class="frase">O backend faz as quatro coisas — recebe, processa, acessa o banco e responde.</p>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Camada</th><th>Responsabilidade</th><th>Onde roda</th></tr>
+    <tr><td><b>Cliente</b> (frontend)</td><td>Interagir com o usuário, exibir a interface</td><td>navegador · <code>localhost:4200</code></td></tr>
+    <tr><td><b>Servidor</b> (backend)</td><td>Lógica da aplicação, validação, acesso ao banco</td><td>Node.js · <code>localhost:3000</code></td></tr>
+    <tr><td><b>Banco</b></td><td>Armazenar e devolver os dados</td><td>PostgreSQL / Supabase</td></tr>
+  </table></div>
+
+  <div class="box peg"><b class="t">As quatro alternativas erradas da questão 1</b>
+  Todas erram por <b>reduzir</b> o backend a uma única tarefa. A resposta certa é sempre a mais
+  <b>completa</b>:
+  <ul>
+    <li><i>"apenas valida se o usuário está logado"</i> — reduz a autenticação</li>
+    <li><i>"apenas armazena, sem validação"</i> — reduz a armazenamento</li>
+    <li><i>"só roteia e repassa para o cliente processar"</i> — reduz a intermediário</li>
+    <li><i>"mantém a interface atualizada e gerencia estado no navegador"</i> — isso é <b>frontend</b></li>
+  </ul>
+  <b>Certa:</b> "recebe requisições, processa a lógica, interage com o banco e envia respostas apropriadas".</div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="rest">
+  <h2><span class="num">2</span>API REST e verbos HTTP <span class="tag caiu">questões 2 e 7</span></h2>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Verbo</th><th>Faz o quê</th><th>SQL equivalente</th><th>No seu projeto</th></tr>
+    <tr><td><b>GET</b></td><td>Recuperar / listar</td><td><code>SELECT</code></td><td><code>index</code>, <code>show</code></td></tr>
+    <tr><td><b>POST</b></td><td>Inserir novo</td><td><code>INSERT</code></td><td><code>store</code></td></tr>
+    <tr><td><b>PUT</b></td><td>Atualizar <b>por completo</b></td><td><code>UPDATE</code> (todos os campos)</td><td><code>update</code></td></tr>
+    <tr><td><b>PATCH</b></td><td>Atualizar <b>parcialmente</b></td><td><code>UPDATE</code> (alguns campos)</td><td><code>patch</code></td></tr>
+    <tr><td><b>DELETE</b></td><td>Excluir</td><td><code>DELETE</code></td><td><code>destroy</code></td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">A questão 2, resolvida em 10 segundos</b>
+  "Recuperar a lista" → <b>GET</b> · "Inserir novo" → <b>POST</b> · "Atualizar existente" → <b>PUT</b> ·
+  "Excluir permanentemente" → <b>DELETE</b>. A ordem <b>I–GET, II–POST, III–PUT, IV–DELETE</b> é a natural;
+  as alternativas erradas apenas trocam POST com PUT ou GET com POST de lugar.</div>
+
+  <div class="box peg"><b class="t">A pegadinha da questão 7</b>
+  Deram um trecho de código e perguntaram o que a rota faz. Dois sinais bastavam:
+  <code>app.<b>put</b>('/clients/:id')</code> e <code>SET name = $1, ... WHERE id = $4</code>. Verbo PUT +
+  comando UPDATE = <b>modificar um registro existente</b>. Não caia na alternativa "adiciona novos clientes"
+  (seria POST + INSERT) nem em "remove" (DELETE).</div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="status">
+  <h2><span class="num">3</span>Códigos de status <span class="tag caiu">questão 5</span></h2>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Faixa</th><th>Significa</th><th>Principais</th></tr>
+    <tr><td><b>2xx</b></td><td>Sucesso</td><td><b>200</b> OK · <b>201</b> Created · <b>204</b> No Content</td></tr>
+    <tr><td><b>4xx</b></td><td>Erro do <b>cliente</b></td><td><b>400</b> Bad Request · <b>404</b> Not Found</td></tr>
+    <tr><td><b>5xx</b></td><td>Erro do <b>servidor</b></td><td><b>500</b> Internal Server Error</td></tr>
+  </table></div>
+
+  <div class="box dica"><b class="t">Quando usar cada um</b>
+  <ul>
+    <li><b>200</b> — GET que devolveu os dados, ou UPDATE que deu certo</li>
+    <li><b>201</b> — POST que <b>criou</b> algo novo (é o do seu <code>store</code>)</li>
+    <li><b>204</b> — DELETE que deu certo e não devolve corpo (é o do seu <code>destroy</code>)</li>
+    <li><b>400</b> — o cliente mandou dado inválido</li>
+    <li><b>404</b> — o recurso pedido não existe</li>
+    <li><b>500</b> — quebrou no servidor</li>
+  </ul></div>
+
+  <div class="box peg"><b class="t">A confusão que a prova explora</b>
+  <b>400 ≠ 404.</b> O 400 é "você mandou errado" (formato, campo faltando); o 404 é "não existe". Na questão
+  5, a afirmação III juntava as duas situações e o gabarito aceitava <b>"400 ou 404"</b>. E lembre: erro de
+  cliente é <b>4</b>xx, de servidor é <b>5</b>xx — inverter isso derruba a questão inteira.</div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="camadas">
+  <h2><span class="num">4</span>Arquitetura em camadas <span class="tag caiu">questão 3</span> <span class="tag seu">seu projeto</span></h2>
+  <p class="frase">Cada camada tem uma responsabilidade só — e o controller nunca faz SQL.</p>
+
+  <div class="camadas">
+    <div class="cam"><b>server.ts</b><span>Sobe o servidor na porta 3000</span></div>
+    <div class="seta">↓</div>
+    <div class="cam"><b>app.ts</b><span>CORS, <code>express.json()</code>, monta o prefixo <code>/api</code></span></div>
+    <div class="seta">↓</div>
+    <div class="cam"><b>routes/</b><span>Diz <b>qual URL</b> chama <b>qual função</b></span></div>
+    <div class="seta">↓</div>
+    <div class="cam hl"><b>controllers/</b><span>Lê <code>req</code>, chama o service, devolve <code>res</code> — <b>só HTTP</b></span></div>
+    <div class="seta">↓</div>
+    <div class="cam"><b>services/</b><span>Regra de negócio: valida, decide, orquestra</span></div>
+    <div class="seta">↓</div>
+    <div class="cam"><b>repositories/</b><span>Único lugar que escreve <b>SQL</b></span></div>
+    <div class="seta">↓</div>
+    <div class="cam"><b>config/database</b><span>O <code>pool</code> de conexão com o PostgreSQL</span></div>
+  </div>
+
+  <div class="box dica"><b class="t">A resposta da questão 3, palavra por palavra</b>
+  <i>"Os controladores atuam como <b>intermediários</b>. Recebem os dados da requisição (vindos das rotas),
+  <b>delegam a lógica de negócio para a camada de serviços</b> e retornam ao cliente uma resposta adequada,
+  normalmente em JSON. Isso garante <b>separação de responsabilidades</b>, facilitando testes e
+  manutenção."</i></div>
+
+  <div class="box peg"><b class="t">As alternativas erradas da questão 3</b>
+  <ul>
+    <li><i>"cuidam da persistência, fazendo operações direto no banco"</i> — isso é o <b>repository</b></li>
+    <li><i>"definem as regras de negócio, substituindo a camada de serviços"</i> — isso é o <b>service</b></li>
+    <li><i>"apenas autenticação"</i> / <i>"apenas configurar middlewares"</i> — reduções falsas</li>
+  </ul></div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="express">
+  <h2><span class="num">5</span>Escrever a rota <span class="tag caiu">questão 4 — discursiva</span></h2>
+  <p>A prova deu a rota GET pronta e pediu a <b>POST</b> equivalente, mais um exemplo de corpo JSON. Este é
+  o modelo do gabarito:</p>
+
+<pre><span class="co">// o que já vinha pronto no enunciado</span>
+app.<span class="fn">get</span>(<span class="st">'/products'</span>, <span class="kw">async</span> (request, response) => {
+  <span class="kw">const</span> clients = <span class="kw">await</span> pool.<span class="fn">query</span>(<span class="st">"SELECT * FROM clients"</span>)
+  response.<span class="fn">json</span>(clients.rows)
+})
+
+<span class="co">// a resposta esperada</span>
+app.<span class="fn">post</span>(<span class="st">'/products'</span>, <span class="kw">async</span> (request, response) => {
+  <span class="kw">const</span> product = request.body
+  <span class="kw">const</span> sql = <span class="st">"INSERT INTO product(name,price,stock) VALUES($1,$2,$3)"</span>
+  <span class="kw">const</span> values = [product.name, product.price, product.stock]
+  <span class="kw">await</span> pool.<span class="fn">query</span>(sql, values)
+  response.<span class="fn">json</span>({ message: <span class="st">"produto inserido com sucesso"</span> })
+})</pre>
+
+  <p>E o corpo da requisição:</p>
+<pre>{
+  <span class="st">"name"</span>: <span class="st">"calça jeans"</span>,
+  <span class="st">"price"</span>: <span class="nu">10</span>,
+  <span class="st">"stock"</span>: <span class="nu">40</span>
+}</pre>
+
+  <div class="box dica"><b class="t">Checklist para não perder ponto na discursiva</b>
+  <ul>
+    <li><code>app.post</code> (não <code>get</code>) e a mesma URL do recurso</li>
+    <li><code>async</code> na função e <code>await</code> no <code>pool.query</code></li>
+    <li>Ler os dados de <code>request.body</code></li>
+    <li>Usar <b><code>$1, $2, $3</code></b> e um array <code>values</code> — <b>nunca</b> concatenar string
+    (é o que evita SQL injection, e o professor cobra isso)</li>
+    <li>Responder em <b>JSON</b></li>
+    <li>Escrever também o <b>exemplo do corpo</b>, que é metade da questão</li>
+  </ul></div>
+
+  <div class="box peg"><b class="t">Detalhe que rende ponto extra</b>
+  O gabarito respondeu com <code>response.json(...)</code> simples, mas o correto em REST para criação é
+  <b>201</b>: <code>response.status(201).json(...)</code>. É o que o seu próprio
+  <code>user.controller.ts</code> faz no <code>store</code>. Se sobrar espaço, escreva assim e justifique.</div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="async">
+  <h2><span class="num">6</span>Promises e async/await <span class="tag caiu">questão 6</span></h2>
+
+<pre><span class="kw">async</span> <span class="fn">getProdutos</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">firstValueFrom</span>(<span class="kw">this</span>.http.<span class="fn">get</span>(url));
+    <span class="kw">return await</span> response.<span class="fn">json</span>();
+  } <span class="kw">catch</span> (error) {
+    console.<span class="fn">error</span>(<span class="st">'Erro ao buscar produtos'</span>, error);
+  }
+}</pre>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Peça</th><th>Para que serve</th></tr>
+    <tr><td><b>async/await</b></td><td>Escrever código assíncrono de forma <b>sequencial e legível</b></td></tr>
+    <tr><td><b>try/catch</b></td><td>Capturar erros (falha de rede, por exemplo) e <b>evitar que a aplicação quebre</b></td></tr>
+    <tr><td><b>firstValueFrom</b></td><td>Converter um <b>Observable</b> do Angular em <b>Promise</b></td></tr>
+  </table></div>
+
+  <div class="box erro"><b class="t">O erro conceitual que a prova planta</b>
+  <i>"O await faz a função parar totalmente a execução do programa até a resposta chegar."</i> — <b>FALSO</b>.
+  O <code>await</code> pausa <b>apenas aquela função</b>; o resto do programa continua rodando. É esse o
+  ponto inteiro do assíncrono. Outras alternativas falsas: <i>"firstValueFrom é síncrono"</i> (não é, devolve
+  Promise) e <i>"o catch reinicia a requisição automaticamente"</i> (não reinicia nada — só trata o erro).</div>
+
+  <div class="box peg"><b class="t">Conexão com o seu backend</b>
+  No Express 4, um erro lançado dentro de uma função <code>async</code> <b>não</b> chega ao middleware de
+  erro com 4 parâmetros — vira <i>unhandled rejection</i> e a requisição fica pendurada. Por isso todo
+  controller <code>async</code> precisa de <code>try/catch</code> ou de um wrapper. Vale como argumento se
+  cair uma discursiva sobre tratamento de erro.</div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="angular">
+  <h2><span class="num">7</span>Angular <span class="tag caiu">7 questões na prova do ED1</span></h2>
+  <p>Na prova mais recente, este bloco inteiro foi de Angular. Vale saber os dois lados.</p>
+
+  <h3>Os tipos de binding</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Sintaxe</th><th>Nome</th><th>Direção</th><th>Exemplo</th></tr>
+    <tr><td><code>{{ }}</code></td><td>Interpolação</td><td>classe → tela</td><td><code>&lt;h1&gt;{{ titulo }}&lt;/h1&gt;</code></td></tr>
+    <tr><td><code>[ ]</code></td><td>Property binding</td><td>classe → tela</td><td><code>[disabled]="carregando"</code></td></tr>
+    <tr><td><code>( )</code></td><td>Event binding</td><td>tela → classe</td><td><code>(click)="atender()"</code></td></tr>
+    <tr><td><code>[( )]</code></td><td>Two-way (ngModel)</td><td>nos dois sentidos</td><td><code>[(ngModel)]="user.name"</code></td></tr>
+  </table></div>
+
+  <h3>Separação de responsabilidades</h3>
+<pre><span class="fn">@Component</span>({
+  selector: <span class="st">'app-chamado'</span>,      <span class="co">// como é chamado no HTML</span>
+  imports: [MatButtonModule],  <span class="co">// recursos do TEMPLATE (standalone)</span>
+  templateUrl: <span class="st">'./chamado.html'</span>, <span class="co">// ESTRUTURA</span>
+  styleUrl: <span class="st">'./chamado.css'</span>      <span class="co">// APARÊNCIA</span>
+})
+<span class="kw">export class</span> <span class="fn">Chamado</span> {
+  titulo = <span class="st">"Sistema de Chamados"</span>;   <span class="co">// DADOS e COMPORTAMENTO</span>
+}</pre>
+
+  <div class="box dica"><b class="t">A resposta que a devolutiva repetiu duas vezes</b>
+  Para <b>acrescentar título, parágrafo ou botão</b>, mexe-se no <b>HTML</b> indicado por
+  <code>templateUrl</code> — não na classe nem no CSS.</div>
+
+  <div class="box peg"><b class="t">Angular Material</b>
+  Instalar o pacote <b>não basta</b>. Em componente standalone, o recurso precisa entrar nos
+  <code>imports</code> daquele componente: sem <code>MatButtonModule</code>, a diretiva
+  <code>mat-raised-button</code> não funciona no template.</div>
+
+  <h3>bootstrapApplication e TypeScript</h3>
+<pre><span class="fn">bootstrapApplication</span>(App, appConfig).<span class="fn">catch</span>(err => console.<span class="fn">error</span>(err));
+<span class="co">// 1º arg: componente raiz · 2º arg: configuração (providers)</span>
+<span class="co">// NÃO cria projeto, NÃO instala dependências, NÃO sobe o servidor</span>
+
+<span class="kw">let</span> quantidade = <span class="nu">4</span>;
+total.textContent = quantidade;           <span class="co">// ERRO: number em propriedade string</span>
+total.textContent = <span class="fn">String</span>(quantidade);   <span class="co">// correto</span></pre>
+
+  <div class="box peg"><b class="t">O operador <code>!</code></b>
+  Em <code>document.querySelector("#total")!</code>, o <code>!</code> é uma <b>asserção não nula</b>: age
+  <b>só no sistema de tipos</b>. Ele não verifica se o elemento existe no DOM e não cria o elemento. Se
+  <code>#total</code> não existir, o erro estoura em execução do mesmo jeito.</div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="simulado">
+  <h2><span class="num">8</span>Simulado — questões reais</h2>
+  <div class="scorebar">
+    <span class="sc">Acertos: <span id="acertos">0</span> / <span id="total">0</span></span>
+    <button onclick="reiniciar()">Recomeçar</button>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">1ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Ao cadastrar um pedido, a requisição vai do cliente para o servidor, que processa os dados, salva no
+      banco e retorna confirmação. Qual alternativa <b>melhor descreve o papel do backend</b>?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Recebe requisições, processa a lógica, interage com o banco e envia respostas apropriadas.</button>
+      <button class="alt"><span class="al">2ª</span>Atua como controlador intermediário, repassando dados para o cliente processar o restante.</button>
+      <button class="alt"><span class="al">3ª</span>Apenas armazena informações, sem aplicar lógica de validação.</button>
+      <button class="alt"><span class="al">4ª</span>Apenas valida se o usuário está logado, deixando o resto para o cliente.</button>
+      <button class="alt"><span class="al">5ª</span>Mantém a interface atualizada e gerencia o estado localmente no navegador.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> É a única <b>completa</b>. Todas as outras reduzem o backend a uma única
+      tarefa, e a 5ª descreve, na verdade, o <b>frontend</b>.</div></div>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">2ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      I. Recuperar a lista de produtos · II. Inserir novo produto · III. Atualizar produto existente ·
+      IV. Excluir permanentemente. Qual a sequência correta de verbos HTTP?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>I – GET, II – POST, III – PUT, IV – DELETE</button>
+      <button class="alt"><span class="al">2ª</span>I – GET, II – PUT, III – POST, IV – DELETE</button>
+      <button class="alt"><span class="al">3ª</span>I – POST, II – PUT, III – GET, IV – DELETE</button>
+      <button class="alt"><span class="al">4ª</span>I – POST, II – GET, III – DELETE, IV – PUT</button>
+      <button class="alt"><span class="al">5ª</span>I – DELETE, II – POST, III – GET, IV – PUT</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> Recuperar = <b>GET</b>, inserir = <b>POST</b>, atualizar =
+      <b>PUT</b> (ou PATCH, se parcial), excluir = <b>DELETE</b>. As erradas trocam POST com PUT ou GET com
+      POST.</div></div>
+  </div>
+
+  <div class="exam" data-ok="4">
+    <div class="head">5ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      I. GET recebe os dados corretamente · II. POST cria um recurso com sucesso · III. Cliente envia dados
+      inválidos ou pede recurso inexistente · IV. Erro inesperado no servidor.</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>I – 201, II – 200, III – 500, IV – 404</button>
+      <button class="alt"><span class="al">2ª</span>I – 200, II – 404, III – 201, IV – 500</button>
+      <button class="alt"><span class="al">3ª</span>I – 500, II – 201, III – 404, IV – 200</button>
+      <button class="alt"><span class="al">4ª</span>I – 200, II – 201, III – 400 ou 404, IV – 500</button>
+      <button class="alt"><span class="al">5ª</span>I – 400, II – 500, III – 201, IV – 200</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>4ª alternativa.</b> 200 = OK · 201 = Created (algo <b>novo</b> foi criado) · 400/404 = erro do
+      <b>cliente</b> · 500 = erro do <b>servidor</b>. O gabarito aceita "400 ou 404" porque a afirmação III
+      junta as duas situações.</div></div>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">6ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Sobre o service em Angular que usa <code>async/await</code> com <code>try/catch</code> e
+      <code>firstValueFrom</code>, assinale a correta.</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>O try/catch captura erros da requisição e permite tratá-los sem que a aplicação quebre.</button>
+      <button class="alt"><span class="al">2ª</span>O firstValueFrom é síncrono, então não precisa de await nem async.</button>
+      <button class="alt"><span class="al">3ª</span>O código não retorna dados, pois response.json() é sempre undefined em função async.</button>
+      <button class="alt"><span class="al">4ª</span>O await faz a função parar totalmente a execução do programa até a resposta chegar.</button>
+      <button class="alt"><span class="al">5ª</span>Se ocorrer erro, o catch reinicia automaticamente a requisição.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> O <code>try/catch</code> trata falhas (rede, por exemplo) sem derrubar a
+      aplicação. A 4ª é a armadilha principal: o <code>await</code> pausa <b>só aquela função</b>, não o
+      programa inteiro. E <code>firstValueFrom</code> devolve <b>Promise</b> — por isso o
+      <code>await</code>.</div></div>
+  </div>
+
+  <div class="exam" data-ok="2">
+    <div class="head">7ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      <code>app.put('/clients/:id', ...)</code> com <code>UPDATE clients SET name=$1, age=$2, email=$3
+      WHERE id=$4</code>. O que essa rota faz?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Busca os dados de um cliente específico pelo id.</button>
+      <button class="alt"><span class="al">2ª</span>Modifica as informações de um cliente existente, identificado pelo id da URL.</button>
+      <button class="alt"><span class="al">3ª</span>Apenas interpreta o request.body, sem executar SQL.</button>
+      <button class="alt"><span class="al">4ª</span>Adiciona novos clientes ao banco.</button>
+      <button class="alt"><span class="al">5ª</span>Remove o registro do cliente pelo id.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>2ª alternativa.</b> Dois sinais bastam: o verbo <b>PUT</b> (atualização, por convenção REST) e o
+      comando <b>UPDATE</b> com <code>WHERE id = $4</code>. Inserir seria POST + INSERT; remover seria
+      DELETE.</div></div>
+  </div>
+
+  <div class="exam" data-ok="1">
+    <div class="head">3ª QUESTÃO · prova ED2 2025-2</div>
+    <div class="r"><div class="lab">Enunciado</div><div class="val">
+      Projeto Node/Express organizado em camadas (rotas, controladores, serviços e modelos). Qual o papel
+      dos <b>controladores</b>?</div></div>
+    <div class="r"><div class="lab">Alternativas</div><div class="val">
+      <button class="alt"><span class="al">1ª</span>Atuam como intermediários: delegam a lógica para a camada de serviços e retornam a resposta ao cliente.</button>
+      <button class="alt"><span class="al">2ª</span>Cuidam exclusivamente da persistência, operando direto no banco.</button>
+      <button class="alt"><span class="al">3ª</span>São responsáveis apenas pela autenticação de usuários.</button>
+      <button class="alt"><span class="al">4ª</span>Definem as regras de negócio, substituindo a camada de serviços.</button>
+      <button class="alt"><span class="al">5ª</span>Servem apenas para configurar middlewares.</button>
+    </div></div>
+    <div class="r coment"><div class="lab">Resposta comentada</div><div class="val">
+      <b>1ª alternativa.</b> O controller é a <b>ponte</b>: recebe os dados da rota, delega ao service e
+      devolve JSON. A 2ª descreve o <b>repository</b>; a 4ª descreve o <b>service</b>. O valor disso é a
+      <b>separação de responsabilidades</b> — facilita teste e manutenção.</div></div>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="cola">
+  <h2><span class="num">9</span>Cola de 1 minuto</h2>
+  <div class="cols2">
+    <div class="card">
+      <h4>Verbos e status</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>GET listar · POST criar · PUT atualizar tudo</li>
+        <li>PATCH atualizar parte · DELETE remover</li>
+        <li>200 OK · 201 Created · 204 sem corpo</li>
+        <li>4xx culpa do <b>cliente</b> · 5xx do <b>servidor</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Camadas</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li>rota → controller → service → repository</li>
+        <li>Controller = <b>só HTTP</b>, nunca SQL</li>
+        <li>Service = regra de negócio</li>
+        <li>Repository = único com SQL</li>
+        <li>Sempre <code>$1, $2</code> — nunca concatenar</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Async</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><code>await</code> pausa <b>só a função</b></li>
+        <li><code>try/catch</code> evita quebrar a aplicação</li>
+        <li><code>firstValueFrom</code>: Observable → Promise</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Angular</h4>
+      <ul style="padding-left:18px;margin:6px 0">
+        <li><code>{{ }}</code> · <code>[ ]</code> · <code>( )</code> · <code>[( )]</code></li>
+        <li>Elemento novo na tela → mexe no <b>HTML</b></li>
+        <li>Standalone → recurso nos <code>imports</code></li>
+        <li><code>!</code> não verifica nada em execução</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box dica"><b class="t">Último conselho</b>
+  Abra o seu <code>cruditens/backend</code> antes da prova e leia os seis arquivos na ordem:
+  <code>server.ts</code> → <code>app.ts</code> → <code>routes</code> → <code>controller</code> →
+  <code>service</code> → <code>repository</code>. Metade deste bloco é perguntar o que cada um deles faz.</div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  Guia de Desenvolvimento Web e Mobile · Estudo Dirigido 2 · Marco Antônio Lopes Ribeiro — UNIFAGOC<br>
+  Fontes: devolutiva da Prova do ED2 2025-2 (317079, questões 1 a 7) e da Prova do ED1 2026-2
+  (417480, questões 10 a 16).
+</div></footer>
+
+<script>
+var total = 0, acertos = 0;
+document.querySelectorAll('.exam').forEach(function(ex){
+  total++;
+  var ok = parseInt(ex.dataset.ok, 10);
+  var alts = ex.querySelectorAll('.alt');
+  alts.forEach(function(b, i){
+    b.addEventListener('click', function(){
+      if (ex.classList.contains('done')) return;
+      ex.classList.add('done');
+      alts.forEach(function(x){ x.disabled = true; });
+      alts[ok - 1].classList.add('right');
+      if (i + 1 === ok) { acertos++; }
+      else { b.classList.add('wrong'); }
+      document.getElementById('acertos').textContent = acertos;
+    });
+  });
+});
+document.getElementById('total').textContent = total;
+function reiniciar(){
+  acertos = 0;
+  document.getElementById('acertos').textContent = 0;
+  document.querySelectorAll('.exam').forEach(function(ex){
+    ex.classList.remove('done');
+    ex.querySelectorAll('.alt').forEach(function(b){
+      b.disabled = false;
+      b.classList.remove('right','wrong');
+    });
+  });
+}
+</script>
+</body>
+</html>

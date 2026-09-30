@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prova ED2 · Guias por matéria</title>
+<style>
+:root{
+  --bg:#f6f7f5; --card:#ffffff; --text:#1d2521; --muted:#5b6660; --line:#d5dbd7;
+  --accent:#2f7d68; --accent-soft:#e3f1ec; --accent-text:#1f5c4b;
+  --warn:#9a5b00; --warn-soft:#fff3dc; --exam-label:#f3f3f3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#121614; --card:#1b201e; --text:#e6ebe8; --muted:#a3ada8; --line:#333b37;
+    --accent:#5fc3a4; --accent-soft:#1f3a31; --accent-text:#8fe0c6;
+    --warn:#f0b75a; --warn-soft:#3a2c14; --exam-label:#232826;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:38px 0 30px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:32px;line-height:1.2;margin:6px 0 10px}
+.lead{color:var(--muted);margin:0;max-width:680px}
+main{padding:30px 0 10px}
+h2{font-size:20px;margin:30px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.mat{display:block;text-decoration:none;color:var(--text);background:var(--card);
+     border:1px solid var(--line);border-radius:14px;padding:18px;transition:border-color .15s}
+.mat:hover{border-color:var(--accent)}
+.mat .n{display:inline-block;font-size:12px;font-weight:700;color:var(--accent-text);
+        background:var(--accent-soft);border-radius:8px;padding:2px 9px;margin-bottom:8px}
+.mat .tt{font-size:18px;font-weight:700;display:block;margin-bottom:5px}
+.mat .ds{font-size:14px;color:var(--muted);display:block}
+.mat .qt{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;padding:2px 9px;
+         border-radius:999px;background:var(--warn-soft);color:var(--warn)}
+table.t{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+table.t th{background:var(--exam-label)}
+.box{border-radius:10px;padding:13px 15px;margin:16px 0;background:var(--accent-soft);
+     border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+.box b{display:block;margin-bottom:4px}
+footer{border-top:1px solid var(--line);margin-top:36px;padding:20px 0 40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="eyebrow">Prova do Estudo Dirigido 2 · Ciência da Computação</div>
+  <h1>Guias de estudo por matéria</h1>
+  <p class="lead">Cada matéria tem a sua pasta e o seu guia. Todos foram montados a partir das duas
+  devolutivas de prova, seguindo a mesma estrutura de blocos e o mesmo formato de questão comentada.</p>
+</div></header>
+
+<main class="wrap">
+
+  <div class="grid">
+    <a class="mat" href="1 - TEORIA DOS GRAFOS/index.html">
+      <span class="n">1</span>
+      <span class="tt">Teoria e Modelos de Grafos</span>
+      <span class="ds">Dijkstra passo a passo, Floyd–Warshall, Kruskal e Prim, com os grafos da prova desenhados.</span>
+      <span class="qt">7 questões · caiu Dijkstra 5×</span>
+    </a>
+
+    <a class="mat" href="2 - LABORATORIO DE PROGRAMACAO/index.html">
+      <span class="n">2</span>
+      <span class="tt">Laboratório de Programação</span>
+      <span class="ds">Interfaces gráficas em Java: Swing, JavaFX, componentes, layouts, eventos e a POO que cai junto.</span>
+      <span class="qt">7 questões · matéria nova</span>
+    </a>
+
+    <a class="mat" href="3 - DESENVOLVIMENTO WEB E MOBILE/index.html">
+      <span class="n">3</span>
+      <span class="tt">Desenvolvimento Web e Mobile</span>
+      <span class="ds">Backend em Node/Express, API REST, status HTTP, camadas e Angular. É o seu projeto de CRUD.</span>
+      <span class="qt">7 questões · Node + Angular</span>
+    </a>
+
+    <a class="mat" href="4 - BANCO DE DADOS II/index.html">
+      <span class="n">4</span>
+      <span class="tt">Banco de Dados II</span>
+      <span class="ds">JOIN, funções de grupo, subconsultas, views, sequence, ON DELETE e PL/SQL.</span>
+      <span class="qt">7 questões</span>
+    </a>
+  </div>
+
+  <h2>Como a prova é dividida</h2>
+  <table class="t">
+    <tr><th>Bloco</th><th>Questões</th><th>Guia</th></tr>
+    <tr><td>Desenvolvimento Web e Mobile</td><td>7</td><td>pasta 3</td></tr>
+    <tr><td>Banco de Dados II</td><td>7</td><td>pasta 4</td></tr>
+    <tr><td>Conhecimentos Gerais</td><td>2</td><td>veja o quadro abaixo</td></tr>
+    <tr><td>Teoria e Modelos de Grafos</td><td>7</td><td>pasta 1</td></tr>
+    <tr><td>Laboratório de Programação</td><td>7</td><td>pasta 2</td></tr>
+    <tr><td><b>Total</b></td><td><b>30</b></td><td></td></tr>
+  </table>
+
+  <div class="box">
+    <b>Conhecimentos Gerais — as 2 questões que não têm pasta própria</b>
+    Não dá para decorar conteúdo, mas dá para reconhecer o padrão: nas quatro questões das duas devolutivas,
+    a alternativa certa foi sempre a que <b>pondera</b> — reconhece o benefício <i>e</i> a limitação ao mesmo
+    tempo ("reduz emissões locais, <i>mas</i> depende da geração de eletricidade"; "mantém o aplicativo
+    <i>e</i> combina canais presenciais"). Alternativas <b>absolutas</b> — "elimina totalmente", "resolve o
+    problema", "basta", "apenas" — são quase sempre as erradas.
+  </div>
+
+  <div class="box">
+    <b>Ordem de estudo sugerida</b>
+    Comece pela <b>pasta 1 (Grafos)</b>, que é a matéria com o método mais mecânico e por isso a de ponto
+    mais garantido. Depois a <b>pasta 2 (Laboratório)</b>, que é o conteúdo novo. A <b>pasta 3 (Web)</b> você
+    já sabe na prática, então serve de revisão rápida. A <b>pasta 4 (BD)</b> fica por último porque é a que
+    você já estudou mais.
+  </div>
+
+</main>
+
+<footer><div class="wrap">
+  Marco Antônio Lopes Ribeiro · Ciência da Computação — UNIFAGOC<br>
+  Montado a partir das devolutivas 317079 (Prova do ED2 2025-2) e 417480 (Prova do ED1 2026-2).
+</div></footer>
+
+</body>
+</html>
