@@ -104,6 +104,9 @@ button:hover{border-color:var(--accent)}
 .gui .inp{border:1px solid var(--exam-line);background:var(--bg);padding:4px 6px;border-radius:3px;min-height:26px}
 .gui .btnrow{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 .gui .b{border:1px solid var(--exam-line);background:var(--exam-label);padding:3px 14px;border-radius:3px;font-size:13px}
+figure{margin:14px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 10px 10px}
+figure svg{display:block;max-width:100%;height:auto;margin:0 auto}
+figcaption{text-align:center;color:var(--muted);font-size:13px;margin-top:8px;font-style:italic}
 footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 40px;color:var(--muted);font-size:14px}
 </style>
 </head>
@@ -126,7 +129,8 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 40px;colo
   <a href="#poo">2 · POO</a>
   <a href="#atividades">3 · Atividades</a>
   <a href="#simulado">4 · Simulado</a>
-  <a href="#cola">5 · Cola</a>
+  <a href="#aberta">5 · Questão aberta</a>
+  <a href="#cola">6 · Cola</a>
 </div></nav>
 
 <main class="wrap">
@@ -141,7 +145,8 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 40px;colo
     <a href="#poo"><span class="n">2</span><span class="tt">POO que cai junto</span><span class="ds">Encapsulamento, polimorfismo, sobrecarga, interface</span></a>
     <a href="#atividades"><span class="n">3</span><span class="tt">Suas atividades</span><span class="ds">O que cada ATV do ED2 pode virar questão</span></a>
     <a href="#simulado"><span class="n">4</span><span class="tt">Simulado</span><span class="ds">Múltipla escolha com resposta comentada</span></a>
-    <a href="#cola"><span class="n">5</span><span class="tt">Cola de 1 minuto</span><span class="ds">Revisão rápida antes de entrar na sala</span></a>
+    <a href="#aberta"><span class="n">5</span><span class="tt">A questão aberta</span><span class="ds">Arquitetura de eventos, com resposta pronta</span></a>
+    <a href="#cola"><span class="n">6</span><span class="tt">Cola de 1 minuto</span><span class="ds">Revisão rápida antes de entrar na sala</span></a>
   </div>
 </section>
 
@@ -510,9 +515,145 @@ barra.<span class="fn">add</span>(menuCadastro);
 
 </section>
 
+<!-- ============ QUESTÃO ABERTA ============ -->
+<section id="aberta">
+  <h2><span class="num">5</span>A questão aberta — arquitetura de eventos</h2>
+  <p class="frase">É o slide "Paradigma Reativo". Se cair discursiva, cai este assunto.</p>
+
+  <p>O enunciado provável é algum destes: <i>"Explique como o JavaFX trata um evento, da ação do usuário até
+  o código responder"</i>, <i>"descreva as etapas do paradigma reativo"</i> ou <i>"o que acontece quando o
+  usuário clica em um botão?"</i>. Todos se respondem com <b>as mesmas três etapas</b>.</p>
+
+  <figure>
+  <svg viewBox="0 0 880 230" role="img" aria-label="Três etapas: origem, propagação e tratamento">
+    <defs>
+      <marker id="seta" markerWidth="10" markerHeight="10" refX="9" refY="3.5" orient="auto">
+        <path d="M0,0 L0,7 L9,3.5 z" fill="var(--accent)"/>
+      </marker>
+    </defs>
+    <!-- caixa 1 -->
+    <rect x="14" y="48" width="226" height="118" rx="12" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="127" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">1. Origem</text>
+    <text x="127" y="96" text-anchor="middle" font-size="13" fill="currentColor">mouse · teclado</text>
+    <text x="127" y="122" text-anchor="middle" font-size="12" fill="var(--muted)">MOUSE_CLICKED</text>
+    <text x="127" y="140" text-anchor="middle" font-size="12" fill="var(--muted)">KEY_PRESSED</text>
+    <!-- seta 1 -->
+    <line x1="250" y1="107" x2="312" y2="107" stroke="var(--accent)" stroke-width="3" marker-end="url(#seta)"/>
+    <text x="281" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">Sistema</text>
+    <text x="281" y="134" text-anchor="middle" font-size="11" fill="var(--muted)">Operacional</text>
+    <!-- caixa 2 -->
+    <rect x="326" y="48" width="226" height="118" rx="12" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="439" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">2. Propagação</text>
+    <!-- mini arvore -->
+    <line x1="439" y1="78" x2="404" y2="110" stroke="var(--line)" stroke-width="2"/>
+    <line x1="439" y1="78" x2="474" y2="110" stroke="var(--line)" stroke-width="2"/>
+    <line x1="404" y1="110" x2="386" y2="140" stroke="var(--line)" stroke-width="2"/>
+    <line x1="404" y1="110" x2="422" y2="140" stroke="var(--line)" stroke-width="2"/>
+    <circle cx="439" cy="78" r="7" fill="var(--accent)"/>
+    <circle cx="404" cy="110" r="7" fill="var(--accent)"/>
+    <circle cx="474" cy="110" r="6" fill="var(--line)"/>
+    <circle cx="386" cy="140" r="6" fill="var(--line)"/>
+    <circle cx="422" cy="140" r="8" fill="var(--start,#e8a33d)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="500" y="146" text-anchor="middle" font-size="11" fill="var(--muted)">Grafo de Cena</text>
+    <!-- seta 2 -->
+    <line x1="562" y1="107" x2="624" y2="107" stroke="var(--accent)" stroke-width="3" marker-end="url(#seta)"/>
+    <text x="593" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">Captura</text>
+    <!-- caixa 3 -->
+    <rect x="638" y="48" width="226" height="118" rx="12" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="751" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">3. Tratamento</text>
+    <rect x="664" y="74" width="174" height="66" rx="6" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+    <text x="751" y="98" text-anchor="middle" font-size="12" font-family="ui-monospace,Consolas,monospace" fill="currentColor">EventHandler&lt;T&gt;</text>
+    <text x="751" y="122" text-anchor="middle" font-size="12" font-family="ui-monospace,Consolas,monospace" fill="var(--accent)">.handle()</text>
+    <text x="440" y="200" text-anchor="middle" font-size="12" fill="var(--muted)">o objeto que viaja da etapa 1 até a 3 é um javafx.event.Event</text>
+  </svg>
+  <figcaption>As três etapas do slide, que são também os três parágrafos da sua resposta.</figcaption>
+  </figure>
+
+  <h3>Resposta pronta — escreva isto</h3>
+  <div class="card">
+    <p>No JavaFX, o tratamento de um evento acontece em <b>três etapas</b>:</p>
+
+    <p><b>1. Origem.</b> Tudo começa com uma <b>interação física do usuário</b> no hardware: um clique do
+    mouse ou uma tecla do teclado. O <b>sistema operacional</b> detecta essa interação e avisa a aplicação.
+    São exemplos os eventos <code>MOUSE_CLICKED</code> e <code>KEY_PRESSED</code>.</p>
+
+    <p><b>2. Propagação.</b> O JavaFX transforma essa interação em um <b>objeto</b> da classe
+    <code>javafx.event.Event</code>. Esse objeto é então <b>propagado pelo Grafo de Cena</b>, ou seja,
+    percorre a árvore de componentes da tela até alcançar o componente que foi o alvo da ação.</p>
+
+    <p><b>3. Tratamento.</b> O componente alvo <b>captura</b> o evento por meio da interface funcional
+    <code>EventHandler&lt;T&gt;</code>, que obriga a implementação do método <code>handle()</code>. É dentro
+    do <code>handle()</code> que fica o código que responde à ação do usuário.</p>
+
+    <p>Esse modelo é chamado de <b>paradigma reativo</b> porque o programa não fica perguntando o tempo todo
+    se alguma coisa aconteceu. Ele apenas <b>registra o que deve ser feito</b> e <b>reage</b> quando o evento
+    chega.</p>
+  </div>
+
+  <div class="box dica"><b class="t">Versão curta, se o tempo apertar</b>
+  "O usuário clica (<b>origem</b>); o JavaFX cria um objeto <code>javafx.event.Event</code> e o envia pelo
+  <b>Grafo de Cena</b> até o componente alvo (<b>propagação</b>); o componente captura esse evento com um
+  <code>EventHandler&lt;T&gt;</code> e executa o método <code>handle()</code> (<b>tratamento</b>). É reativo
+  porque o programa não fica checando nada: ele reage quando o evento chega."</div>
+
+  <h3>O código, se pedirem um exemplo</h3>
+<pre>Button botao = <span class="kw">new</span> <span class="fn">Button</span>(<span class="st">"Salvar"</span>);
+
+<span class="co">// forma completa — mostra o EventHandler e o handle()</span>
+botao.<span class="fn">setOnAction</span>(<span class="kw">new</span> <span class="fn">EventHandler</span>&lt;ActionEvent&gt;() {
+    <span class="fn">@Override</span>
+    <span class="kw">public void</span> <span class="fn">handle</span>(ActionEvent e) {
+        rotulo.<span class="fn">setText</span>(<span class="st">"Salvo!"</span>);
+    }
+});
+
+<span class="co">// forma curta com lambda (EventHandler é interface funcional)</span>
+botao.<span class="fn">setOnAction</span>(e -> rotulo.<span class="fn">setText</span>(<span class="st">"Salvo!"</span>));</pre>
+
+  <div class="box dica"><b class="t">Por que o lambda funciona</b>
+  <code>EventHandler&lt;T&gt;</code> é uma <b>interface funcional</b>: tem <b>um único método abstrato</b>,
+  o <code>handle()</code>. É exatamente por isso que ela pode ser escrita como expressão lambda. Se a
+  questão pedir para "justificar", essa é a frase que fecha a resposta — e amarra com a POO da seção 2.</div>
+
+  <h3>As quatro palavras que não podem faltar</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Termo</th><th>Em que etapa</th><th>O que é</th></tr>
+    <tr><td><code>MOUSE_CLICKED</code> / <code>KEY_PRESSED</code></td><td>1 · Origem</td><td>O tipo da interação física</td></tr>
+    <tr><td><code>javafx.event.Event</code></td><td>2 · Propagação</td><td>O <b>objeto</b> gerado, que carrega os dados do evento</td></tr>
+    <tr><td><b>Grafo de Cena</b></td><td>2 · Propagação</td><td>A árvore de componentes por onde o evento viaja</td></tr>
+    <tr><td><code>EventHandler&lt;T&gt;</code> e <code>.handle()</code></td><td>3 · Tratamento</td><td>A interface funcional e o método que executa a resposta</td></tr>
+  </table></div>
+
+  <div class="box peg"><b class="t">Se a questão for sobre Swing em vez de JavaFX</b>
+  A lógica é idêntica, só mudam os nomes. Vale citar os dois para mostrar domínio:
+  <div class="scroll"><table class="t" style="margin-top:8px">
+    <tr><th>Etapa</th><th>JavaFX</th><th>Swing</th></tr>
+    <tr><td>Registrar</td><td><code>setOnAction(...)</code></td><td><code>addActionListener(...)</code></td></tr>
+    <tr><td>Interface</td><td><code>EventHandler&lt;T&gt;</code></td><td><code>ActionListener</code></td></tr>
+    <tr><td>Método</td><td><code>handle(ActionEvent e)</code></td><td><code>actionPerformed(ActionEvent e)</code></td></tr>
+    <tr><td>Objeto do evento</td><td><code>javafx.event.Event</code></td><td><code>java.awt.event.ActionEvent</code></td></tr>
+  </table></div>
+  Os dois são <b>orientados a eventos</b>: o componente é a <b>fonte</b>, a interface é o <b>ouvinte</b> e o
+  objeto do evento carrega as informações.</div>
+
+  <div class="box erro"><b class="t">Os dois erros que derrubam a nota da aberta</b>
+  <ul>
+    <li><b>Pular a etapa 2.</b> Muita gente escreve "o usuário clica e o método roda". Falta o miolo: o
+    evento vira <b>objeto</b> e <b>percorre o Grafo de Cena</b>. É justamente essa parte que o slide
+    destaca, então é a que o professor quer ver.</li>
+    <li><b>Não explicar por que é "reativo".</b> Feche sempre com a frase: o programa <b>não consulta</b> o
+    hardware em looping, ele <b>registra</b> o que fazer e <b>reage</b> quando o evento chega.</li>
+  </ul></div>
+
+  <div class="box dica"><b class="t">Modelo de organização da resposta</b>
+  Escreva com <b>subtítulos numerados</b> (1. Origem · 2. Propagação · 3. Tratamento), um parágrafo curto
+  em cada, e o trecho de código no final. As devolutivas mostram que questão aberta é corrigida por
+  <b>itens identificados</b> — quanto mais clara a separação, mais fácil o corretor marcar cada ponto.</div>
+</section>
+
 <!-- ============ 9 ============ -->
 <section id="cola">
-  <h2><span class="num">5</span>Cola de 1 minuto</h2>
+  <h2><span class="num">6</span>Cola de 1 minuto</h2>
   <div class="cols2">
     <div class="card">
       <h4>Swing</h4>
